@@ -1,0 +1,186 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CustomWindowTitleBackground">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.NoTitleBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@color/colorTransparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/colorTransparent</item>
+    </style>
+
+    <style name="AppTheme.TabText" parent="AppTheme">
+        <item name="android:layout_width">@dimen/textTitleSizeBold</item>
+        <item name="android:layout_height">@dimen/textTitleSizeBold</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.TimeDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+    </style>
+
+    <style name="ucrop_ImageViewWidgetIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:duplicateParentState">true</item>
+    </style>
+
+    <style name="ucrop_WrapperIconState">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ucrop_WrapperRotateButton">
+        <item name="android:layout_width">@dimen/ucrop_size_wrapper_rotate_button</item>
+        <item name="android:layout_height">@dimen/ucrop_size_wrapper_rotate_button</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ucrop_TextViewCropAspectRatio">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/ucrop_height_crop_aspect_ratio_text</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:textColor">@color/ucrop_scale_text_view_selector</item>
+    </style>
+
+    <style name="ucrop_TextViewWidgetText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">@dimen/ucrop_margit_top_widget_text</item>
+        <item name="android:textColor">@color/ucrop_color_widget_text</item>
+        <item name="android:textSize">@dimen/ucrop_text_size_widget_text</item>
+    </style>
+
+    <style name="AppTheme.SexDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/colorTransparent</item>
+    </style>
+
+    <style name="SelectSexAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/sex_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/sex_dialog_exit</item>
+    </style>
+
+    <style name="AppTheme.CustomToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Title</item>
+        <item name="subtitleTextAppearance">
+            @style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle
+        </item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="titleMargin">4dp</item>
+        <item name="maxButtonHeight">@dimen/abc_action_bar_default_height_material</item>
+        <item name="buttonGravity">top</item>
+        <item name="collapseIcon">?attr/homeAsUpIndicator</item>
+        <item name="collapseContentDescription">@string/abc_toolbar_collapse_description</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">@dimen/abc_action_bar_content_inset_with_nav
+        </item>
+        <item name="android:paddingLeft">@dimen/abc_action_bar_default_padding_start_material</item>
+        <item name="android:paddingRight">@dimen/abc_action_bar_default_padding_end_material</item>
+    </style>
+
+    <style name="BaseStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">28px</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">-</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:src">@drawable/ic_image_gray_24dp</item>
+    </style>
+
+    <style name="BodyTextStyle" parent="BaseStyle">
+        <item name="android:textColor">@color/colorGrayDarkDark</item>
+        <item name="android:textSize">28px</item>
+    </style>
+
+    <style name="BodyTextStyleAllParams" parent="BaseStyle">
+        <item name="android:textSize">28px</item>
+        <item name="android:textColor">@color/colorGrayDarkDark</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <!--属性全-->
+    <style name="BaseTitleStyle" parent="BaseStyle">
+        <item name="android:textSize">34px</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="TitleTextStyle" parent="BaseTitleStyle">
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!--属性全-->
+    <style name="TitleTextStyleAllParams" parent="BaseTitleStyle">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ImgStyle" parent="BaseStyle">
+        <item name="android:src">@drawable/ic_image_gray_24dp</item>
+    </style>
+
+    <style name="ImgStyleAllParams" parent="BaseStyle">
+        <item name="android:src">@drawable/ic_image_gray_24dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <!--主题色的按钮-->
+    <style name="BtnPrimStyle" parent="BaseStyle">
+        <item name="android:background">@drawable/selector_default_normal_btn</item>
+        <item name="android:textColor">@color/selector_default_color_</item>
+        <item name="android:textSize">30px</item>
+        <item name="android:text">确定</item>
+        <item name="android:layout_height">90px</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">20px</item>
+        <item name="android:paddingRight">20px</item>
+        <item name="android:paddingTop">10px</item>
+        <item name="android:paddingBottom">10px</item>
+    </style>
+
+    <style name="BtnPrimStyleBig" parent="BaseStyle">
+        <item name="android:background">@drawable/selector_default_normal_btn</item>
+        <item name="android:textColor">@color/selector_default_color_</item>
+        <item name="android:textSize">30px</item>
+        <item name="android:text">确定</item>
+        <item name="android:layout_height">90px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/borderWidth</item>
+        <item name="android:layout_marginRight">@dimen/borderWidth</item>
+        <item name="android:layout_marginTop">@dimen/borderWidth</item>
+        <item name="android:layout_marginBottom">@dimen/borderWidth</item>
+    </style>
+
+</resources>

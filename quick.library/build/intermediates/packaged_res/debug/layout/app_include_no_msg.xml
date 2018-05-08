@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/noMsgContainer"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/borderWidth">
+
+    <ImageView
+        android:id="@+id/hintErrorIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:minHeight="350px"
+        android:minWidth="350px"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_broken_image_gray_24dp" />
+
+    <TextView
+        android:id="@+id/hintErrorTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/borderWidth"
+        android:gravity="center"
+        android:text="@string/errorNoMsgHint"
+        android:textColor="@color/colorGray"
+        android:textSize="30px"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/refreshBtn"
+        android:layout_width="200px"
+        android:layout_height="70px"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/borderWidth"
+        android:background="@drawable/selector_rec_cir_bg_tr_prim"
+        android:gravity="center"
+        android:text="刷新页面"
+        android:textColor="@color/selector_prim_white"
+        android:textSize="28px"
+        android:visibility="gone" />
+
+</com.zhy.autolayout.AutoLinearLayout>

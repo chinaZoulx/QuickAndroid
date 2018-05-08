@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200px"
+    android:layout_height="200px"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_black"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="20px"
+    android:paddingLeft="50px"
+    android:paddingRight="50px"
+    android:paddingTop="20px">
+
+    <FrameLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:indeterminateTint="@color/colorBlueShallow"
+            android:progressBackgroundTintMode="multiply"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/errorHintIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_broken_image_gray_24dp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <!--<android.support.v4.widget.ContentLoadingProgressBar-->
+    <!--android:layout_width="50dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--style="?android:attr/android:progressBarStyleHorizontal"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_height="50dp" />-->
+
+    <TextView
+        android:id="@+id/loadingHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="载入中"
+        android:textColor="@color/colorBlack"
+        android:textSize="12sp" />
+</com.zhy.autolayout.AutoLinearLayout>
