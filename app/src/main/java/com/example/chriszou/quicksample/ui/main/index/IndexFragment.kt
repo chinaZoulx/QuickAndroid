@@ -1,4 +1,4 @@
-package com.example.chriszou.quicksample.ui.index
+package com.example.chriszou.quicksample.ui.main.index
 
 import android.support.v7.widget.Toolbar
 import com.example.chriszou.quicksample.R

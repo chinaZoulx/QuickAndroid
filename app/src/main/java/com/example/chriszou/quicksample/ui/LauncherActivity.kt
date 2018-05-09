@@ -5,10 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import com.example.chriszou.quicksample.R
+import com.example.chriszou.quicksample.ui.main.MainActivity
 import org.chris.quick.b.BaseActivity
-import org.chris.quick.b.BaseApplication
-import org.chris.quick.helper.SharedPreferencesHelper
-import org.chris.quick.tools.DateUtils
 import org.chris.quick.tools.common.PermissionUtils
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -40,7 +38,7 @@ class LauncherActivity : BaseActivity() {
     }
 
     private fun launcher() {
-        val firstLoginDate = SharedPreferencesHelper.getValue(BaseApplication.APP_FIRST_LOGIN_DATE, -1L)
+//        val firstLoginDate = SharedPreferencesHelper.getValue(BaseApplication.APP_FIRST_LOGIN_DATE, -1L)
         when {
 //            firstLoginDate == -1L -> startAction(this, LoginActivity::class.java, "")
 //            DateUtils.getCurrentTimeInMillis() - firstLoginDate > DateUtils.DAY * 7 -> startAction(this, LoginActivity::class.java, "")

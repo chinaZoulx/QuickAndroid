@@ -1,9 +1,9 @@
-package com.example.chriszou.quicksample.ui
+package com.example.chriszou.quicksample.ui.main
 
 import com.example.chriszou.quicksample.R
-import com.example.chriszou.quicksample.ui.index.IndexFragment
+import com.example.chriszou.quicksample.ui.main.index.IndexFragment
 import com.example.chriszou.quicksample.ui.mycenter.DiscoverFragment
-import com.example.chriszou.quicksample.ui.mycenter.MyCenterFragment
+import com.example.chriszou.quicksample.ui.main.mycenter.MyCenterFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.chris.quick.b.BaseActivity
 

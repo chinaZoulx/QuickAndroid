@@ -1,4 +1,4 @@
-package com.example.chriszou.quicksample.ui.mycenter
+package com.example.chriszou.quicksample.ui.main.mycenter
 
 import com.example.chriszou.quicksample.R
 import org.chris.quick.b.BaseFragment
