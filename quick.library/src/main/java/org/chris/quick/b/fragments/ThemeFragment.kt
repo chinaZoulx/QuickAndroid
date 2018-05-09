@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 
 import org.chris.quick.R
+import org.chris.quick.b.activities.ThemeActivity
 import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.DevicesUtils
 
@@ -39,7 +40,7 @@ abstract class ThemeFragment : Fragment() {
 
     lateinit var appContentContainer: FrameLayout
     var appBaseToolbar: Toolbar? = null
-
+    private var isDefaultToolbar = false
     private var onMenuItemClickListener: ((menu: MenuItem?) -> Boolean)? = null
     private var resMenu = -1
 
@@ -49,13 +50,14 @@ abstract class ThemeFragment : Fragment() {
      * @return
      */
     open val isUsingBaseLayout get() = true
+    open val isFitsSystemWindows get() = true
 
-    val toolbar: Toolbar?
-        get() {
-            if (isUsingBaseLayout && appBaseToolbar == null)
-                appBaseToolbar = appBaseLayoutContainer?.findViewById(R.id.appToolbar)
-            return appBaseToolbar
-        }
+    open fun onResultToolbar(): Toolbar? {
+        isDefaultToolbar = true
+        if (isUsingBaseLayout && appBaseToolbar == null)
+            appBaseToolbar = getView(R.id.appToolbar) as Toolbar
+        return appBaseToolbar
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (appBaseLayoutContainer == null) {
@@ -64,11 +66,8 @@ abstract class ThemeFragment : Fragment() {
                 appContentContainer = appBaseLayoutContainer?.findViewById(R.id.appContent)!!
                 inflater.inflate(onResultLayoutResId(), appContentContainer)
             } else appBaseLayoutContainer = inflater.inflate(onResultLayoutResId(), container, false)
-            if (toolbar != null) {
-                if (hasTitle()) appBaseToolbar?.visibility = View.VISIBLE else appBaseToolbar?.visibility = View.GONE
-//                appBaseToolbar?.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
-//                appBaseToolbar?.layoutParams?.height = (CommonUtils.getSystemAttrValue(activity, R.attr.actionBarSize) + CommonUtils.getStatusHeight(activity)).toInt()
-            }
+            setHasOptionsMenu(true)//允许包含菜单
+            setupTitle()
         } else {
             val parent = appBaseLayoutContainer?.parent as ViewGroup
             parent.removeView(appBaseLayoutContainer)
@@ -77,9 +76,32 @@ abstract class ThemeFragment : Fragment() {
         return appBaseLayoutContainer
     }
 
+    private fun setupTitle() {
+        appBaseToolbar = onResultToolbar()
+        if (appBaseToolbar != null) {
+            appBaseToolbar?.visibility = if (hasTitle()) View.VISIBLE else View.GONE
+            appBaseToolbar?.fitsSystemWindows = hasTitle()
+
+            if (isFitsSystemWindows) {
+                appBaseToolbar?.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
+                appBaseToolbar?.layoutParams?.height = (CommonUtils.getSystemAttrValue(activity, R.attr.actionBarSize) + CommonUtils.getStatusHeight(activity)).toInt()
+            }
+
+            if (!isDefaultToolbar && isUsingBaseLayout) {//不是默认的布局并且引用父布局
+                val viewGroup = appBaseLayoutContainer as ViewGroup
+                for (i in 0 until viewGroup.childCount) {
+                    if (viewGroup.getChildAt(i) is Toolbar) {
+                        viewGroup.removeViewAt(i)
+                        break
+                    }
+                }
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         if (resMenu != -1)
-            inflater!!.inflate(resMenu, menu)
+            inflater?.inflate(resMenu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -87,13 +109,13 @@ abstract class ThemeFragment : Fragment() {
         return if (onMenuItemClickListener != null) onMenuItemClickListener!!.invoke(item) else super.onOptionsItemSelected(item)
     }
 
-    fun setMenu(@MenuRes resMenu: Int, onMenuItemClickListener: ((menu: MenuItem?) -> Boolean)) {
+    fun setParentMenu(@MenuRes resMenu: Int, onMenuItemClickListener: ((menu: MenuItem?) -> Boolean)) {
         this.resMenu = resMenu
         this.onMenuItemClickListener = onMenuItemClickListener
     }
 
     fun setTitle(title: String) {
-        appBaseToolbar!!.title = title
+        appBaseToolbar?.title = title
     }
 
     protected fun setRightView(@LayoutRes resId: Int) {
@@ -110,12 +132,12 @@ abstract class ThemeFragment : Fragment() {
         appBaseToolbar!!.addView(view, layoutParams)
     }
 
-    protected fun setBackInvalid(backIcon: Int) {
-        setBackValid(backIcon, false, null)
+    protected fun setBackInvalid() {
+        setBackValid(-1, false, null)
     }
 
     protected fun setBackValid(onClickListener: View.OnClickListener) {
-        setBackValid(-1, true, onClickListener)
+        setBackValid(-1, false, onClickListener)
     }
 
     /**
@@ -124,20 +146,18 @@ abstract class ThemeFragment : Fragment() {
      * @param onClickListener
      */
     @JvmOverloads
-    protected fun setBackValid(backIcon: Int = -1, isValid: Boolean = true, onClickListener: View.OnClickListener? = null) {
+    protected fun setBackValid(backIcon: Int = -1, isValid: Boolean = false, onClickListener: View.OnClickListener? = null) {
         var tempListener = onClickListener
         if (appBaseToolbar == null) return
-        if (backIcon == -1)
-            appBaseToolbar?.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
-        else
-            appBaseToolbar?.setNavigationIcon(backIcon)
-
         if (isValid) {
-            if (tempListener == null) {
+            if (backIcon == -1)
+                appBaseToolbar?.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+            else
+                appBaseToolbar?.setNavigationIcon(backIcon)
+            if (tempListener == null)
                 tempListener = View.OnClickListener { activity?.onBackPressed() }
-            }
             appBaseToolbar?.setNavigationOnClickListener(tempListener)
-        }
+        } else appBaseToolbar?.navigationIcon = null
     }
 
     fun setOnClickListener(onClickListener: View.OnClickListener, @IdRes vararg resIds: Int) {
@@ -158,9 +178,7 @@ abstract class ThemeFragment : Fragment() {
      * @param <T>
      * @return
     </T> */
-    fun <T : View> getView(@IdRes resId: Int): T {
-        return getView(resId, appBaseLayoutContainer!!)
-    }
+    fun <T : View> getView(@IdRes resId: Int): T = getView(resId, appBaseLayoutContainer!!)
 
     /**
      * 获取View
@@ -240,7 +258,7 @@ abstract class ThemeFragment : Fragment() {
      *
      * @return
      */
-    fun hasTitle(): Boolean {
+    protected open fun hasTitle(): Boolean {
         return false
     }
 

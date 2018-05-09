@@ -60,6 +60,9 @@ abstract class ThemeActivity : AutoLayoutActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (ExitApplication.getInstance() == null)
+            throw NullPointerException(String.format("未初始化BaseApplication"))
+
         ExitApplication.getInstance().addActivity(this)
         initView()
         init()
@@ -76,9 +79,24 @@ abstract class ThemeActivity : AutoLayoutActivity() {
             appBaseLayoutContainer = LayoutInflater.from(this).inflate(onResultLayoutResId(), null)
             setContentView(appBaseLayoutContainer)
         }
-        if (onResultToolbar() != null) {
-            //替换Action
-            appBaseToolbar = onResultToolbar()
+        setupTitle()
+    }
+
+    private fun setupTitle() {
+        appBaseToolbar = onResultToolbar()
+        if (appBaseToolbar != null) {
+            appBaseToolbar?.visibility = if (hasTitle()) View.VISIBLE else View.GONE
+
+            if (hasTitle()) {//有标题
+                setSupportActionBar(appBaseToolbar)
+                if (intent.hasExtra(TITLE)) {
+                    title = intent.getStringExtra(TITLE)
+                }
+                appBaseToolbar?.fitsSystemWindows = hasTitle()
+                val actionBar = supportActionBar
+                actionBar?.setDisplayShowHomeEnabled(true)
+            }
+
             if (!isDefaultToolbar && isUsingBaseLayout) {//不是默认的布局并且引用父布局
                 val viewGroup = appBaseLayoutContainer as ViewGroup
                 for (i in 0 until viewGroup.childCount) {
@@ -88,18 +106,6 @@ abstract class ThemeActivity : AutoLayoutActivity() {
                     }
                 }
             }
-            setSupportActionBar(appBaseToolbar)
-            if (intent.hasExtra(TITLE)) {
-                title = intent.getStringExtra(TITLE)
-            }
-            if (!hasTitle()) {
-                appBaseToolbar!!.visibility = View.GONE
-                appBaseToolbar!!.fitsSystemWindows = false
-            } else {
-                appBaseToolbar!!.fitsSystemWindows = true
-            }
-            val actionBar = supportActionBar
-            actionBar?.setDisplayShowHomeEnabled(true)
         }
     }
 
@@ -237,6 +243,7 @@ abstract class ThemeActivity : AutoLayoutActivity() {
     protected fun showToast(content: CharSequence, duration: Int) {
         showToast(content, 0, duration)
     }
+
     protected fun showToast(content: CharSequence, gravity: Int = 0, duration: Int = Toast.LENGTH_SHORT) {
         val toast = Toast.makeText(this, content, duration)
         if (gravity != 0)

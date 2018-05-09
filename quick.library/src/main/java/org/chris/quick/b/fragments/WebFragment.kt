@@ -41,7 +41,7 @@ open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragmen
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                loadDialog.dismiss()
+                loadingDialog.dismiss()
                 Log.e("加载状态", "加载完成:$url")
             }
 

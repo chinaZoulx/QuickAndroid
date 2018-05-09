@@ -2,6 +2,7 @@ package org.chris.quick.b
 
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.view.View
 import org.chris.quick.b.fragments.ThemeFragment
 import org.chris.quick.function.IsOkDialog
 import org.chris.quick.function.LoadingDialog
@@ -14,14 +15,14 @@ import org.chris.quick.function.LoadingDialog
  */
 abstract class BaseFragment : ThemeFragment() {
 
-    var isOkDialog = IsOkDialog(activity)
-    var loadDialog = LoadingDialog(activity)
+    lateinit var isOkDialog: IsOkDialog
+    lateinit var loadingDialog: LoadingDialog
     //    private var onInitListener: ((isFirst:Boolean) -> Unit)? = null
     private var onInitListener: (() -> Unit)? = null
 
     override fun init() {
         isOkDialog = IsOkDialog(activity)
-        loadDialog = LoadingDialog(activity)
+        loadingDialog = LoadingDialog(activity)
         if (hasTitle()) {
             setBackValid()
         }
@@ -32,8 +33,8 @@ abstract class BaseFragment : ThemeFragment() {
         this.onInitListener = onInitListener
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         if (!isInit) {
             onInitLayout()
             onBindListener()

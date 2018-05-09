@@ -8,15 +8,15 @@ package android.support.transition;
 
 public final class R {
     public static final class attr {
-        public static int font = 0x7f0400a2;
-        public static int fontProviderAuthority = 0x7f0400a4;
-        public static int fontProviderCerts = 0x7f0400a5;
-        public static int fontProviderFetchStrategy = 0x7f0400a6;
-        public static int fontProviderFetchTimeout = 0x7f0400a7;
-        public static int fontProviderPackage = 0x7f0400a8;
-        public static int fontProviderQuery = 0x7f0400a9;
-        public static int fontStyle = 0x7f0400aa;
-        public static int fontWeight = 0x7f0400ab;
+        public static int font = 0x7f0400a9;
+        public static int fontProviderAuthority = 0x7f0400ab;
+        public static int fontProviderCerts = 0x7f0400ac;
+        public static int fontProviderFetchStrategy = 0x7f0400ad;
+        public static int fontProviderFetchTimeout = 0x7f0400ae;
+        public static int fontProviderPackage = 0x7f0400af;
+        public static int fontProviderQuery = 0x7f0400b0;
+        public static int fontStyle = 0x7f0400b1;
+        public static int fontWeight = 0x7f0400b2;
     }
     public static final class bool {
         public static int abc_action_bar_embed_tabs = 0x7f050001;
@@ -70,36 +70,36 @@ public final class R {
         public static int action_text = 0x7f0c0030;
         public static int actions = 0x7f0c0031;
         public static int async = 0x7f0c003e;
-        public static int blocking = 0x7f0c0042;
-        public static int chronometer = 0x7f0c004d;
-        public static int forever = 0x7f0c0083;
-        public static int ghost_view = 0x7f0c0084;
-        public static int icon = 0x7f0c0094;
-        public static int icon_group = 0x7f0c0095;
-        public static int info = 0x7f0c00a2;
-        public static int italic = 0x7f0c00a3;
-        public static int line1 = 0x7f0c00ab;
-        public static int line3 = 0x7f0c00ac;
-        public static int normal = 0x7f0c00e2;
-        public static int notification_background = 0x7f0c00e3;
-        public static int notification_main_column = 0x7f0c00e4;
-        public static int notification_main_column_container = 0x7f0c00e5;
-        public static int parent_matrix = 0x7f0c00f1;
-        public static int right_icon = 0x7f0c0102;
-        public static int right_side = 0x7f0c0103;
-        public static int save_image_matrix = 0x7f0c0105;
-        public static int save_non_transition_alpha = 0x7f0c0106;
-        public static int save_scale_type = 0x7f0c0107;
-        public static int tag_transition_group = 0x7f0c013e;
-        public static int text = 0x7f0c013f;
-        public static int text2 = 0x7f0c0140;
-        public static int time = 0x7f0c0149;
-        public static int title = 0x7f0c014a;
-        public static int transition_current_scene = 0x7f0c0155;
-        public static int transition_layout_save = 0x7f0c0156;
-        public static int transition_position = 0x7f0c0157;
-        public static int transition_scene_layoutid_cache = 0x7f0c0158;
-        public static int transition_transform = 0x7f0c0159;
+        public static int blocking = 0x7f0c0043;
+        public static int chronometer = 0x7f0c004f;
+        public static int forever = 0x7f0c0087;
+        public static int ghost_view = 0x7f0c0088;
+        public static int icon = 0x7f0c0099;
+        public static int icon_group = 0x7f0c009a;
+        public static int info = 0x7f0c00a7;
+        public static int italic = 0x7f0c00a9;
+        public static int line1 = 0x7f0c00b1;
+        public static int line3 = 0x7f0c00b2;
+        public static int normal = 0x7f0c00e8;
+        public static int notification_background = 0x7f0c00e9;
+        public static int notification_main_column = 0x7f0c00ea;
+        public static int notification_main_column_container = 0x7f0c00eb;
+        public static int parent_matrix = 0x7f0c00f9;
+        public static int right_icon = 0x7f0c010b;
+        public static int right_side = 0x7f0c010c;
+        public static int save_image_matrix = 0x7f0c010e;
+        public static int save_non_transition_alpha = 0x7f0c010f;
+        public static int save_scale_type = 0x7f0c0110;
+        public static int tag_transition_group = 0x7f0c014a;
+        public static int text = 0x7f0c014b;
+        public static int text2 = 0x7f0c014c;
+        public static int time = 0x7f0c0155;
+        public static int title = 0x7f0c0156;
+        public static int transition_current_scene = 0x7f0c0161;
+        public static int transition_layout_save = 0x7f0c0162;
+        public static int transition_position = 0x7f0c0163;
+        public static int transition_scene_layoutid_cache = 0x7f0c0164;
+        public static int transition_transform = 0x7f0c0165;
     }
     public static final class integer {
         public static int status_bar_notification_info_maxnum = 0x7f0d000b;
@@ -125,14 +125,14 @@ public final class R {
         public static int Widget_Compat_NotificationActionText = 0x7f160193;
     }
     public static final class styleable {
-        public static int[] FontFamily = { 0x7f0400a4, 0x7f0400a5, 0x7f0400a6, 0x7f0400a7, 0x7f0400a8, 0x7f0400a9 };
+        public static int[] FontFamily = { 0x7f0400ab, 0x7f0400ac, 0x7f0400ad, 0x7f0400ae, 0x7f0400af, 0x7f0400b0 };
         public static int FontFamily_fontProviderAuthority = 0;
         public static int FontFamily_fontProviderCerts = 1;
         public static int FontFamily_fontProviderFetchStrategy = 2;
         public static int FontFamily_fontProviderFetchTimeout = 3;
         public static int FontFamily_fontProviderPackage = 4;
         public static int FontFamily_fontProviderQuery = 5;
-        public static int[] FontFamilyFont = { 0x01010532, 0x0101053f, 0x01010533, 0x7f0400a2, 0x7f0400aa, 0x7f0400ab };
+        public static int[] FontFamilyFont = { 0x01010532, 0x0101053f, 0x01010533, 0x7f0400a9, 0x7f0400b1, 0x7f0400b2 };
         public static int FontFamilyFont_android_font = 0;
         public static int FontFamilyFont_android_fontStyle = 1;
         public static int FontFamilyFont_android_fontWeight = 2;
