@@ -66,7 +66,7 @@ public abstract class BaseRecyclerViewAdapter<M> extends RecyclerView.Adapter<Ba
      */
     public abstract int onResultLayoutResId();
 
-    public abstract void onBindData(BaseViewHolder holder, int position, M itemData);
+    public abstract void onBindData(@NonNull BaseViewHolder holder, int position, M itemData);
 
     @Override
     public int getItemCount() {

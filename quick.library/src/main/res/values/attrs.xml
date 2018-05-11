@@ -66,7 +66,13 @@
     </declare-styleable>
 
     <declare-styleable name="SemicircleView">
-        <attr name="SemicircleViewRadius" format="integer|dimension|float"/>
+        <attr name="svRadius" format="integer|dimension|float" />
+        <attr name="svStartColor" format="reference|color" />
+        <attr name="svEndColor" format="reference|color" />
+        <attr name="svPaddingHeight" format="dimension" />
+        <attr name="svIsShadow" format="boolean"/>
+        <attr name="svShadowRadius" format="dimension"/>
+        <attr name="svShadowDistance" format="dimension"/>
     </declare-styleable>
     <declare-styleable name="RoundRectView">
         <attr name="roundRectRadius" format="integer|dimension|float" />

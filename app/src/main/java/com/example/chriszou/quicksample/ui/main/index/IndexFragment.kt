@@ -11,6 +11,11 @@ class IndexFragment : BaseFragment() {
     override fun onResultToolbar(): Toolbar? = getView(R.id.toolbar)
     override fun onInit() {
         setParentMenu(R.menu.navigation, { menu ->
+            when(menu?.itemId){
+                R.id.navigation0->showToast("首页")
+                R.id.navigation1->showToast("发现")
+                R.id.navigation3->showToast("我的")
+            }
             true
         })
     }

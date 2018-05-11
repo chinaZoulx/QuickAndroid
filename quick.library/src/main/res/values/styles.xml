@@ -116,7 +116,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">28px</item>
+        <item name="android:textSize">@dimen/textBodySize</item>
         <item name="android:gravity">center</item>
         <item name="android:text">-</item>
         <item name="android:scaleType">centerInside</item>
@@ -125,17 +125,15 @@
 
     <style name="BodyTextStyle" parent="BaseStyle">
         <item name="android:textColor">@color/colorGrayDarkDark</item>
-        <item name="android:textSize">28px</item>
     </style>
 
     <style name="BodyTextStyleAllParams" parent="BaseStyle">
-        <item name="android:textSize">28px</item>
         <item name="android:textColor">@color/colorGrayDarkDark</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
     <!--属性全-->
     <style name="BaseTitleStyle" parent="BaseStyle">
-        <item name="android:textSize">34px</item>
+        <item name="android:textSize">@dimen/textTitleSizeBold</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
@@ -160,22 +158,22 @@
     <style name="BtnPrimStyle" parent="BaseStyle">
         <item name="android:background">@drawable/selector_default_normal_btn</item>
         <item name="android:textColor">@color/selector_default_color_</item>
-        <item name="android:textSize">30px</item>
+        <item name="android:textSize">@dimen/textBodySize</item>
         <item name="android:text">确定</item>
-        <item name="android:layout_height">90px</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingLeft">20px</item>
-        <item name="android:paddingRight">20px</item>
-        <item name="android:paddingTop">10px</item>
-        <item name="android:paddingBottom">10px</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
     </style>
 
     <style name="BtnPrimStyleBig" parent="BaseStyle">
         <item name="android:background">@drawable/selector_default_normal_btn</item>
         <item name="android:textColor">@color/selector_default_color_</item>
-        <item name="android:textSize">30px</item>
+        <item name="android:textSize">@dimen/textBodySize</item>
         <item name="android:text">确定</item>
-        <item name="android:layout_height">90px</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginLeft">@dimen/borderWidth</item>
         <item name="android:layout_marginRight">@dimen/borderWidth</item>

@@ -3,6 +3,7 @@ package org.chris.quick.b;
 import android.app.Activity;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -489,7 +490,7 @@ public abstract class BaseListFragment extends ThemeFragment implements XRecycle
 
     public abstract String onResultUrl();
 
-    public abstract void onResultParams(Map<String, String> params);
+    public abstract void onResultParams(@NonNull Map<String, String> params);
 
     /**
      * 数据请求成功
@@ -497,7 +498,7 @@ public abstract class BaseListFragment extends ThemeFragment implements XRecycle
      * @param jsonData
      * @return
      */
-    public abstract void onRequestDataSuccess(String jsonData, boolean isPullRefresh);
+    public abstract void onRequestDataSuccess(@NonNull String jsonData, boolean isPullRefresh);
 
     public void setOnRequestListener(OnRequestListener onRequestListener) {
         this.onRequestListener = onRequestListener;

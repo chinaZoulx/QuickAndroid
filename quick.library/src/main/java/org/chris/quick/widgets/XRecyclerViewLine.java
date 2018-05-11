@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -109,7 +110,7 @@ public class XRecyclerViewLine extends XRecyclerView {
     @Override
     public void setLoadingMoreEnabled(boolean isLoadMore) {
         this.isLoadMore = isLoadMore;
-        mDividerItemDecoration.setXRevScrollState(true,isLoadMore);
+        mDividerItemDecoration.setXRevScrollState(true, isLoadMore);
         super.setLoadingMoreEnabled(isLoadMore);
     }
 
@@ -331,7 +332,7 @@ public class XRecyclerViewLine extends XRecyclerView {
      * @brief recyle view 滚动监听器
      * @date 2015/4/6
      */
-    public class OnRecyclerViewScrollListener extends OnScrollListener implements OnScrollBottomListener {
+    public static class OnRecyclerViewScrollListener extends OnScrollListener implements OnScrollBottomListener {
 
         private String TAG = getClass().getSimpleName();
 
@@ -349,7 +350,7 @@ public class XRecyclerViewLine extends XRecyclerView {
          * 最后一个可见的item的位置
          */
         private int lastVisibleItemPosition;
-/*    *//**
+        /*    *//**
          * 是否正在加载
          *//*
     private boolean isLoadingMore = false;*/
@@ -362,7 +363,7 @@ public class XRecyclerViewLine extends XRecyclerView {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-
+            Log.e("test", String.format("dx:%d,dy:%d", dx, dy));
             LayoutManager layoutManager = recyclerView.getLayoutManager();
             //  int lastVisibleItemPosition = -1;
             if (layoutManagerType == null) {
@@ -404,13 +405,11 @@ public class XRecyclerViewLine extends XRecyclerView {
             LayoutManager layoutManager = recyclerView.getLayoutManager();
             int visibleItemCount = layoutManager.getChildCount();
             int totalItemCount = layoutManager.getItemCount();
-            if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE &&
-                    (lastVisibleItemPosition) >= totalItemCount - 1)) {
+            if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition >= totalItemCount - 1)) {
                 //Log.d(TAG, "is loading more");
                 onBottom();
-            } else onOther();
+            }else onOther();
         }
-
 
         @Override
         public void onBottom() {

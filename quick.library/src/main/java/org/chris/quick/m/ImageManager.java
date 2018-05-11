@@ -111,7 +111,7 @@ public class ImageManager {
             if (!TextUtils.isEmpty(url)) {
                 Glide.with(context).load(url).placeholder(emptyImg).error(errImg).dontAnimate().into(iv);
             }
-            if (file != null && file.exists()) {
+            if (file != null) {
                 Glide.with(context).load(file).placeholder(emptyImg).error(errImg).dontAnimate().into(iv);
             }
             if (resId != -1) {
@@ -247,7 +247,7 @@ public class ImageManager {
             if (!TextUtils.isEmpty(url)) {
                 Glide.with(context).load(url).placeholder(emptyImg).error(errImg).transform(new GlideCircleTransform(context)).dontAnimate().into(iv);
             }
-            if (file != null && file.exists()) {
+            if (file != null) {
                 Glide.with(context).load(file).placeholder(emptyImg).error(errImg).transform(new GlideCircleTransform(context)).dontAnimate().into(iv);
             }
             if (resId != -1) {
@@ -347,7 +347,7 @@ public class ImageManager {
             if (!TextUtils.isEmpty(url)) {
                 Glide.with(context).load(url).placeholder(emptyImg).error(errImg).transform(new GlideRoundTransform(context, radius)).dontAnimate().into(iv);
             }
-            if (file != null && file.exists()) {
+            if (file != null) {
                 Glide.with(context).load(file).placeholder(emptyImg).error(errImg).transform(new GlideRoundTransform(context, radius)).dontAnimate().into(iv);
             }
             if (resId != -1) {

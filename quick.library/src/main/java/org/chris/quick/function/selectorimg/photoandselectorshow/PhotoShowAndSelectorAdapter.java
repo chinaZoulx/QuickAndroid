@@ -54,8 +54,8 @@ public class PhotoShowAndSelectorAdapter extends PagerAdapter {
     public Object instantiateItem(final ViewGroup container, final int position) {
         final String filePath = imgList.get(position);
         final View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_photo_show, container, false);
-        final ProgressWheel loadingAnimView = (ProgressWheel) view.findViewById(R.id.loadingAnimView);
-        final ImageViewScale imgScaleView = (ImageViewScale) view.findViewById(R.id.imageScaleView);
+        final ProgressWheel loadingAnimView = view.findViewById(R.id.loadingAnimView);
+        final ImageViewScale imgScaleView = view.findViewById(R.id.imageScaleView);
         imgScaleView.setOnViewTapListener(new _ScaleViewAttacher.OnViewTapListener() {
             @Override
             public void onViewTap(View view, float x, float y) {
@@ -66,22 +66,22 @@ public class PhotoShowAndSelectorAdapter extends PagerAdapter {
         });
         if (filePath.contains("http")) {
             loadingAnimView.setVisibility(View.VISIBLE);
-//            Glide.with(container.getContext()).using(new ProgressModelLoader(new ProgressListener() {
-////                @Override
-////                public void progress(long bytesRead, long maxLength, boolean done) {
-////                    float progress = (float) bytesRead / maxLength;
-////                    loadingAnimView.setProgress((int) (progress * 360));
-////                    loadingAnimView.setText(((int) (progress * 100)) + "");
-////                }
-////            })).load(filePath).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>() {
-////                @Override
-////                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-////                    imgScaleView.setVisibility(View.VISIBLE);
-////                    imgScaleView.setImageDrawable(resource);
-////                    loadingAnimView.setVisibility(View.GONE);
-////                }
-////            });
-            ImageManager.loadImage(container.getContext(),filePath,imgScaleView);
+            Glide.with(container.getContext()).using(new ProgressModelLoader(new ProgressListener() {
+                @Override
+                public void progress(long bytesRead, long maxLength, boolean done) {
+                    float progress = (float) bytesRead / maxLength;
+                    loadingAnimView.setProgress((int) (progress * 360));
+                    loadingAnimView.setText(((int) (progress * 100)) + "");
+                }
+            })).load(filePath).diskCacheStrategy(DiskCacheStrategy.NONE).into(new SimpleTarget<GlideDrawable>() {
+                @Override
+                public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                    imgScaleView.setVisibility(View.VISIBLE);
+                    imgScaleView.setImageDrawable(resource);
+                    loadingAnimView.setVisibility(View.GONE);
+                }
+            });
+//            ImageManager.loadImage(container.getContext(),filePath,imgScaleView);
         } else {
             loadingAnimView.setVisibility(View.GONE);
             imgScaleView.setVisibility(View.VISIBLE);

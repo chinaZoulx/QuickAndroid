@@ -10,6 +10,7 @@
     android:paddingRight="11dp"
     android:paddingStart="10dp"
     android:paddingTop="10dp"
+    android:background="@drawable/shape_rec_r5_bg_black90"
     tools:ignore="RtlHardcoded">
 
     <ImageView

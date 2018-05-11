@@ -167,20 +167,18 @@ abstract class ThemeActivity : AutoLayoutActivity() {
      */
     @JvmOverloads
     protected fun setBackValid(backIcon: Int = -1, isValid: Boolean = true, onClickListener: View.OnClickListener? = null) {
+        var tempListener = onClickListener
+        if (appBaseToolbar == null) return
         if (isValid) {
-            var onClickListener = onClickListener
-            checkNotNullToolbar()
-            if (backIcon == -1) {
+            if (backIcon == -1)
                 appBaseToolbar!!.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
-            } else {
+            else
                 appBaseToolbar!!.setNavigationIcon(backIcon)
-            }
 
-            if (onClickListener == null) {
-                onClickListener = View.OnClickListener { onBackPressed() }
-            }
-            appBaseToolbar!!.setNavigationOnClickListener(onClickListener)
-        }
+            if (tempListener == null)
+                tempListener = View.OnClickListener { onBackPressed() }
+            appBaseToolbar!!.setNavigationOnClickListener(tempListener)
+        } else appBaseToolbar?.navigationIcon = null
     }
 
     private fun checkNotNullToolbar() {

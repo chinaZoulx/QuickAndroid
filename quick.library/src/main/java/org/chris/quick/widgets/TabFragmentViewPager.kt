@@ -15,7 +15,7 @@ import org.chris.quick.b.BaseFragmentPagerAdapter
  */
 
 class TabFragmentViewPager : ViewPager {
-    private var tabAdapter: Adapter? = null
+    var aAdapter: Adapter? = null
 
     init {
         offscreenPageLimit = 5
@@ -25,11 +25,11 @@ class TabFragmentViewPager : ViewPager {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    fun setupData(fm: FragmentManager, vararg fragments: Fragment): Unit = if (tabAdapter == null) {
-        tabAdapter = Adapter(fm, *fragments)
-        adapter = tabAdapter
+    fun setupData(fm: FragmentManager, vararg fragments: Fragment): Unit = if (aAdapter == null) {
+        aAdapter = Adapter(fm, *fragments)
+        adapter = aAdapter
     } else {
-        tabAdapter!!.setDataList(fragments.toMutableList())
+        aAdapter!!.setDataList(fragments.toMutableList())
     }
 
     fun setupBottomNavigationView(bottomNavigationView: BottomNavigationView) {
@@ -65,7 +65,7 @@ class TabFragmentViewPager : ViewPager {
     }
 
     fun destroy(fm: FragmentManager) {
-        tabAdapter?.getDataList()?.forEach { fm.beginTransaction().remove(it).commitAllowingStateLoss() }
+        aAdapter?.getDataList()?.forEach { fm.beginTransaction().remove(it).commitAllowingStateLoss() }
     }
 
     class Adapter(fm: FragmentManager, vararg fragments: Fragment) : BaseFragmentPagerAdapter(fm) {

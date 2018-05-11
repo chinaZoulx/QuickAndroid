@@ -1,5 +1,6 @@
 package com.example.chriszou.quicksample.ui.main
 
+import android.content.Intent
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.index.IndexFragment
 import com.example.chriszou.quicksample.ui.mycenter.DiscoverFragment
@@ -8,10 +9,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.chris.quick.b.BaseActivity
 
 class MainActivity : BaseActivity() {
-    override fun hasTitle(): Boolean = true
+    override fun hasTitle(): Boolean = false
     override fun onResultLayoutResId(): Int = R.layout.activity_main
     override fun onInit() {
-
+        setBackInvalid()
     }
 
     override fun onInitLayout() {
@@ -28,5 +29,12 @@ class MainActivity : BaseActivity() {
 
     private fun onRefresh() {
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        (0 until tabFragmentViewPager.aAdapter?.getDataList()!!.size).map {
+            tabFragmentViewPager.aAdapter?.getDataList()!![it]
+        }.forEach { it.onActivityResult(requestCode, resultCode, data) }
     }
 }

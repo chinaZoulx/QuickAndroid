@@ -84,7 +84,7 @@ class DownloadService : Service() {
         customLayout.setImageViewResource(R.id.coverIv, model.cover)
         //        customLayout.setProgressBar(R.id.progressBar, 100, 0, true);
         customLayout.setOnClickPendingIntent(R.id.downloadStatusContainer, pendingIntentCancel)
-        compat(customLayout)
+//        compat(customLayout)
 
         return NotificationCompat.Builder(this, packageName)
                 .setContentTitle(model.title)
