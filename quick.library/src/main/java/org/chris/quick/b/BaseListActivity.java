@@ -34,6 +34,7 @@ import org.chris.quick.widgets.XRecyclerViewLine;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import okhttp3.Call;
@@ -158,15 +159,18 @@ public abstract class BaseListActivity extends ThemeActivity implements XRecycle
                 tabLayout.getTabAt(i).setText(tabs[i]);
             }
         } else {
-            for (int i = 0; i < tabs.length; i++) {
-                tabLayout.addTab(tabLayout.newTab().setText(tabs[i]));
+            for (String tab : tabs) {
+                tabLayout.addTab(tabLayout.newTab().setText(tab));
             }
         }
         if (selectorPosition != 0)
-            tabLayout.getTabAt(selectorPosition).select();
+            Objects.requireNonNull(tabLayout.getTabAt(selectorPosition)).select();
         return tabLayout;
     }
 
+    public void setHeaderContainer(@LayoutRes int resId) {
+        setHeaderContainer(LayoutInflater.from(getActivity()).inflate(resId, null));
+    }
     public void setHeaderContainer(View view) {
         headerContainer.removeAllViews();
         headerContainer.addView(view);

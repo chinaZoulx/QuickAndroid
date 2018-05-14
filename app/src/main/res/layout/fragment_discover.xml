@@ -8,6 +8,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -81,12 +82,14 @@
                     android:padding="10dp"
                     android:text="AI"
                     android:textColor="@color/colorWhite" />
+
                 <TextView
                     android:id="@+id/searchKeyTv8"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
                     android:textColor="@color/colorWhite" />
+
                 <TextView
                     android:id="@+id/searchKeyTv9"
                     style="@style/BodyTextStyleAllParams"
@@ -116,6 +119,7 @@
                         android:src="@drawable/ic_fullscreen_white_24dp" />
 
                     <TextView
+                        android:id="@+id/filtrateTv"
                         style="@style/BodyTextStyle"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -135,7 +139,6 @@
 
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
-
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -150,12 +153,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <fragment
-                android:id="@+id/discoverListFragment"
-                class="com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                <fragment
+                    android:id="@+id/discoverListFragment"
+                    class="com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
         </org.chris.quick.widgets.CustomCompatSwipeRefreshLayout>
     </android.support.v4.widget.NestedScrollView>
 

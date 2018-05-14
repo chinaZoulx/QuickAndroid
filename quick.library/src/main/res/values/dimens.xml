@@ -38,7 +38,7 @@
     <dimen name="borderWidthBig">60px</dimen>
 
     <dimen name="cardViewRadius">5dp</dimen>
-    <dimen name="cardViewElevation">5dp</dimen>
+    <dimen name="cardViewElevation">10dp</dimen>
     <dimen name="cardViewContentPadding">10dp</dimen>
 
     <dimen name="withdrawDepositTitle">24px</dimen>

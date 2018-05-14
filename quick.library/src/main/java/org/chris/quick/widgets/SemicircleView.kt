@@ -95,8 +95,8 @@ class SemicircleView @JvmOverloads constructor(context: Context, attrs: Attribut
             path.quadTo(0f, 0f, 0f, radius)
         }
         path.lineTo(0f, height.toFloat() - paddingHeight)
-//        path.quadTo(width / 2.0f, height.toFloat() , width.toFloat(), height.toFloat() - paddingHeight)
-        path.quadTo(width / 2.0f, height.toFloat() + paddingHeight, width.toFloat(), height.toFloat() - paddingHeight)
+        path.quadTo(width / 2.0f, height.toFloat() , width.toFloat(), height.toFloat() - paddingHeight)
+//        path.quadTo(width / 2.0f, height.toFloat() + paddingHeight, width.toFloat(), height.toFloat() - paddingHeight)
         path.lineTo(width.toFloat(), radius)
         if (radius > 0)
             path.quadTo(width.toFloat(), 0f, width.toFloat() - radius, 0f)

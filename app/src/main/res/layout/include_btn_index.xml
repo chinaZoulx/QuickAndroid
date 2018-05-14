@@ -1,0 +1,87 @@
+<com.lzp.floatingactionbuttonplus.FloatingActionButtonPlus xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fabContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.lzp.floatingactionbuttonplus.FabBehavior"
+    app:mBackgroundColor="#00000000"
+    app:switchFabColor="@color/colorPrimary"
+    app:switchFabIcon="@drawable/ic_add_white_24dp"
+    app:position="right_bottom"
+    tools:showIn="@layout/activity_main">
+
+    <com.lzp.floatingactionbuttonplus.FabTagLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tagText="开启任务">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_launch_white_24dp"
+            app:fabSize="mini" />
+    </com.lzp.floatingactionbuttonplus.FabTagLayout>
+
+    <com.lzp.floatingactionbuttonplus.FabTagLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tagText="暂停任务">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pause_white_24dp"
+            app:fabSize="mini" />
+    </com.lzp.floatingactionbuttonplus.FabTagLayout>
+
+    <com.lzp.floatingactionbuttonplus.FabTagLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tagText="重新登陆">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_swap_horiz_white_24dp"
+            app:fabSize="mini" />
+    </com.lzp.floatingactionbuttonplus.FabTagLayout>
+
+    <com.lzp.floatingactionbuttonplus.FabTagLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tagText="重新加载">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_refresh_white_24dp"
+            app:fabSize="mini" />
+    </com.lzp.floatingactionbuttonplus.FabTagLayout>
+
+    <com.lzp.floatingactionbuttonplus.FabTagLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tagText="操作日志">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_call_to_action_white_24dp"
+            app:fabSize="mini" />
+    </com.lzp.floatingactionbuttonplus.FabTagLayout>
+
+    <com.lzp.floatingactionbuttonplus.FabTagLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tagText="消费计算">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit_white_24dp"
+            app:fabSize="mini" />
+    </com.lzp.floatingactionbuttonplus.FabTagLayout>
+</com.lzp.floatingactionbuttonplus.FloatingActionButtonPlus>

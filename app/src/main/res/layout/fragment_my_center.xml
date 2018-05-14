@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
@@ -15,7 +14,10 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -33,7 +35,6 @@
                         android:layout_height="200dp"
                         android:background="@color/colorLine"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:svEndColor="@color/colorPrimaryDark"
                         app:svIsShadow="true"
                         app:svPaddingHeight="20dp"
                         app:svStartColor="@color/colorPrimary" />
@@ -66,7 +67,7 @@
                             android:id="@+id/qrCodeIv"
                             style="@style/ImgStyleAllParams"
                             android:layout_width="?attr/actionBarSize"
-                            android:layout_height="match_parent"
+                            android:layout_height="?attr/actionBarSize"
                             android:scaleType="centerInside"
                             android:src="@drawable/ic_qr_code_white" />
 
@@ -81,7 +82,7 @@
                         <ImageView
                             style="@style/ImgStyleAllParams"
                             android:layout_width="?attr/actionBarSize"
-                            android:layout_height="match_parent"
+                            android:layout_height="?attr/actionBarSize"
                             android:scaleType="centerInside"
                             android:src="@drawable/ic_settings_white_24dp"
                             app:layout_constraintRight_toRightOf="parent" />

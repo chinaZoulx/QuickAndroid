@@ -30,7 +30,7 @@ public abstract class BaseApplication extends ExitApplication {
     /**
      * 本地存储名称
      */
-    public static final String APP_BASE_NAME = "baseChris";
+    public static final String APP_BASE_NAME = "baseChrisApp";
     /**
      * 账户名称
      */

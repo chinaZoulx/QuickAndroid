@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filtrateToolbar"
+    style="@style/AppTheme.CustomToolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:minHeight="?attr/actionBarSize">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/ImgStyleAllParams"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            android:visibility="gone" />
+
+        <org.chris.quick.widgets.EditTextClear
+            android:id="@+id/filtrateEtc"
+            android:gravity="center"
+            android:textSize="@dimen/textBodySize"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_cir_white_border_prim"
+            android:hint="请输入搜索内容"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/colorGray" />
+
+        <TextView
+            android:id="@+id/filtrateTv"
+            style="@style/BodyTextStyleAllParams"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:text="搜索"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>

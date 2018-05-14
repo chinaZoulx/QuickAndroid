@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.chris.quick.widgets.AutoCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/cardViewElevation"
+    app:cardCornerRadius="@dimen/cardViewRadius"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/coverIv"
+        style="@style/ImgStyle"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop" />
+</org.chris.quick.widgets.AutoCardView>

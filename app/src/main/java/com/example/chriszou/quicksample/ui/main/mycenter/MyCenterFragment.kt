@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_my_center.*
 import org.chris.quick.b.BaseFragment
 import org.chris.quick.function.SelectorImgActivity
 import org.chris.quick.m.glide.GlideCircleTransform
+import org.chris.quick.tools.common.CommonUtils
 import java.io.File
 
 class MyCenterFragment : BaseFragment() {
@@ -36,6 +37,7 @@ class MyCenterFragment : BaseFragment() {
             customCompatSwipeRefreshLayout.isRefreshing = false
         }
         qrCodeView = LayoutInflater.from(activity).inflate(R.layout.include_qr_code, null)
+        appBarLayout.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
     }
 
     override fun onBindListener() {
@@ -59,9 +61,7 @@ class MyCenterFragment : BaseFragment() {
         })
         qrCodeIv.setOnClickListener {
             qrCodeView.findViewById<ImageView>(R.id.qrCodeIv).setImageBitmap(CodeCreator.createQRCode("https://pro.modao.cc/app/eZPidskwaymptDBTA349hYBAA5kmXNl#screen=s827EF27EBF1522825072999"))
-            isOkDialog.alertIsOkDialog("二维码", qrCodeView, "取消", "确定", { view, isRight ->
-
-            })
+            isOkDialog.alertIsOkDialog("二维码", qrCodeView, "取消", "确定", null)
         }
     }
 

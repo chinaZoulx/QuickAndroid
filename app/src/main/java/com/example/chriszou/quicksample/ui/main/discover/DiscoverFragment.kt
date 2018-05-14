@@ -1,24 +1,23 @@
 package com.example.chriszou.quicksample.ui.mycenter
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import com.chris.work.zxing.android.CaptureActivity
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment
+import com.example.chriszou.quicksample.ui.search.InputFiltrateListActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
 import org.chris.quick.b.BaseFragment
 import org.chris.quick.b.activities.WebActivity
+import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.ResourceUtils
 
 class DiscoverFragment : BaseFragment() {
 
     companion object {
         const val REQUEST_SCAN_CODE = 0x354
+        const val REQUEST_FILTRATE_CODE = 0x355
     }
 
     lateinit var discoverListFragment: DiscoverListFragment
@@ -31,7 +30,7 @@ class DiscoverFragment : BaseFragment() {
 
     override fun onInitLayout() {
         setTitle("发现")
-
+        appBarLayout.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
     }
 
     override fun onBindListener() {
@@ -55,6 +54,10 @@ class DiscoverFragment : BaseFragment() {
                     else -> WebActivity.startAction(activity, "搜索", "http://www.taobao.com")
                 }
             }
+        }
+
+        filtrateTv.setOnClickListener {
+            InputFiltrateListActivity.startAction(activity, REQUEST_FILTRATE_CODE, "搜索")
         }
     }
 

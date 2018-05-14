@@ -118,7 +118,7 @@
     <dimen name="borderWidthLittle">20px</dimen>
     <dimen name="btnHeight">40dp</dimen>
     <dimen name="cardViewContentPadding">10dp</dimen>
-    <dimen name="cardViewElevation">5dp</dimen>
+    <dimen name="cardViewElevation">10dp</dimen>
     <dimen name="cardViewRadius">5dp</dimen>
     <dimen name="dotSize">2dp</dimen>
     <dimen name="dotSizePadding">2dp</dimen>
@@ -191,7 +191,7 @@
     <string name="ucrop_label_edit_photo">裁剪</string>
     <string name="ucrop_label_original">原始比例</string>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
