@@ -147,12 +147,12 @@ public abstract class BaseApplication extends ExitApplication {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         // 初始化Bugly
-        CrashReport.initCrashReport(context, getBugglyAppId(), Log.isDebug(), strategy);
+        CrashReport.initCrashReport(context, onResultBugglyAppId(), Log.isDebug(), strategy);
         //如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下
 //        CrashReport.initCrashReport(context, strategy);
     }
 
-    public String getBugglyAppId() {
+    public String onResultBugglyAppId() {
         return "f886605058";
     }
 

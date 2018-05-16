@@ -9,8 +9,8 @@ import org.chris.quick.b.BaseFragment
 class IndexFragment : BaseFragment() {
 
     override fun onResultLayoutResId(): Int = R.layout.fragment_index
-    override fun hasTitle(): Boolean = true
-    override fun onResultToolbar(): Toolbar? = getView(R.id.toolbar)
+    override val isShowTitle: Boolean get() = true
+//    override fun onResultToolbar(): Toolbar? = getView(R.id.toolbar)
     override fun onInit() {
         setParentMenu(R.menu.navigation, { menu ->
             when (menu?.itemId) {

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.index.detail.IndexListDetailActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:collapsedTitleGravity="left"
+            app:collapsedTitleTextAppearance="@color/colorWhite"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleGravity="center"
+            app:expandedTitleTextAppearance="@color/colorWhite"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="This is a title">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                app:layout_collapseMode="parallax">
+
+                <ImageView
+                    android:id="@+id/coverIv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_index_list_detail_cover" />
+                <ImageView
+                    android:id="@+id/userCoverIv"
+                    android:layout_width="80dp"
+                    android:src="@mipmap/ic_launcher_round"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_height="80dp" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/filtrateToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="pin"
+                app:title="Toolbar"
+                app:titleTextColor="@color/colorWhite" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBgDark"></LinearLayout>
+        <!--<org.chris.quick.widgets.CustomCompatSwipeRefreshLayout-->
+        <!--android:id="@+id/customCompatSwipeRefreshLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:clickable="false">-->
+
+        <!--<fragment-->
+        <!--android:id="@+id/indexListFragment"-->
+        <!--class="com.example.chriszou.quicksample.ui.main.index.IndexListFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+        <!--</org.chris.quick.widgets.CustomCompatSwipeRefreshLayout>-->
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/actionFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:clickable="true"
+        android:src="@drawable/ic_add_white_24dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:borderWidth="1dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="right|bottom"
+        app:pressedTranslationZ="10dp"
+        app:rippleColor="@color/colorBlack" />
+</android.support.design.widget.CoordinatorLayout>

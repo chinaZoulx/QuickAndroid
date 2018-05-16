@@ -12,16 +12,15 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:elevation="5dp"
-        android:visibility="visible"
-        android:fitsSystemWindows="true"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:theme="@style/Theme.AppCompat.DayNight"
+        android:visibility="gone"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:titleTextColor="@color/colorWhite" />
 
     <FrameLayout
         android:id="@+id/appContent"
         android:layout_width="match_parent"
-        android:background="@color/colorBg"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@color/colorBg" />
 </LinearLayout>

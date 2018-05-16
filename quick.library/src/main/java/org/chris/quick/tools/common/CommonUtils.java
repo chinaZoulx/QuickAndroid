@@ -401,4 +401,13 @@ public class CommonUtils {
             return false;
         }
     }
+
+    public static void setupFitsSystemWindows(Activity activity, View view) {
+        view.setPadding(view.getPaddingLeft(), CommonUtils.getStatusHeight(activity) + view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+    }
+
+    public static void setupFitsSystemWindowsFromToolbar(Activity activity, View view) {
+        view.getLayoutParams().height = (int) (CommonUtils.getSystemAttrValue(activity, android.R.attr.actionBarSize) + CommonUtils.getStatusHeight(activity));
+        view.setPadding(view.getPaddingLeft(), CommonUtils.getStatusHeight(activity) + view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+    }
 }

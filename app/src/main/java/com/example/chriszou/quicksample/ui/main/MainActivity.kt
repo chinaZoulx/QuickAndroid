@@ -9,7 +9,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.chris.quick.b.BaseActivity
 
 class MainActivity : BaseActivity() {
-    override fun hasTitle(): Boolean = false
+    override val isShowTitle: Boolean get() = false
+
     override fun onResultLayoutResId(): Int = R.layout.activity_main
     override fun onInit() {
         setBackInvalid()

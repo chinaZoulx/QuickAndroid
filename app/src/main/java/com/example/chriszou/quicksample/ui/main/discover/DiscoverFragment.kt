@@ -23,14 +23,16 @@ class DiscoverFragment : BaseFragment() {
     lateinit var discoverListFragment: DiscoverListFragment
 
     override fun onResultLayoutResId(): Int = R.layout.fragment_discover
-    override fun hasTitle(): Boolean = false
+    override val isShowTitle: Boolean
+        get() = super.isShowTitle
+
     override fun onInit() {
         discoverListFragment = childFragmentManager.findFragmentById(R.id.discoverListFragment) as DiscoverListFragment
     }
 
     override fun onInitLayout() {
         setTitle("发现")
-        appBarLayout.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
+        CommonUtils.setupFitsSystemWindows(activity, appBarLayout)
     }
 
     override fun onBindListener() {

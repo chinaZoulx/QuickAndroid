@@ -19,7 +19,7 @@ abstract class BaseActivity : ThemeActivity(), EasyPermissions.PermissionCallbac
     lateinit var loadingDialog: LoadingDialog
 
     override fun init() {
-        if (isUsingBaseLayout && hasTitle()) {
+        if (isUsingBaseLayout && isShowTitle) {
             setBackValid()
         }
         isOkDialog = IsOkDialog(activity)

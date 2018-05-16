@@ -15,7 +15,7 @@ class DiscoverListFragment : BaseListFragment() {
             if (activity != null)
                 PhotoShowAndSelectorActivity.startAction(activity!!, v, getAdapter<Adapter>().dataList, position)
         }
-        getAdapter<Adapter>().setOnClickListener(BaseRecyclerViewAdapter.OnClickListener { view, holder, position ->
+        getAdapter<Adapter>().setOnClickListener(BaseRecyclerViewAdapter.OnClickListener { view, holder, _ ->
             when (view.id) {
                 R.id.delBtn -> {
                     holder.getButton(R.id.delBtn).setBackgroundResource(R.drawable.shape_cir_prim)

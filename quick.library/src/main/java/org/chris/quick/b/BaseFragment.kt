@@ -23,9 +23,7 @@ abstract class BaseFragment : ThemeFragment() {
     override fun init() {
         isOkDialog = IsOkDialog(activity)
         loadingDialog = LoadingDialog(activity)
-        if (hasTitle()) {
-            setBackValid()
-        }
+        if (isShowTitle) setBackValid()
         onInit()
     }
 

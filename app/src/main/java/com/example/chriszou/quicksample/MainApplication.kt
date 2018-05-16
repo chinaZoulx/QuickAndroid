@@ -1,9 +1,11 @@
 package com.example.chriszou.quicksample
 
-import org.chris.quick.b.BaseApplication
+import org.chris.quick.b.BaseTinkerApplication
 
-class MainApplication:BaseApplication() {
+class MainApplication:BaseTinkerApplication() {
     override fun onInit() {
 
     }
+
+    override fun onResultBugglyAppId(): String ="b39b69c63c"
 }

@@ -3,15 +3,15 @@ package com.example.chriszou.quicksample.ui.main.index
 import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import com.example.chriszou.quicksample.R
+import com.example.chriszou.quicksample.ui.main.index.detail.IndexListDetailActivity
 import org.chris.quick.b.BaseListFragment
 import org.chris.quick.b.BaseRecyclerViewAdapter
-import org.chris.quick.function.selectorimg.photoandselectorshow.PhotoShowAndSelectorActivity
 
 class IndexListFragment : BaseListFragment() {
     override fun onInit() {
         getAdapter<Adapter>().setOnItemClickListener { v, position ->
             if (activity != null)
-                PhotoShowAndSelectorActivity.startAction(activity!!, v, getAdapter<Adapter>().dataList, position)
+                IndexListDetailActivity.startAction(activity!!, "详细", getAdapter<Adapter>().getItem(position))
         }
     }
 

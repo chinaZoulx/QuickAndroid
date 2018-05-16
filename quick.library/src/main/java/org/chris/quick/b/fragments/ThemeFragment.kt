@@ -50,6 +50,7 @@ abstract class ThemeFragment : Fragment() {
      * @return
      */
     open val isUsingBaseLayout get() = true
+    open val isShowTitle get() = false
     open val isFitsSystemWindows get() = true
 
     open fun onResultToolbar(): Toolbar? {
@@ -79,12 +80,13 @@ abstract class ThemeFragment : Fragment() {
     private fun setupTitle() {
         appBaseToolbar = onResultToolbar()
         if (appBaseToolbar != null) {
-            appBaseToolbar?.visibility = if (hasTitle()) View.VISIBLE else View.GONE
-            appBaseToolbar?.fitsSystemWindows = hasTitle()
+            appBaseToolbar?.visibility = if (isShowTitle) View.VISIBLE else View.GONE
+            appBaseToolbar?.fitsSystemWindows = isShowTitle
 
             if (isFitsSystemWindows) {
-                appBaseToolbar?.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
-                appBaseToolbar?.layoutParams?.height = (CommonUtils.getSystemAttrValue(activity, R.attr.actionBarSize) + CommonUtils.getStatusHeight(activity)).toInt()
+//                appBaseToolbar?.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
+//                appBaseToolbar?.layoutParams?.height = (CommonUtils.getSystemAttrValue(activity, R.attr.actionBarSize) + CommonUtils.getStatusHeight(activity)).toInt()
+                CommonUtils.setupFitsSystemWindowsFromToolbar(activity,appBaseToolbar)
             }
 
             if (!isDefaultToolbar && isUsingBaseLayout) {//不是默认的布局并且引用父布局
@@ -252,15 +254,6 @@ abstract class ThemeFragment : Fragment() {
      */
     @LayoutRes
     protected abstract fun onResultLayoutResId(): Int
-
-    /**
-     * 是否有title
-     *
-     * @return
-     */
-    protected open fun hasTitle(): Boolean {
-        return false
-    }
 
     /**
      * 初始化操作

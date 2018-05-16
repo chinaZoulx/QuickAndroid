@@ -27,7 +27,7 @@ class MyCenterFragment : BaseFragment() {
     lateinit var qrCodeView: View
 
     override fun onResultLayoutResId(): Int = R.layout.fragment_my_center
-    override fun hasTitle(): Boolean = false
+
     override fun onInit() = Unit
 
     override fun onInitLayout() {

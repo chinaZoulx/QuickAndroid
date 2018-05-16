@@ -57,6 +57,10 @@ abstract class ThemeActivity : AutoLayoutActivity() {
      * @return
      */
     open val isUsingBaseLayout get() = true
+    /**
+     * 是否显示标题
+     */
+    open val isShowTitle get() = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,14 +89,14 @@ abstract class ThemeActivity : AutoLayoutActivity() {
     private fun setupTitle() {
         appBaseToolbar = onResultToolbar()
         if (appBaseToolbar != null) {
-            appBaseToolbar?.visibility = if (hasTitle()) View.VISIBLE else View.GONE
+            appBaseToolbar?.visibility = if (isShowTitle) View.VISIBLE else View.GONE
 
-            if (hasTitle()) {//有标题
+            if (isShowTitle) {//有标题
                 setSupportActionBar(appBaseToolbar)
                 if (intent.hasExtra(TITLE)) {
                     title = intent.getStringExtra(TITLE)
                 }
-                appBaseToolbar?.fitsSystemWindows = hasTitle()
+                appBaseToolbar?.fitsSystemWindows = isShowTitle
                 val actionBar = supportActionBar
                 actionBar?.setDisplayShowHomeEnabled(true)
             }
@@ -123,10 +127,6 @@ abstract class ThemeActivity : AutoLayoutActivity() {
         if (isUsingBaseLayout && appBaseToolbar == null)
             appBaseToolbar = findViewById<View>(R.id.appToolbar) as Toolbar
         return appBaseToolbar
-    }
-
-    protected open fun hasTitle(): Boolean {
-        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

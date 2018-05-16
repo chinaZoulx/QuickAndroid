@@ -127,7 +127,7 @@ public class BaseTinkerApplication extends BaseApplication {
 
         long start = System.currentTimeMillis();
         // 这里实现SDK初始化，appId替换成你的在Bugly平台申请的appId,调试时将第三个参数设置为true
-        Bugly.init(this, getBugglyAppId(), true);
+        Bugly.init(this, onResultBugglyAppId(), true);
         long end = System.currentTimeMillis();
         Log.e("init time--->", end - start + "ms");
     }
