@@ -6,5 +6,10 @@
     <external-path
         name="external_storage_root"
         path="." />
-
+    <external-files-path
+        name="camera_has_sdcard"
+        path="file/" />
+    <files-path
+        name="camera_no_sdcard"
+        path="." />
 </paths>

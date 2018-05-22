@@ -1,23 +1,23 @@
 -- Merging decision tree log ---
 manifest
-ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
 	package
 		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:2:5-38
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-19:12
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:11-69

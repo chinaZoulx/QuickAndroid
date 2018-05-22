@@ -34,6 +34,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -139,7 +140,7 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         intent.putExtra(Intents.Scan.HEIGHT, scanHeight);
         intent.putExtra(Intents.Scan.CAMERA_ID, cameraId);
         intent.putExtra(Intents.Scan.PROMPT_MESSAGE, hint);
-        intent.putExtra(Intents.Scan.RESULT_DISPLAY_DURATION_MS, 0);
+        intent.putExtra(Intents.Scan.RESULT_DISPLAY_DURATION_MS, 0L);
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -448,7 +449,12 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
                 decodeOrStoreSavedBitmap(null, historyItem.getResult());
             }
         } else if (requestCode == SystemActionManager.REQUEST_CODE_PHOTO_ALBUM && resultCode == RESULT_OK) {//相册
-            startImageCrop(intent.getData());
+            Cursor cursor = getContentResolver().query(intent.getData(), new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+            cursor.moveToFirst();
+            String content = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            cursor.close();
+            parseQrCodeImg(BitmapFactory.decodeFile(content));
+//            startImageCrop(coverUri(content));
         } else if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK) {
             parseQrCodeImg((Bitmap) intent.getParcelableExtra("data"));
         }
@@ -472,14 +478,22 @@ public final class CaptureActivity extends AppCompatActivity implements SurfaceH
         finish();
     }
 
+    private Uri coverUri(String filePath) {
+        File tempFile = new File(filePath);
+        return FileProvider.getUriForFile(this, getApplicationInfo().processName + ".install.fileProvider", tempFile);
+    }
+
     /**
      * 通过Uri传递图像信息以供裁剪
+     * mix2s android 8.0 有问题
      *
      * @param uri
      */
     private void startImageCrop(Uri uri) {
         //构建隐式Intent来启动裁剪程序
         Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         //设置数据uri和类型为图片类型
         intent.setDataAndType(uri, "image/*");
         //显示View为可裁剪的
