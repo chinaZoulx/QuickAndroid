@@ -2,7 +2,7 @@
  * yidingliu.com Inc. * Copyright (c) 2016 All Rights Reserved.
  */
 
-package org.chris.quick.m;
+package org.chris.zxing.library;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 
-import org.chris.quick.tools.common.DevicesUtils;
 
 import java.io.File;
 
@@ -63,7 +62,7 @@ public class SystemActionManager {
 
     public static Intent actionCamera(Activity activity,String savePath) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (DevicesUtils.isSDcardOK()) {
+//        if (DevicesUtils.isSDcardOK()) {
             //设定拍照存放到自己指定的目录,可以先建好
             File file = new File(savePath);
             Uri pictureUri;
@@ -78,7 +77,7 @@ public class SystemActionManager {
             if (intent != null) {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, pictureUri);
             }
-        }
+//        }
         return intent;
     }
 

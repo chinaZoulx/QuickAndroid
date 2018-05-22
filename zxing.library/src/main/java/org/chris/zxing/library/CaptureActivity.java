@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -32,6 +33,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -64,6 +67,7 @@ import org.chris.zxing.library.result.ResultHandlerFactory;
 import org.chris.zxing.library.result.supplement.SupplementalInfoRetriever;
 import org.chris.zxing.library.share.ShareActivity;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Collection;
@@ -78,11 +82,12 @@ import java.util.Map;
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-public final class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public final class CaptureActivity extends AppCompatActivity implements SurfaceHolder.Callback {
+    public static final int REQUEST_CODE_CROP = 0x64;
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
-    private static final long DEFAULT_INTENT_RESULT_DURATION_MS = 0L;
+    private static final long DEFAULT_INTENT_RESULT_DURATION_MS = 500L;
     private static final long BULK_MODE_SCAN_DELAY_MS = 1000L;
 
     private static final String[] ZXING_URLS = {"http://zxing.appspot.com/scan", "zxing://scan/"};
@@ -134,6 +139,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         intent.putExtra(Intents.Scan.HEIGHT, scanHeight);
         intent.putExtra(Intents.Scan.CAMERA_ID, cameraId);
         intent.putExtra(Intents.Scan.PROMPT_MESSAGE, hint);
+        intent.putExtra(Intents.Scan.RESULT_DISPLAY_DURATION_MS, 0);
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -184,6 +190,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        findViewById(R.id.selectorPhotoAlbumBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemActionManager.startActionAlbum(CaptureActivity.this);
             }
         });
     }
@@ -435,7 +447,52 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                 HistoryItem historyItem = historyManager.buildHistoryItem(itemNumber);
                 decodeOrStoreSavedBitmap(null, historyItem.getResult());
             }
+        } else if (requestCode == SystemActionManager.REQUEST_CODE_PHOTO_ALBUM && resultCode == RESULT_OK) {//相册
+            startImageCrop(intent.getData());
+        } else if (requestCode == REQUEST_CODE_CROP && resultCode == RESULT_OK) {
+            parseQrCodeImg((Bitmap) intent.getParcelableExtra("data"));
         }
+    }
+
+    /**
+     * 解析图片二维码
+     *
+     * @param qrCode
+     */
+    private void parseQrCodeImg(Bitmap qrCode) {
+        String qrCodeImgContent = QRCodeParse.parseQRCode(qrCode);
+        if (qrCodeImgContent.isEmpty()) {
+            Toast.makeText(this, "未找到二维码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(getIntent().getAction());
+        intent.addFlags(Intents.FLAG_NEW_DOC);
+        intent.putExtra(Intents.Scan.RESULT, qrCodeImgContent);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+    /**
+     * 通过Uri传递图像信息以供裁剪
+     *
+     * @param uri
+     */
+    private void startImageCrop(Uri uri) {
+        //构建隐式Intent来启动裁剪程序
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        //设置数据uri和类型为图片类型
+        intent.setDataAndType(uri, "image/*");
+        //显示View为可裁剪的
+        intent.putExtra("crop", true);
+        //裁剪的宽高的比例为1:1
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        //输出图片的宽高均为150
+        intent.putExtra("outputX", 150);
+        intent.putExtra("outputY", 150);
+        //裁剪之后的数据是通过Intent返回
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, REQUEST_CODE_CROP);
     }
 
     private void decodeOrStoreSavedBitmap(Bitmap bitmap, Result result) {

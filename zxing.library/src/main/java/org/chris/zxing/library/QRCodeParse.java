@@ -28,14 +28,14 @@ import java.util.Map;
 
 public class QRCodeParse {
     public static Bitmap createQRCode(String contentStr) throws WriterException {
-        return createQRCode(contentStr,null);
+        return createQRCode(contentStr, null);
     }
 
     /**
      * 生成QRCode（二维码）
      *
      * @param contentStr
-     * @param logo logo图片
+     * @param logo       logo图片
      * @return
      * @throws WriterException
      */
@@ -75,7 +75,7 @@ public class QRCodeParse {
 
         if (srcWidth == 0 || srcHeight == 0 || logoWidth == 0 || logoHeight == 0) return qrCode;
 
-        logo = cutToSquareBitmap(logo, Math.min(logoWidth,logoHeight));//裁剪
+        logo = cutToSquareBitmap(logo, Math.min(logoWidth, logoHeight));//裁剪
         logoWidth = logo.getWidth();
         logoHeight = logo.getHeight();
 
@@ -119,9 +119,6 @@ public class QRCodeParse {
      *
      * @param qrCodeImg
      * @return
-     * @throws FormatException
-     * @throws ChecksumException
-     * @throws NotFoundException
      */
     public static String parseQRCode(@NonNull Bitmap qrCodeImg) {
         Map<DecodeHintType, Object> hints = new HashMap<>();
@@ -135,14 +132,6 @@ public class QRCodeParse {
         } catch (Exception ex) {
             return "";
         }
-    }
-
-    public static Result parseBinaryBitmap(BinaryBitmap binaryBitmap) throws FormatException, ChecksumException, NotFoundException {
-        Map<DecodeHintType, Object> hints = new HashMap<>();
-        hints.put(DecodeHintType.CHARACTER_SET, "utf-8");
-        hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
-        hints.put(DecodeHintType.POSSIBLE_FORMATS, BarcodeFormat.QR_CODE);
-        return new QRCodeReader().decode(binaryBitmap, hints);
     }
 
     private static BinaryBitmap Bitmap2BinaryBitmap(Bitmap bitmap) {

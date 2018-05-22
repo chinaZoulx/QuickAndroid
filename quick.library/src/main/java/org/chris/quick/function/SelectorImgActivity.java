@@ -3,7 +3,6 @@ package org.chris.quick.function;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -11,7 +10,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -163,12 +161,14 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
         mSelectTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isCrop && alreadySelectorPaths.size() > 0) {
-                    Uri uri = Uri.fromFile(new File(alreadySelectorPaths.get(0)));
-                    startCropActivity(uri);
-                } else {
-                    setResult(alreadySelectorPaths);
-                }
+                if (alreadySelectorPaths.size() > 0)
+                    if (isCrop) {
+                        Uri uri = Uri.fromFile(new File(alreadySelectorPaths.get(0)));
+                        startCropActivity(uri);
+                    } else {
+                        setResult(alreadySelectorPaths);
+                    }
+                else showToast("请至少选择一张图片");
             }
         });
 
@@ -184,6 +184,7 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
             @Override
             public void onClick(View v) {
                 sendBroadcast(new Intent(PhotoAlbumActivity.EXIT));
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
@@ -440,7 +441,7 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case SystemActionManager.CAMERA_CODE:
+                case SystemActionManager.REQUEST_CODE_CAMERA:
                     if (new File(savePath).exists()) {
                         if (isCrop) {
                             Uri uri = Uri.fromFile(new File(savePath));
