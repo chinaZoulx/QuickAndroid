@@ -135,7 +135,7 @@
                         style="@style/ImgStyleAllParams"
                         android:layout_width="?attr/actionBarSize"
                         android:layout_height="?attr/actionBarSize"
-                        android:src="@drawable/ic_fullscreen_white_24dp" />
+                        android:src="@drawable/ic_photo_size_select_actual_black_24dp" />
 
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>

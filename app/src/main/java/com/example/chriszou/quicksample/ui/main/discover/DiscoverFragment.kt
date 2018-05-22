@@ -1,23 +1,28 @@
 package com.example.chriszou.quicksample.ui.mycenter
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Handler
 import android.widget.TextView
-import com.chris.work.zxing.android.CaptureActivity
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment
 import com.example.chriszou.quicksample.ui.search.InputFiltrateListActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
 import org.chris.quick.b.BaseFragment
 import org.chris.quick.b.activities.WebActivity
+import org.chris.quick.function.SelectorImgActivity
 import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.ResourceUtils
+import org.chris.zxing.library.CaptureActivity
+import org.chris.zxing.library.Intents
+import org.chris.zxing.library.QRCodeParse
 
 class DiscoverFragment : BaseFragment() {
 
     companion object {
-        const val REQUEST_SCAN_CODE = 0x354
-        const val REQUEST_FILTRATE_CODE = 0x355
+        const val REQUEST_CODE_SCAN = 0x354
+        const val REQUEST_CODE_FILTRATE = 0x355
+        const val REQUEST_CODE_SELECTOR_IMG = 0x356
     }
 
     lateinit var discoverListFragment: DiscoverListFragment
@@ -46,7 +51,10 @@ class DiscoverFragment : BaseFragment() {
         }
 
         scanIv.setOnClickListener {
-            CaptureActivity.startAction(activity, REQUEST_SCAN_CODE, "扫描", "请将二维码/条形码，置于框内")
+            CaptureActivity.startActionScan(activity, REQUEST_CODE_SCAN, "请将二维码/条形码，置于框内")
+        }
+        filtrateIv.setOnClickListener {
+            SelectorImgActivity.startAction(activity, REQUEST_CODE_SELECTOR_IMG, "选择二维码图片", true)
         }
 
         for (index in 0..9) {
@@ -59,7 +67,7 @@ class DiscoverFragment : BaseFragment() {
         }
 
         filtrateTv.setOnClickListener {
-            InputFiltrateListActivity.startAction(activity, REQUEST_FILTRATE_CODE, "搜索")
+            InputFiltrateListActivity.startAction(activity, REQUEST_CODE_FILTRATE, "搜索")
         }
     }
 
@@ -103,15 +111,16 @@ class DiscoverFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_SCAN_CODE && resultCode == CaptureActivity.RESULT_CODE) {
-            if (data!!.hasExtra(CaptureActivity.CONTENT))
-                isOkDialog.alertIsOkDialog("二维码包含内容", data.getStringExtra(CaptureActivity.CONTENT))
-//            if (data.hasExtra(CaptureActivity.BITMAP)) {
-//                qrCodeView.findViewById<ImageView>(R.id.qrCodeIv).setImageBitmap(data.getParcelableExtra(CaptureActivity.BITMAP))
-//                isOkDialog.alertIsOkDialog("二维码", qrCodeView, "取消", "确定", { view, isRight ->
-//
-//                })
-//            }
+        when (requestCode) {
+            REQUEST_CODE_SCAN -> {
+                if (resultCode == CaptureActivity.RESULT_OK)
+                    isOkDialog.alertIsOkDialog("二维码包含内容", data?.getStringExtra(Intents.Scan.RESULT))
+            }
+            REQUEST_CODE_SELECTOR_IMG -> {
+                if (resultCode == SelectorImgActivity.RESULT_CODE) {
+                    showToast(QRCodeParse.parseQRCode(BitmapFactory.decodeFile(data!!.getStringArrayListExtra(SelectorImgActivity.ALREADY_PATHS)[0])))
+                }
+            }
         }
     }
 }

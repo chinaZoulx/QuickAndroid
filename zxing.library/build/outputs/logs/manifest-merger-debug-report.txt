@@ -1,23 +1,23 @@
 -- Merging decision tree log ---
 manifest
-ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
-INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
+INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
 	package
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:2:5-35
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:2:5-38
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-13:12
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:1-18:12
 		INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:1:11-69
@@ -25,20 +25,40 @@ uses-permission#android.permission.CAMERA
 ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:4:5-65
 	android:name
 		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:4:22-62
+uses-feature#android.hardware.camera
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:6:5-60
+	android:name
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:6:19-57
+uses-feature#android.hardware.camera.autofocus
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:7:5-70
+	android:name
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:7:19-67
+uses-permission#android.permission.INTERNET
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:9:22-64
+uses-permission#android.permission.VIBRATE
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:10:5-66
+	android:name
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:10:22-63
+uses-permission#android.permission.FLASHLIGHT
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:11:5-69
+	android:name
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:11:22-66
+uses-permission#android.permission.READ_CONTACTS
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:12:5-72
+	android:name
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:12:22-69
 application
-ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:6:5-11:19
-	android:supportsRtl
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:8:9-35
-	android:allowBackup
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:7:9-35
-activity#com.chris.work.zxing.android.CaptureActivity
-ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:9:9-61
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:13:5-17:19
+activity#org.chris.zxing.library.CaptureActivity
+ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:14:9-16:72
+	android:screenOrientation
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:15:13-49
+	android:windowSoftInputMode
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:16:13-70
 	android:name
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:9:19-58
-activity#com.chris.work.zxing.android.PreferencesActivity
-ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:10:9-65
-	android:name
-		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:10:19-62
+		ADDED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml:14:19-50
 uses-sdk
 INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from H:\StudioProject\QuickSample\zxing.library\src\main\AndroidManifest.xml

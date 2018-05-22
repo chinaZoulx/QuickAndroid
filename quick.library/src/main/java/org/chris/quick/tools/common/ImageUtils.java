@@ -60,8 +60,7 @@ public class ImageUtils {
         BitmapFactory.decodeFile(filePath, options);
 
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth,
-                reqHeight);
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
@@ -78,8 +77,7 @@ public class ImageUtils {
      * @source http://www.android-doc.com/training/displaying-bitmaps/load-bitmap
      * .html #read-bitmap
      */
-    public static int calculateInSampleSize(BitmapFactory.Options options,
-                                            int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -98,50 +96,44 @@ public class ImageUtils {
 
     /**
      * 显示图片
+     *
      * @param img
      * @param url
      */
-    public static void displayImg ( Context context,ImageView img, String url ){
-        ImageManager.loadCircleImage(context,url,img);
+    public static void displayImg(Context context, ImageView img, String url) {
+        ImageManager.loadCircleImage(context, url, img);
     }
 
-    /**判断该文件是否是一个图片。*/
+    /**
+     * 判断该文件是否是一个图片。
+     */
     public static boolean isImage(String fileName) {
-        fileName=fileName.toLowerCase();
-        return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")||fileName.endsWith(".gif");
+        fileName = fileName.toLowerCase();
+        return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".gif");
     }
 
-    public static StateListDrawable getSelector ( Context context,
-                                                  int idSelected, int idUnselect ) {
-        return getSelector(context, idUnselect, idSelected, idSelected,
-                           idUnselect);
+    public static StateListDrawable getSelector(Context context, int idSelected, int idUnselect) {
+        return getSelector(context, idUnselect, idSelected, idSelected, idUnselect);
     }
 
-    private static StateListDrawable getSelector(Context context, int idNormal,
-                                                 int idPressed, int idFocused, int idUnable) {
+    private static StateListDrawable getSelector(Context context, int idNormal, int idPressed, int idFocused, int idUnable) {
         StateListDrawable bg = new StateListDrawable();
-        Drawable normal = idNormal == -1 ? null : context.getResources ()
-                                                         .getDrawable(idNormal);
-        Drawable pressed = idPressed == -1 ? null : context.getResources()
-                                                           .getDrawable(idPressed);
-        Drawable focused = idFocused == -1 ? null : context.getResources()
-                                                           .getDrawable(idFocused);
-        Drawable unable = idUnable == -1 ? null : context.getResources()
-                                                         .getDrawable(idUnable);
+        Drawable normal = idNormal == -1 ? null : context.getResources().getDrawable(idNormal);
+        Drawable pressed = idPressed == -1 ? null : context.getResources().getDrawable(idPressed);
+        Drawable focused = idFocused == -1 ? null : context.getResources().getDrawable(idFocused);
+        Drawable unable = idUnable == -1 ? null : context.getResources().getDrawable(idUnable);
         // View.PRESSED_ENABLED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_pressed,
-                                android.R.attr.state_enabled }, pressed);
+        bg.addState(new int[]{android.R.attr.state_pressed, android.R.attr.state_enabled}, pressed);
         // View.ENABLED_FOCUSED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_enabled,
-                                android.R.attr.state_focused }, focused);
+        bg.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_focused}, focused);
         // View.ENABLED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_enabled }, normal);
+        bg.addState(new int[]{android.R.attr.state_enabled}, normal);
         // View.FOCUSED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_focused }, focused);
+        bg.addState(new int[]{android.R.attr.state_focused}, focused);
         // View.WINDOW_FOCUSED_STATE_SET
-        bg.addState(new int[] { android.R.attr.state_window_focused }, unable);
+        bg.addState(new int[]{android.R.attr.state_window_focused}, unable);
         // View.EMPTY_STATE_SET
-        bg.addState(new int[] {}, normal);
+        bg.addState(new int[]{}, normal);
         return bg;
     }
 }

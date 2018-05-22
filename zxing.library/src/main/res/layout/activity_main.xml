@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="org.chris.zxing.library.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/qrCodeBtn"
+        android:layout_width="match_parent"
+        android:text="扫描二维码"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/helpBtn"
+        android:layout_width="match_parent"
+        android:text="关于"
+        app:layout_constraintTop_toBottomOf="@+id/qrCodeBtn"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/preferencesBtn"
+        android:layout_width="match_parent"
+        android:text="PreferencesActivity"
+        app:layout_constraintTop_toBottomOf="@+id/helpBtn"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/ShareActivityBtn"
+        android:layout_width="match_parent"
+        android:text="ShareActivity"
+        app:layout_constraintTop_toBottomOf="@+id/preferencesBtn"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/SearchBookContentsActivityBtn"
+        android:layout_width="match_parent"
+        android:text="SearchBookContentsActivity"
+        app:layout_constraintTop_toBottomOf="@+id/ShareActivityBtn"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/EncodeActivityBtn"
+        android:layout_width="match_parent"
+        android:text="EncodeActivity"
+        app:layout_constraintTop_toBottomOf="@+id/SearchBookContentsActivityBtn"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/HistoryActivityBtn"
+        android:layout_width="match_parent"
+        android:text="HistoryActivity"
+        app:layout_constraintTop_toBottomOf="@+id/EncodeActivityBtn"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/AppPickerActivityBtn"
+        android:layout_width="match_parent"
+        android:text="AppPickerActivity"
+        app:layout_constraintTop_toBottomOf="@+id/HistoryActivityBtn"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/BookmarkPickerActivityBtn"
+        android:layout_width="match_parent"
+        android:text="BookmarkPickerActivity"
+        app:layout_constraintTop_toBottomOf="@+id/AppPickerActivityBtn"
+        android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>
