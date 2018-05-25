@@ -307,10 +307,10 @@ abstract class ThemeActivity : AutoLayoutActivity() {
          * @param activityClass
          * @param title
          */
-        fun startAction(activity: Activity, activityClass: Class<*>, title: String) {
+        fun startAction(activity: Activity?, activityClass: Class<*>, title: String) {
             val intent = Intent(activity, activityClass)
             intent.putExtra(TITLE, title)
-            activity.startActivity(intent)
+            activity?.startActivity(intent)
         }
     }
 }

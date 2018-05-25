@@ -30,6 +30,9 @@ object PermissionUtils {
         permissionsChinese.putString(Manifest.permission.BLUETOOTH_ADMIN, "蓝牙配对")
         permissionsChinese.putString(Manifest.permission.BLUETOOTH, "蓝牙")
         permissionsChinese.putString(Manifest.permission.MASTER_CLEAR, "软格式化")
+        permissionsChinese.putString(Manifest.permission.INSTALL_SHORTCUT, "创建桌面快捷键")
+        permissionsChinese.putString(Manifest.permission.UNINSTALL_SHORTCUT, "删除桌面快捷键")
+        permissionsChinese.putString(Manifest.permission.SYSTEM_ALERT_WINDOW, "显示悬浮窗")
     }
 
     fun getPermissionChineseName(perm: String): String = try {

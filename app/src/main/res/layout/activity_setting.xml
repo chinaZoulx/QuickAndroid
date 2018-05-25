@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.chris.quick.widgets.AutoForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:divider="@drawable/shape_app_divider_colorline"
+    app:dividerPadding="@dimen/borderWidth"
+    app:showDividers="middle"
+    tools:context=".ui.setting.SettingActivity">
+
+    <TextView
+        android:id="@+id/addShortcutTv"
+        style="@style/TitleTextStyleAllParams"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:layout_marginTop="@dimen/borderWidth"
+        android:background="?attr/selectableItemBackground"
+        android:drawableRight="@drawable/ic_keyboard_arrow_right_gray_24dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:text="添加桌面快捷键" />
+
+    <TextView
+        android:id="@+id/openFloatWindowTv"
+        style="@style/TitleTextStyleAllParams"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:background="?attr/selectableItemBackground"
+        android:drawableRight="@drawable/ic_keyboard_arrow_right_gray_24dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:text="打开悬浮窗" />
+
+    <LinearLayout
+        android:id="@+id/checkUpgradeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth">
+
+        <TextView
+            style="@style/TitleTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/itemHeight"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="检查更新" />
+
+        <TextView
+            android:id="@+id/versionTv"
+            style="@style/BodyTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
+    </LinearLayout>
+</org.chris.quick.widgets.AutoForegroundLinearLayout>

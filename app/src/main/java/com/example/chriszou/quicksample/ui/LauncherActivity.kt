@@ -3,6 +3,7 @@ package com.example.chriszou.quicksample.ui
 import android.Manifest
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.MainActivity
@@ -33,7 +34,8 @@ class LauncherActivity : BaseActivity() {
 
     @AfterPermissionGranted(REQUEST_PERMISSIONS_CODE)
     override fun start() {
-        val perms = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        val perms = if (Build.VERSION.SDK_INT >= 26) arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)//, Manifest.permission.INSTALL_SHORTCUT, Manifest.permission.UNINSTALL_SHORTCUT 发现请求这俩权限没卵用，设置开启之后这俩货还是返回未通过
+        else arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *perms)) launcher() else EasyPermissions.requestPermissions(this, "App需要请求一些权限后，才能正常工作", REQUEST_PERMISSIONS_CODE, *perms)
     }
 

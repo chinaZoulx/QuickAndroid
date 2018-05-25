@@ -133,17 +133,17 @@
     </style>
     <!--属性全-->
     <style name="BaseTitleStyle" parent="BaseStyle">
-        <item name="android:textSize">@dimen/textTitleSizeBold</item>
+        <item name="android:textSize">@dimen/textTitleSize</item>
         <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TitleTextStyle" parent="BaseTitleStyle">
-        <item name="android:textStyle">normal</item>
+
     </style>
     <!--属性全-->
     <style name="TitleTextStyleAllParams" parent="BaseTitleStyle">
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ImgStyle" parent="BaseStyle">

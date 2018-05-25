@@ -77,10 +77,10 @@
                             android:text=" "
                             android:textColor="@color/colorWhite"
                             app:layout_constraintLeft_toRightOf="@id/qrCodeIv"
-                            app:layout_constraintRight_toLeftOf="@id/settingTv" />
+                            app:layout_constraintRight_toLeftOf="@id/settingIv" />
 
                         <ImageView
-                            android:id="@+id/settingTv"
+                            android:id="@+id/settingIv"
                             style="@style/ImgStyleAllParams"
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"

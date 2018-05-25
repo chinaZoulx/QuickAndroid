@@ -10,7 +10,7 @@ android {
         applicationId "com.example.chriszou.quicksample"
         minSdkVersion 22
         targetSdkVersion 27
-        versionCode 1
+        versionCode 18052315
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

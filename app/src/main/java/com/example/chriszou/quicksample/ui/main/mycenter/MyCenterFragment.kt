@@ -9,9 +9,11 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.chriszou.quicksample.R
+import com.example.chriszou.quicksample.ui.setting.SettingActivity
 import com.jcodecraeer.xrecyclerview.AppBarStateChangeListener
 import kotlinx.android.synthetic.main.fragment_my_center.*
 import org.chris.quick.b.BaseFragment
+import org.chris.quick.b.activities.ThemeActivity
 import org.chris.quick.function.SelectorImgActivity
 import org.chris.quick.m.glide.GlideCircleTransform
 import org.chris.quick.tools.common.CommonUtils
@@ -62,6 +64,9 @@ class MyCenterFragment : BaseFragment() {
         qrCodeIv.setOnClickListener {
             qrCodeView.findViewById<ImageView>(R.id.qrCodeIv).setImageBitmap(QRCodeParse.createQRCode("这是一个二维码", ImageUtils.decodeSampledBitmapFromResource(resources, R.mipmap.bg_aboutus, 341, 341)))//, ImageUtils.decodeSampledBitmapFromResource(resources, R.mipmap.bg_aboutus, 341, 341)
             isOkDialog.alertIsOkDialog("二维码", qrCodeView, "取消", "确定", null)
+        }
+        settingIv.setOnClickListener {
+            ThemeActivity.startAction(activity, SettingActivity::class.java, "设置")
         }
     }
 

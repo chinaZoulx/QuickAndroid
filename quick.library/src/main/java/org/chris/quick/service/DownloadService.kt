@@ -92,6 +92,7 @@ class DownloadService : Service() {
                 .setProgress(100, 0, true)
                 .setAutoCancel(false)
                 .setOngoing(true)
+                .setTimeoutAfter(DateUtils.MINUTE * 5)//延迟取消通知
                 .setCustomContentView(customLayout)
     }
 
