@@ -34,8 +34,21 @@ class LauncherActivity : BaseActivity() {
 
     @AfterPermissionGranted(REQUEST_PERMISSIONS_CODE)
     override fun start() {
-        val perms = if (Build.VERSION.SDK_INT >= 26) arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)//, Manifest.permission.INSTALL_SHORTCUT, Manifest.permission.UNINSTALL_SHORTCUT 发现请求这俩权限没卵用，设置开启之后这俩货还是返回未通过
-        else arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        val perms = if (Build.VERSION.SDK_INT >=0)
+            arrayOf(Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.BLUETOOTH,
+                    Manifest.permission.BLUETOOTH_ADMIN,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION)//, Manifest.permission.INSTALL_SHORTCUT, Manifest.permission.UNINSTALL_SHORTCUT 发现请求这俩权限没卵用，设置开启之后这俩货还是一直返回未通过
+        else arrayOf(Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.BLUETOOTH,
+                Manifest.permission.BLUETOOTH_ADMIN,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION)
         if (EasyPermissions.hasPermissions(this, *perms)) launcher() else EasyPermissions.requestPermissions(this, "App需要请求一些权限后，才能正常工作", REQUEST_PERMISSIONS_CODE, *perms)
     }
 

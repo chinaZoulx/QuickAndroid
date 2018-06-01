@@ -290,7 +290,7 @@ abstract class ThemeActivity : AutoLayoutActivity() {
         ExitApplication.getInstance().removeActivity(this)
     }
 
-    companion object {
+   companion object {
         init {//兼容vector
             setCompatVectorFromResourcesEnabled(true)
         }

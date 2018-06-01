@@ -9,11 +9,13 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.chriszou.quicksample.R
+import com.example.chriszou.quicksample.ui.bluetooth.BluetoothActivity
 import com.example.chriszou.quicksample.ui.setting.SettingActivity
 import com.jcodecraeer.xrecyclerview.AppBarStateChangeListener
 import kotlinx.android.synthetic.main.fragment_my_center.*
 import org.chris.quick.b.BaseFragment
 import org.chris.quick.b.activities.ThemeActivity
+import org.chris.quick.b.activities.ThemeActivity.Companion.TITLE
 import org.chris.quick.function.SelectorImgActivity
 import org.chris.quick.m.glide.GlideCircleTransform
 import org.chris.quick.tools.common.CommonUtils
@@ -67,6 +69,11 @@ class MyCenterFragment : BaseFragment() {
         }
         settingIv.setOnClickListener {
             ThemeActivity.startAction(activity, SettingActivity::class.java, "设置")
+        }
+        bluetoothTv.setOnClickListener {
+            val intent = Intent(activity, BluetoothActivity::class.java)
+            intent.putExtra(TITLE, "蓝牙管理")
+            startActivity(intent)
         }
     }
 

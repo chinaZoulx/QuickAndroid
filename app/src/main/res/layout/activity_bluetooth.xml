@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.chris.quick.widgets.AutoForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:divider="@drawable/shape_app_divider_colorline"
+    app:dividerPadding="@dimen/borderWidth"
+    app:showDividers="middle|end"
+    tools:context=".ui.bluetooth.BluetoothActivity">
+
+    <TextView
+        android:id="@+id/bluetoothNameTv"
+        style="@style/TitleTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:text="蓝牙名称：" />
+
+    <TextView
+        android:id="@+id/bluetoothMacTv"
+        style="@style/TitleTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:text="蓝牙Mac：" />
+
+    <TextView
+        android:id="@+id/bluetoothPairStatusTv"
+        style="@style/TitleTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:text="连接状态：" />
+
+    <TextView
+        android:id="@+id/dialogSampleTv"
+        style="@style/TitleTextStyleAllParams"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:drawableRight="@drawable/ic_keyboard_arrow_right_gray_24dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:text="连接设备" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/borderWidth">
+
+        <org.chris.quick.widgets.EditTextClear
+            android:id="@+id/msgContentEtc"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="请输入命令" />
+
+        <Button
+            android:id="@+id/sendMsgBtn"
+            style="@style/BtnPrimStyle"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="@dimen/borderWidth"
+            android:text="发送" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/bluetoothCommandListFragment"
+        class="com.example.chriszou.quicksample.ui.bluetooth.BluetoothCommandListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</org.chris.quick.widgets.AutoForegroundLinearLayout>

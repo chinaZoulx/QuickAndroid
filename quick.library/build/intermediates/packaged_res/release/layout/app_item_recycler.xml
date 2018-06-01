@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /*
+  ~  * yidingliu.com Inc. * Copyright (c) 2016 All Rights Reserved.
+  ~  */
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/borderWidth"
+    android:paddingRight="@dimen/borderWidth"
+    android:paddingTop="20px">
+
+    <View
+        android:id="@+id/baseItemLine"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="20px"
+        android:background="@color/colorLine"
+        android:visibility="invisible" />
+</LinearLayout>

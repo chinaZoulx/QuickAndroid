@@ -88,6 +88,8 @@ public abstract class BaseRecyclerViewAdapter<M> extends RecyclerView.Adapter<Ba
      * @return
      */
     public int onResultItemMarginTop(int position) {
+        if (onResultItemMargin() > 0)
+            return onResultItemMargin() / 2;
         return onResultItemMargin();
     }
 
@@ -97,7 +99,9 @@ public abstract class BaseRecyclerViewAdapter<M> extends RecyclerView.Adapter<Ba
      * @return
      */
     public int onResultItemMarginBottom(int position) {
-        return 0;
+        if (onResultItemMargin() > 0)
+            return onResultItemMargin() / 2;
+        return onResultItemMargin();
     }
 
     /**
@@ -128,6 +132,8 @@ public abstract class BaseRecyclerViewAdapter<M> extends RecyclerView.Adapter<Ba
      * @return
      */
     public int onResultItemPaddingTop(int position) {
+        if (onResultItemPadding() > 0)
+            return onResultItemPadding() / 2;
         return onResultItemPadding();
     }
 
@@ -137,6 +143,8 @@ public abstract class BaseRecyclerViewAdapter<M> extends RecyclerView.Adapter<Ba
      * @return
      */
     public int onResultItemPaddingBottom(int position) {
+        if (onResultItemPadding() > 0)
+            return onResultItemPadding() / 2;
         return onResultItemPadding();
     }
 
@@ -494,7 +502,7 @@ public abstract class BaseRecyclerViewAdapter<M> extends RecyclerView.Adapter<Ba
                 if (radius == 0)
                     ImageManager.loadImage(itemView.getContext(), url + "", img);
                 else
-                    ImageManager.loadRoundImage(itemView.getContext(), url + "",radius, img);
+                    ImageManager.loadRoundImage(itemView.getContext(), url + "", radius, img);
             }
             if (iconId != 0) {
                 ImageManager.loadImage(itemView.getContext(), iconId, img);

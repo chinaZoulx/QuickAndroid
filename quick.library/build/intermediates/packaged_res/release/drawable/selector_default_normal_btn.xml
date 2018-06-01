@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/shape_cir_prim" android:state_focused="true" android:state_pressed="false" />
+    <item android:drawable="@drawable/shape_cir_prim" android:state_focused="true" android:state_pressed="true" />
+    <item android:drawable="@drawable/shape_cir_prim" android:state_focused="false" android:state_pressed="true" />
+    <item android:drawable="@drawable/shape_cir_prim" android:state_selected="true" />
+    <item android:drawable="@drawable/shape_cir_white_border_prim">
+        <!--<shape>-->
+        <!--<solid android:color="@color/colorTransparent" />-->
+        <!--<stroke android:width="1px" android:color="@color/colorPrimary" />-->
+        <!--<corners android:radius="100px" />-->
+        <!--</shape>-->
+    </item>
+</selector>

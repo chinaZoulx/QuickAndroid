@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingEnd="11dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="11dp"
+    android:paddingStart="10dp"
+    android:paddingTop="10dp"
+    android:background="@drawable/shape_rec_r5_bg_black90"
+    tools:ignore="RtlHardcoded">
+
+    <ImageView
+        android:id="@+id/coverIv"
+        style="@style/ImgStyle"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titleTv"
+            style="@style/TitleTextStyle"
+            android:text="标题"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/hintTv"
+            style="@style/BodyTextStyle"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="等待任务下载"
+            android:textColor="@color/colorLineDark"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/confirmTimeTv"
+        style="@style/BodyTextStyle"
+        android:text="10:41"
+        android:textColor="@color/colorWhite"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/downloadStatusContainer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"
+            android:indeterminateTint="@color/colorWhite"
+            android:indeterminateTintMode="src_in"
+            tools:ignore="UnusedAttribute" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            android:src="@mipmap/ic_cancel_white" />
+    </RelativeLayout>
+</LinearLayout>

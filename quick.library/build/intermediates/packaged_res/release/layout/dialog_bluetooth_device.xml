@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_rec_r3_white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/itemHeight"
+        android:background="#090000FF"
+        android:gravity="center"
+        android:text="温馨提示"
+        android:textColor="@color/colorBlack"
+        android:textSize="36px" />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="600px"
+        android:layout_height="660px" />
+
+    <Button
+        android:id="@+id/confirmBtn"
+        android:layout_width="260px"
+        android:layout_height="80px"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/borderWidth"
+        android:layout_marginTop="@dimen/borderWidth"
+        android:background="@drawable/shape_rec_r10_blue_bg"
+        android:text="关闭"
+        android:textColor="@color/colorWhite" />
+
+</com.zhy.autolayout.AutoLinearLayout>

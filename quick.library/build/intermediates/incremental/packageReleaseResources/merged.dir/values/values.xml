@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#f33030</color>
+    <color name="colorBg">#f7f7f7</color>
+    <color name="colorBgDark">#f0eff4</color>
+    <color name="colorBgDarkDark">#f1f1f1</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlack0a">#0a0a0a</color>
+    <color name="colorBlack0b">#0b0b0b</color>
+    <color name="colorBlack30">#30000000</color>
+    <color name="colorBlack40">#40000000</color>
+    <color name="colorBlack50">#50000000</color>
+    <color name="colorBlack60">#60000000</color>
+    <color name="colorBlack70">#70000000</color>
+    <color name="colorBlack80">#80000000</color>
+    <color name="colorBlack90">#98000000</color>
+    <color name="colorBlackShallow">#282828</color>
+    <color name="colorBlue">#0000FF</color>
+    <color name="colorBlue50">#500000FF</color>
+    <color name="colorBlueDark">#008FD7</color>
+    <color name="colorBlueShallow">#00A2E9</color>
+    <color name="colorBlueShallow50">#00a2e9</color>
+    <color name="colorContent">#008FD7</color>
+    <color name="colorContentBg">#f5f5f5</color>
+    <color name="colorDialogBtnOk">@color/colorPrimary</color>
+    <color name="colorGray">#828282</color>
+    <color name="colorGrayDark">#4b4b4b</color>
+    <color name="colorGrayDarkDark">#1e1e1e</color>
+    <color name="colorHoloBlueBright">#00DDFF</color>
+    <color name="colorHoloGreenLight">#99CC00</color>
+    <color name="colorHoloOrangeLight">#FFBB33</color>
+    <color name="colorHoloRedLight">#FF4444</color>
+    <color name="colorLine">#dddddd</color>
+    <color name="colorLineDark">#cfcfcf</color>
+    <color name="colorPrimary">#00A2E9</color>
+    <color name="colorPrimaryDark">#008FD7</color>
+    <color name="colorPrimaryRed">#f33030</color>
+    <color name="colorRead">#ad0d0c</color>
+    <color name="colorRecyclerItemLine">#1a1a1a</color>
+    <color name="colorStarsBorder">#c7c7c7</color>
+    <color name="colorSystemGreen">#01978a</color>
+    <color name="colorTitle">#008FD7</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite30">#30FFFFFF</color>
+    <color name="colorWhite50">#50FFFFFF</color>
+    <color name="colorWhite80">#80FFFFFF</color>
+    <color name="ucrop_color_crop_background">#000</color>
+    <color name="ucrop_color_progress_wheel_line">#808080</color>
+    <color name="ucrop_color_statusbar">#CC5833</color>
+    <color name="ucrop_color_title">#fff</color>
+    <color name="ucrop_color_toolbar">#FF6E40</color>
+    <color name="ucrop_color_widget">#000</color>
+    <color name="ucrop_color_widget_active">#FF6E40</color>
+    <color name="ucrop_color_widget_background">#fff</color>
+    <color name="ucrop_color_widget_text">#000</color>
+    <declare-styleable name="AVLoadingIndicatorView"><attr name="indicator">
+            <flag name="BallPulse" value="0"/>
+            <flag name="BallGridPulse" value="1"/>
+            <flag name="BallClipRotate" value="2"/>
+            <flag name="BallClipRotatePulse" value="3"/>
+            <flag name="SquareSpin" value="4"/>
+            <flag name="BallClipRotateMultiple" value="5"/>
+            <flag name="BallPulseRise" value="6"/>
+            <flag name="BallRotate" value="7"/>
+            <flag name="CubeTransition" value="8"/>
+            <flag name="BallZigZag" value="9"/>
+            <flag name="BallZigZagDeflect" value="10"/>
+            <flag name="BallTrianglePath" value="11"/>
+            <flag name="BallScale" value="12"/>
+            <flag name="LineScale" value="13"/>
+            <flag name="LineScaleParty" value="14"/>
+            <flag name="BallScaleMultiple" value="15"/>
+            <flag name="BallPulseSync" value="16"/>
+            <flag name="BallBeat" value="17"/>
+            <flag name="LineScalePulseOut" value="18"/>
+            <flag name="LineScalePulseOutRapid" value="19"/>
+            <flag name="BallScaleRipple" value="20"/>
+            <flag name="BallScaleRippleMultiple" value="21"/>
+            <flag name="BallSpinFadeLoader" value="22"/>
+            <flag name="LineSpinFadeLoader" value="23"/>
+            <flag name="TriangleSkewSpin" value="24"/>
+            <flag name="Pacman" value="25"/>
+            <flag name="BallGridBeat" value="26"/>
+            <flag name="SemiCircleSpin" value="27"/>
+        </attr><attr format="color" name="indicator_color"/></declare-styleable>
+    <declare-styleable name="CustomCompatTabLayout"><attr format="boolean" name="isDefaultStyle"/></declare-styleable>
+    <declare-styleable name="DashedLineView"><attr format="dimension|integer" name="lineHeight"/><attr format="color|integer" name="lineColor"/><attr format="dimension|integer" name="dashWidth"/></declare-styleable>
+    <declare-styleable name="ImageViewCircle"><attr format="dimension" name="border_width"/><attr format="color" name="border_color"/></declare-styleable>
+    <declare-styleable name="ProgressBarCircle"><attr format="color" name="pbcOutlineColor"/><attr format="dimension" name="pbcOutlineWidth"/><attr format="dimension" name="pbcOAndISpaceWidth"/><attr format="color" name="pbcOAndISpaceColor"/><attr format="color" name="pbcInteriorColorCover"/><attr format="color" name="pbcInteriorColorBg"/><attr format="boolean" name="pbcIsLoop"/><attr format="float" name="pbcProgress"/></declare-styleable>
+    <declare-styleable name="ProgressBarHorizontal"><attr format="reference" name="pbhBgSrc"/><attr format="color" name="pbhBgColorStart"/><attr format="color" name="pbhBgColorEnd"/><attr format="dimension" name="pbhBgRadius"/><attr format="dimension" name="pbhBgLtRadius"/><attr format="dimension" name="pbhBgLbRadius"/><attr format="dimension" name="pbhBgRbRadius"/><attr format="dimension" name="pbhBgRtRadius"/><attr format="reference" name="pbhCoverSrc"/><attr format="color" name="pbhCoverColorStart"/><attr format="color" name="pbhCoverColorEnd"/><attr format="dimension" name="pbhCoverRadius"/><attr format="dimension" name="pbhCoverLtRadius"/><attr format="dimension" name="pbhCoverLbRadius"/><attr format="dimension" name="pbhCoverRbRadius"/><attr format="dimension" name="pbhCoverRtRadius"/><attr format="integer" name="pbhProgress"/><attr name="pbhScaleType">
+            <enum name="match_parent" value="0"/>
+            <enum name="wrap_content" value="1"/>
+        </attr></declare-styleable>
+    <declare-styleable name="ProgressWheel"><attr format="string" name="pwText"/><attr format="color" name="pwTextColor"/><attr format="dimension" name="pwTextSize"/><attr format="color" name="pwBarColor"/><attr format="color" name="pwRimColor"/><attr format="dimension" name="pwRimWidth"/><attr format="dimension" name="pwSpinSpeed"/><attr format="integer" name="pwDelayMillis"/><attr format="color" name="pwCircleColor"/><attr format="dimension" name="pwRadius"/><attr format="dimension" name="pwBarWidth"/><attr format="dimension" name="pwBarLength"/><attr format="color" name="pwContourColor"/><attr format="dimension" name="pwContourSize"/></declare-styleable>
+    <declare-styleable name="RollView"><attr format="boolean" name="isLoop"/></declare-styleable>
+    <declare-styleable name="RoundProgressBar"><attr format="color|string" name="roundColor"/><attr format="color|string" name="roundInsideColor"/><attr format="dimension" name="roundInsideSize"/><attr format="dimension" name="roundSize"/><attr format="dimension" name="roundBorderWidth"/><attr format="color|string" name="roundProgressColor"/><attr format="color|string" name="textColor"/><attr format="dimension" name="textSize"/><attr format="boolean" name="textIsDisplayable"/><attr format="integer" name="style"/></declare-styleable>
+    <declare-styleable name="RoundRectView"><attr format="integer|dimension|float" name="roundRectRadius"/><attr format="color" name="roundRectColorStart"/><attr format="color" name="roundRectColorEnd"/></declare-styleable>
+    <declare-styleable name="SemicircleView"><attr format="integer|dimension|float" name="svRadius"/><attr format="reference|color" name="svStartColor"/><attr format="reference|color" name="svEndColor"/><attr format="dimension" name="svPaddingHeight"/><attr format="boolean" name="svIsShadow"/><attr format="dimension" name="svShadowRadius"/><attr format="dimension" name="svShadowDistance"/></declare-styleable>
+    <declare-styleable name="ShadowRelativeLayout"><attr format="dimension|integer" name="shadowSize"/><attr format="dimension|integer" name="shadowDx"/><attr format="dimension|integer" name="shadowDy"/><attr format="dimension|integer|float" name="shadowRadius"/><attr format="reference|color" name="shadowColor"/></declare-styleable>
+    <declare-styleable name="SimpleRatingBar"><attr format="color" name="srb_borderColor"/><attr format="color" name="srb_fillColor"/><attr format="color" name="srb_backgroundColor"/><attr format="color" name="srb_starBackgroundColor"/><attr format="color" name="srb_pressedBorderColor"/><attr format="color" name="srb_pressedFillColor"/><attr format="color" name="srb_pressedBackgroundColor"/><attr format="color" name="srb_pressedStarBackgroundColor"/><attr format="integer" name="srb_numberOfStars"/><attr format="dimension" name="srb_starSize"/><attr format="dimension" name="srb_maxStarSize"/><attr format="dimension" name="srb_starsSeparation"/><attr format="float" name="srb_starBorderWidth"/><attr format="float" name="srb_starCornerRadius"/><attr format="boolean" name="srb_isIndicator"/><attr format="float" name="srb_rating"/><attr format="float" name="srb_stepSize"/><attr format="boolean" name="srb_drawBorderEnabled"/><attr format="enum" name="srb_gravity">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr></declare-styleable>
+    <declare-styleable name="XRecyclerViewLine"><attr format="dimension|reference" name="xDividerSize"/><attr format="dimension|reference" name="xDividerPadding"/><attr format="color|reference" name="xDivider"/><attr name="xShowDividers">
+            <flag name="top" value="0x01"/>
+            <flag name="bottom" value="0x02"/>
+            <flag name="middle" value="0x04"/>
+            <flag name="none" value="0x08"/>
+        </attr><attr format="enum" name="xDividerOrientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr></declare-styleable>
+    <declare-styleable name="ucrop_AspectRatioTextView"><attr format="string" name="ucrop_artv_ratio_title"/><attr format="float" name="ucrop_artv_ratio_x"/><attr format="float" name="ucrop_artv_ratio_y"/></declare-styleable>
+    <dimen name="actionBarSize">55dp</dimen>
+    <dimen name="borderWidth">20dp</dimen>
+    <dimen name="borderWidthBig">60px</dimen>
+    <dimen name="borderWidthLittle">20px</dimen>
+    <dimen name="btnHeight">40dp</dimen>
+    <dimen name="cardViewContentPadding">10dp</dimen>
+    <dimen name="cardViewElevation">10dp</dimen>
+    <dimen name="cardViewRadius">5dp</dimen>
+    <dimen name="dotSize">2dp</dimen>
+    <dimen name="dotSizePadding">2dp</dimen>
+    <dimen name="itemHeight">50dp</dimen>
+    <dimen name="itemHeightSmall">40dp</dimen>
+    <dimen name="itemHeightSmallSupper">30dp</dimen>
+    <dimen name="itemLineBold">30px</dimen>
+    <dimen name="itemSize">80dp</dimen>
+    <dimen name="itemTxtSize">14dp</dimen>
+    <dimen name="marginLeft">10dp</dimen>
+    <dimen name="marginRight">10dp</dimen>
+    <dimen name="marginSpacing">5dp</dimen>
+    <dimen name="marginSpacingSmall">1dp</dimen>
+    <dimen name="textBodySize">13sp</dimen>
+    <dimen name="textBodySizeBold">15sp</dimen>
+    <dimen name="textBodySizeSmall">12sp</dimen>
+    <dimen name="textTagSize">10sp</dimen>
+    <dimen name="textTagSizeBold">11sp</dimen>
+    <dimen name="textTagSizeSmall">8sp</dimen>
+    <dimen name="textTitleSize">18sp</dimen>
+    <dimen name="textTitleSizeBold">20sp</dimen>
+    <dimen name="textTitleSizeSmall">16sp</dimen>
+    <dimen name="ucrop_height_crop_aspect_ratio_text">40dp</dimen>
+    <dimen name="ucrop_height_divider_shadow">3dp</dimen>
+    <dimen name="ucrop_height_horizontal_wheel_progress_line">20dp</dimen>
+    <dimen name="ucrop_height_wrapper_controls">64dp</dimen>
+    <dimen name="ucrop_height_wrapper_states">72dp</dimen>
+    <dimen name="ucrop_margin_horizontal_wheel_progress_line">10dp</dimen>
+    <dimen name="ucrop_margit_top_widget_text">10sp</dimen>
+    <dimen name="ucrop_size_dot_scale_text_view">8dp</dimen>
+    <dimen name="ucrop_size_wrapper_rotate_button">50dp</dimen>
+    <dimen name="ucrop_text_size_widget_text">13sp</dimen>
+    <dimen name="ucrop_width_horizontal_wheel_progress_line">2dp</dimen>
+    <dimen name="withdrawDepositTitle">24px</dimen>
+    <item name="tag_first" type="id"/>
+    <item name="tag_second" type="id"/>
+    <string name="cancel">取消</string>
+    <string name="closeMenu">关闭菜单</string>
+    <string name="cutToAlbum">相册转场动画</string>
+    <string name="errorNetWorkHint">请检查，网络无法连接</string>
+    <string name="errorNoMsgHint">暂无相关记录</string>
+    <string name="errorOtherHint">出了点意外，暂时无法访问</string>
+    <string name="errorParseDataHint">数据解析错误，请联系管理员</string>
+    <string name="errorServiceHint">出了点意外，服务器升级中</string>
+    <string name="has_read_sms_permission">Has read sms permission: %b</string>
+    <string name="latest_image">最近照片</string>
+    <string name="listview_header_hint_normal">下拉刷新</string>
+    <string name="listview_header_hint_release">释放开始刷新</string>
+    <string name="listview_header_last_time">上一次刷新:</string>
+    <string name="listview_header_last_time_no">未刷新</string>
+    <string name="listview_loading">正在加载...</string>
+    <string name="nomore_loading">没有更多啦</string>
+    <string name="openMenu">打开菜单</string>
+    <string name="photo_album">相册</string>
+    <string name="rationale_ask_again">App权限已被禁止，是否去设置</string>
+    <string name="rationale_camera">App获取相机权限后才能正常工作</string>
+    <string name="rationale_location_contacts">App获取定位信息后才能正常工作</string>
+    <string name="rationale_record">App获取录音权限后才能正常工作</string>
+    <string name="rationale_sms">App获取短信权限后才能正常工作</string>
+    <string name="refresh">刷新</string>
+    <string name="refresh_done">刷新完成</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="returned_from_app_settings_to_activity">请到App设置中开启权限后，再重试</string>
+    <string name="select_album">选择相册</string>
+    <string name="select_image">选择图片</string>
+    <string name="setting">设置</string>
+    <string name="settings_dialog_canceled">取消弹框</string>
+    <string name="sure">确定</string>
+    <string name="title_settings_dialog">重要通知</string>
+    <string name="ucrop_label_edit_photo">裁剪</string>
+    <string name="ucrop_label_original">原始比例</string>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.CustomToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Title</item>
+        <item name="subtitleTextAppearance">
+            @style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle
+        </item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="titleMargin">4dp</item>
+        <item name="maxButtonHeight">@dimen/abc_action_bar_default_height_material</item>
+        <item name="buttonGravity">top</item>
+        <item name="collapseIcon">?attr/homeAsUpIndicator</item>
+        <item name="collapseContentDescription">@string/abc_toolbar_collapse_description</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">@dimen/abc_action_bar_content_inset_with_nav
+        </item>
+        <item name="android:paddingLeft">@dimen/abc_action_bar_default_padding_start_material</item>
+        <item name="android:paddingRight">@dimen/abc_action_bar_default_padding_end_material</item>
+    </style>
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@color/colorTransparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/colorTransparent</item>
+    </style>
+    <style name="AppTheme.NoTitleBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="AppTheme.SexDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/colorTransparent</item>
+    </style>
+    <style name="AppTheme.TabText" parent="AppTheme">
+        <item name="android:layout_width">@dimen/textTitleSizeBold</item>
+        <item name="android:layout_height">@dimen/textTitleSizeBold</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+    <style name="AppTheme.TimeDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
+    </style>
+    <style name="BaseStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/textBodySize</item>
+        <item name="android:gravity">center</item>
+        <item name="android:text">-</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:src">@drawable/ic_image_gray_24dp</item>
+    </style>
+    <style name="BaseTitleStyle" parent="BaseStyle">
+        <item name="android:textSize">@dimen/textTitleSize</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="BodyTextStyle" parent="BaseStyle">
+        <item name="android:textColor">@color/colorGrayDarkDark</item>
+    </style>
+    <style name="BodyTextStyleAllParams" parent="BaseStyle">
+        <item name="android:textColor">@color/colorGrayDarkDark</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <style name="BtnPrimStyle" parent="BaseStyle">
+        <item name="android:background">@drawable/selector_default_normal_btn</item>
+        <item name="android:textColor">@color/selector_default_color_</item>
+        <item name="android:textSize">@dimen/textBodySize</item>
+        <item name="android:text">确定</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+    <style name="BtnPrimStyleBig" parent="BaseStyle">
+        <item name="android:background">@drawable/selector_default_normal_btn</item>
+        <item name="android:textColor">@color/selector_default_color_</item>
+        <item name="android:textSize">@dimen/textBodySize</item>
+        <item name="android:text">确定</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/borderWidth</item>
+        <item name="android:layout_marginRight">@dimen/borderWidth</item>
+        <item name="android:layout_marginTop">@dimen/borderWidth</item>
+        <item name="android:layout_marginBottom">@dimen/borderWidth</item>
+    </style>
+    <style name="CustomWindowTitleBackground">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <style name="ImgStyle" parent="BaseStyle">
+        <item name="android:src">@drawable/ic_image_gray_24dp</item>
+    </style>
+    <style name="ImgStyleAllParams" parent="BaseStyle">
+        <item name="android:src">@drawable/ic_image_gray_24dp</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <style name="SelectSexAnimation" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/sex_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/sex_dialog_exit</item>
+    </style>
+    <style name="TitleTextStyle" parent="BaseTitleStyle">
+
+    </style>
+    <style name="TitleTextStyleAllParams" parent="BaseTitleStyle">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    <style name="ucrop_ImageViewWidgetIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:duplicateParentState">true</item>
+    </style>
+    <style name="ucrop_TextViewCropAspectRatio">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/ucrop_height_crop_aspect_ratio_text</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:duplicateParentState">true</item>
+        <item name="android:textColor">@color/ucrop_scale_text_view_selector</item>
+    </style>
+    <style name="ucrop_TextViewWidgetText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">@dimen/ucrop_margit_top_widget_text</item>
+        <item name="android:textColor">@color/ucrop_color_widget_text</item>
+        <item name="android:textSize">@dimen/ucrop_text_size_widget_text</item>
+    </style>
+    <style name="ucrop_WrapperIconState">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <style name="ucrop_WrapperRotateButton">
+        <item name="android:layout_width">@dimen/ucrop_size_wrapper_rotate_button</item>
+        <item name="android:layout_height">@dimen/ucrop_size_wrapper_rotate_button</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+    </style>
+</resources>
