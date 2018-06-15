@@ -252,7 +252,7 @@ class CustomCompatViewPager : ViewPager {
             private var itemWidth = 0f
             private var offsetPosition = 0f
             private val mCoverWidth: Int = 0
-            private val mScaleMax = 1.0f
+            private val mScaleMax = 0.9f
             private val mScaleMin = 0.7f
 
             override fun transformPage(view: View, position: Float) {

@@ -36,7 +36,7 @@ abstract class BaseFragment : ThemeFragment() {
         if (!isInit) {
             onInitLayout()
             onBindListener()
-            onBindData()
+            start()
             isInit = true
             onInitListener?.invoke()
         }
@@ -68,5 +68,5 @@ abstract class BaseFragment : ThemeFragment() {
     /**
      * 绑定数据
      */
-    abstract fun onBindData()
+    abstract fun start()
 }

@@ -52,7 +52,7 @@ class WebActivity : BaseActivity() {
 
     companion object {
 
-        fun startAction(context: Context?, title: String, url: String) {
+        fun startAction(context: Context?, title: String, url: String?) {
             val intent = Intent(context, WebActivity::class.java)
             intent.putExtra(ThemeActivity.TITLE, title)
             intent.putExtra("url", url)

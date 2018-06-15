@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.v7.widget.Toolbar
 import com.example.chriszou.quicksample.R
+import com.example.chriszou.quicksample.ui.setting.OtherActivity
 import kotlinx.android.synthetic.main.activity_index_list_detail.*
 import org.chris.quick.b.BaseActivity
 import org.chris.quick.m.ImageManager
@@ -41,7 +42,7 @@ class IndexListDetailActivity : BaseActivity() {
     }
 
     override fun onBindListener() {
-
+        coverIv.setOnClickListener { startActivity(Intent(activity,OtherActivity::class.java),{resultCode, data -> showToast("dfdfdf") }) }
     }
 
     override fun start() {

@@ -30,7 +30,7 @@ import org.chris.quick.listener.OnClickListener2;
 import org.chris.quick.m.HttpManager;
 import org.chris.quick.tools.GsonUtils;
 import org.chris.quick.tools.common.HttpUtils;
-import org.chris.quick.widgets.XRecyclerViewLine;
+import org.chris.quick.widgets.XRecyclerViewUsingLine;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -86,7 +86,7 @@ public abstract class BaseListFragment extends ThemeFragment implements XRecycle
     private FrameLayout headerContainer;
     private FrameLayout footerContainer;
     private FrameLayout listContainer;
-    private XRecyclerViewLine xRecyclerView;
+    private XRecyclerViewUsingLine xRecyclerView;
     private ArrowRefreshHeader mRefreshHeader;
 
     boolean isDefaultNoMsgLayout = true;
@@ -445,8 +445,8 @@ public abstract class BaseListFragment extends ThemeFragment implements XRecycle
         return getDefaultCuttingLine(getActivity());
     }
 
-    public static XRecyclerViewLine.DividerItemDecoration getDefaultCuttingLine(Activity activity) {
-        return new XRecyclerViewLine.DividerItemDecoration(activity, ContextCompat.getDrawable(activity, R.drawable.shape_app_divider_colorline_border), DividerItemDecoration.VERTICAL, (int) AutoUtils.getPercentHeight1px(), AutoUtils.getPercentWidthSize(activity.getResources().getDimensionPixelSize(R.dimen.borderWidth)), XRecyclerViewLine.DividerItemDecoration.MIDDLE);
+    public static XRecyclerViewUsingLine.DividerItemDecoration getDefaultCuttingLine(Activity activity) {
+        return new XRecyclerViewUsingLine.DividerItemDecoration(activity, ContextCompat.getDrawable(activity, R.drawable.shape_app_divider_colorline_border), DividerItemDecoration.VERTICAL, (int) AutoUtils.getPercentHeight1px(), AutoUtils.getPercentWidthSize(activity.getResources().getDimensionPixelSize(R.dimen.borderWidth)), XRecyclerViewUsingLine.DividerItemDecoration.MIDDLE);
     }
 
     @DrawableRes

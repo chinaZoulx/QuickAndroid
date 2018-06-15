@@ -32,7 +32,7 @@ public class LoadingDialog {
         this.context = context;
     }
 
-    public void initDialog(Activity context) {
+    private void initDialog(Activity context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AppTheme_Dialog);
         View contentView = LayoutInflater.from(context).inflate(R.layout.pw_loading, null);
         builder.setView(contentView);
@@ -40,7 +40,7 @@ public class LoadingDialog {
         Window window = mLoadingDialog.getWindow();
         window.setGravity(Gravity.CENTER);
 
-        loadingHintTv = (TextView) contentView.findViewById(R.id.loadingHint);
+        loadingHintTv = contentView.findViewById(R.id.loadingHint);
         mLoadingDialog.getWindow().setGravity(Gravity.CENTER);
         mLoadingDialog.setCanceledOnTouchOutside(false);
         mLoadingDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {

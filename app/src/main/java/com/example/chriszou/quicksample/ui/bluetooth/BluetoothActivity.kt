@@ -76,9 +76,10 @@ class BluetoothActivity : BaseActivity() {
                             -> {
                                 Log.e("蓝牙状态", "MESSAGE_STATE_CHANGE: " + msg.arg1)
                                 when (msg.arg1) {
-                                    BluetoothChatService.STATE_CONNECTED -> bluetoothPairStatusTv.text = String.format("配对状态：%s", "连接成功")
-                                    BluetoothChatService.STATE_CONNECTING -> bluetoothPairStatusTv.text = String.format("配对状态：%s", "连接中...")
-                                    BluetoothChatService.STATE_LISTEN, BluetoothChatService.STATE_NONE -> bluetoothPairStatusTv.text = String.format("配对状态：%s", "连接失败")
+                                    BluetoothChatService.STATE_CONNECTED -> bluetoothPairStatusTv.text = String.format("连接状态：%s", "连接成功")
+                                    BluetoothChatService.STATE_CONNECTING -> bluetoothPairStatusTv.text = String.format("连接状态：%s", "连接中...")
+                                    BluetoothChatService.STATE_LISTEN -> bluetoothPairStatusTv.text = String.format("连接状态：%s", "连接开始")
+                                    BluetoothChatService.STATE_NONE -> bluetoothPairStatusTv.text = String.format("连接状态：%s", "连接失败")
                                 }
                             }
                             BluetoothChatService.MESSAGE_WRITE//我发出的
@@ -109,22 +110,17 @@ class BluetoothActivity : BaseActivity() {
         }
     }
 
-    private fun onceAgainRequestOpenBluetooth() {
-        isOkDialog.alertIsOkDialog("打开蓝牙App才能正常工作", "退出", "马上开启") { view, isRight ->
-            if (isRight) {
-                openBluetooth()
-            } else finish()
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_ENABLE_BT//打开蓝牙返回
             -> {
                 if (resultCode == Activity.RESULT_OK) {
+                    openBluetooth()
                     showToast("蓝牙已成功打开")
-                } else {
-                    onceAgainRequestOpenBluetooth()
+                } else isOkDialog.alertIsOkDialog("打开蓝牙App才能正常工作", "退出", "马上开启") { _, isRight ->
+                    if (isRight) {
+                        openBluetooth()
+                    } else finish()
                 }
             }
         }

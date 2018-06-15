@@ -10,8 +10,8 @@ android {
         applicationId "com.example.chriszou.quicksample"
         minSdkVersion 22
         targetSdkVersion 27
-        versionCode 18052315
-        versionName "1.0.0"
+        versionCode 18060511
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -57,6 +57,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.lzp.floatingactionbutton:floatingactionbuttonplus:1.0.0'
+    //    implementation 'com.android.support:percent:27.1.1'
     implementation project(':quick.library')
     implementation project(path: ':zxing.library')
+    implementation project(':viewpagerlayoutmanager')
 }

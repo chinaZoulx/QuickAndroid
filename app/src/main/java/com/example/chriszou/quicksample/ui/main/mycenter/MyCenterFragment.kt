@@ -10,13 +10,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.bluetooth.BluetoothActivity
+import com.example.chriszou.quicksample.ui.main.MainActivity
 import com.example.chriszou.quicksample.ui.setting.SettingActivity
 import com.jcodecraeer.xrecyclerview.AppBarStateChangeListener
 import kotlinx.android.synthetic.main.fragment_my_center.*
 import org.chris.quick.b.BaseFragment
 import org.chris.quick.b.activities.ThemeActivity
 import org.chris.quick.b.activities.ThemeActivity.Companion.TITLE
+import org.chris.quick.function.QuickStartActivity
 import org.chris.quick.function.SelectorImgActivity
+import org.chris.quick.helper.SharedPreferencesHelper
 import org.chris.quick.m.glide.GlideCircleTransform
 import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.ImageUtils
@@ -26,6 +29,7 @@ import java.io.File
 class MyCenterFragment : BaseFragment() {
     companion object {
         const val REQUEST_SELECTOR_COVER = 0x324
+        const val COVER_PATH = "coverPath"
     }
 
     lateinit var qrCodeView: View
@@ -36,9 +40,9 @@ class MyCenterFragment : BaseFragment() {
 
     override fun onInitLayout() {
         setTitle("个人中心")
+        Glide.with(context).load(File(SharedPreferencesHelper.getValue(COVER_PATH, ""))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)
         customCompatSwipeRefreshLayout.setOnRefreshListener {
-            Handler().postDelayed({}, 500)
-            customCompatSwipeRefreshLayout.isRefreshing = false
+            Handler().postDelayed({ customCompatSwipeRefreshLayout.isRefreshing = false }, 500)
         }
         qrCodeView = LayoutInflater.from(activity).inflate(R.layout.include_qr_code, null)
         appBarLayout.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
@@ -51,6 +55,8 @@ class MyCenterFragment : BaseFragment() {
                 when (state) {
                     AppBarStateChangeListener.State.EXPANDED -> {
                         customCompatSwipeRefreshLayout.isEnabled = true
+                        if (!titleTv.text.isEmpty())
+                            titleTv.text = ""
                     }
                     AppBarStateChangeListener.State.COLLAPSED -> {//折叠起来 AppBarStateChangeListener.State.EXPANDED:展开 IDLE:折叠中
                         titleTv.text = "标题"
@@ -68,16 +74,23 @@ class MyCenterFragment : BaseFragment() {
             isOkDialog.alertIsOkDialog("二维码", qrCodeView, "取消", "确定", null)
         }
         settingIv.setOnClickListener {
-            ThemeActivity.startAction(activity, SettingActivity::class.java, "设置")
+            //            ThemeActivity.startAction(activity, SettingActivity::class.java, "设置")
+            val intent = Intent(activity, SettingActivity::class.java)
+            intent.putExtra(TITLE, "设置")
+            QuickStartActivity.startActivity(activity, intent, { resultCode, data ->
+                showToast("设置数据返回了哟")
+            })
         }
         bluetoothTv.setOnClickListener {
             val intent = Intent(activity, BluetoothActivity::class.java)
             intent.putExtra(TITLE, "蓝牙管理")
-            startActivity(intent)
+            QuickStartActivity.startActivity(activity,intent,{resultCode, data ->
+                showToast("蓝牙返回了哟")
+            })
         }
     }
 
-    override fun onBindData() {
+    override fun start() {
 
     }
 
@@ -86,6 +99,7 @@ class MyCenterFragment : BaseFragment() {
             if (data != null && data.hasExtra(SelectorImgActivity.ALREADY_PATHS)) {
                 val imgList = data.getStringArrayListExtra(SelectorImgActivity.ALREADY_PATHS)
                 if (imgList != null && imgList.size > 0) {
+                    SharedPreferencesHelper.putValue(COVER_PATH, imgList[0])
                     Glide.with(context).load(File(imgList[0])).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)
                 }
             }

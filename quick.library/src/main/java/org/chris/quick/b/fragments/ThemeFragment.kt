@@ -1,5 +1,6 @@
 package org.chris.quick.b.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
@@ -21,6 +22,8 @@ import android.widget.Toast
 
 import org.chris.quick.R
 import org.chris.quick.b.activities.ThemeActivity
+import org.chris.quick.function.QuickStartActivity
+import org.chris.quick.listener.OnClickListener2
 import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.DevicesUtils
 
@@ -52,6 +55,19 @@ abstract class ThemeFragment : Fragment() {
     open val isUsingBaseLayout get() = true
     open val isShowTitle get() = false
     open val isFitsSystemWindows get() = true
+
+    /**
+     * 返回资源文件ID
+     *
+     * @return
+     */
+    @LayoutRes
+    protected abstract fun onResultLayoutResId(): Int
+
+    /**
+     * 初始化操作
+     */
+    abstract fun init()
 
     open fun onResultToolbar(): Toolbar? {
         isDefaultToolbar = true
@@ -86,7 +102,7 @@ abstract class ThemeFragment : Fragment() {
             if (isFitsSystemWindows) {
 //                appBaseToolbar?.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
 //                appBaseToolbar?.layoutParams?.height = (CommonUtils.getSystemAttrValue(activity, R.attr.actionBarSize) + CommonUtils.getStatusHeight(activity)).toInt()
-                CommonUtils.setupFitsSystemWindowsFromToolbar(activity,appBaseToolbar)
+                CommonUtils.setupFitsSystemWindowsFromToolbar(activity, appBaseToolbar)
             }
 
             if (!isDefaultToolbar && isUsingBaseLayout) {//不是默认的布局并且引用父布局
@@ -192,6 +208,31 @@ abstract class ThemeFragment : Fragment() {
     </T> */
     fun <T : View> getView(@IdRes resId: Int, parent: View): T = parent.findViewById<View>(resId) as T
 
+    fun setVisibility(visibility: Int, vararg resIds: Int) {
+        for (resId in resIds)
+            setVisibility(visibility, getView<View>(resId))
+    }
+
+    fun setVisibility(visibility: Int, vararg views: View) {
+        for (view in views)
+            setVisibility(visibility, view)
+    }
+
+    fun setVisibility(visibility: Int, view: View) {
+        view.visibility = visibility
+    }
+
+    protected fun setOnClickListener(onClickListener: OnClickListener2, @IdRes vararg resIds: Int) {
+        for (resId in resIds) {
+            setOnClickListener(onClickListener, getView<View>(resId))
+        }
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener2, vararg views: View) {
+        for (view in views)
+            view.setOnClickListener(onClickListener)
+    }
+
     /**
      * 获取常规类型数值
      *
@@ -247,16 +288,7 @@ abstract class ThemeFragment : Fragment() {
         Snackbar.make(tempView!!, content, Snackbar.LENGTH_SHORT).setAction(actionTxt, onClickListener).setActionTextColor(ContextCompat.getColor(activity!!, R.color.colorBlueShallow)).show()
     }
 
-    /**
-     * 返回资源文件ID
-     *
-     * @return
-     */
-    @LayoutRes
-    protected abstract fun onResultLayoutResId(): Int
-
-    /**
-     * 初始化操作
-     */
-    abstract fun init()
+    protected fun startActivity(intent: Intent, onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)) {
+        QuickStartActivity.startActivity(activity, intent, onActivityResultListener)
+    }
 }

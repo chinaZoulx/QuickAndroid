@@ -37,20 +37,14 @@ class BluetoothDeviceDialog(var context: Context, internal var onItemClickedList
     private var receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
-                BluetoothDevice.ACTION_FOUND -> {
+                BluetoothDevice.ACTION_FOUND -> {//找到设备
                     val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                     when (device.bondState) {
-                        BluetoothDevice.BOND_BONDED -> {
-                        }
-                        else -> {
-                            if (!holder.adapter.dataList.contains(device)) {
-                                holder.adapter.dataList.add(device)
-                                holder.adapter.notifyDataSetChanged()
-                            }
-                        }
+                        BluetoothDevice.BOND_BONDED -> Unit
+                        else -> if (!holder.adapter.dataList.contains(device)) holder.adapter.add(device)
                     }
                 }
-                BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {
+                BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {//搜索完成
                     holder.recyclerView.refreshComplete()
                     if (holder.adapter.itemCount <= 0)
                         showToast("未找到设备")

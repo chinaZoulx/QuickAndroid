@@ -12,6 +12,7 @@ import org.chris.quick.b.BaseFragment
 import org.chris.quick.b.activities.WebActivity
 import org.chris.quick.function.SelectorImgActivity
 import org.chris.quick.tools.common.CommonUtils
+import org.chris.quick.tools.common.HttpUtils
 import org.chris.quick.tools.common.ResourceUtils
 import org.chris.zxing.library.CaptureActivity
 import org.chris.zxing.library.Intents
@@ -44,7 +45,7 @@ class DiscoverFragment : BaseFragment() {
         customCompatSwipeRefreshLayout.setOnRefreshListener {
             customCompatSwipeRefreshLayout.isRefreshing = true
             Handler().postDelayed({
-                onBindData()
+                start()
                 showToast("刷新完成")
                 customCompatSwipeRefreshLayout.isRefreshing = false
             }, 1000)
@@ -71,7 +72,7 @@ class DiscoverFragment : BaseFragment() {
         }
     }
 
-    override fun onBindData() {
+    override fun start() {
         val tempDataList = arrayListOf<String>()
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/ce/f4/a5/cef4a5cd12d4dbdc29f85bc4631c5c35.jpg")
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/73/bd/10/73bd109d7301546b19dab0e2de593ecb.jpg")
@@ -100,6 +101,14 @@ class DiscoverFragment : BaseFragment() {
         discoverListFragment.getAdapter<DiscoverListFragment.Adapter>().dataList = tempDataList
     }
 
+    private fun parseQrCodeContent(content: String?) {
+        when {
+            HttpUtils.isHttpUrlFormRight(content) -> WebActivity.startAction(activity, "链接", content)
+            else ->
+                isOkDialog.alertIsOkDialog("二维码包含内容", content)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         customCompatSwipeRefreshLayout.setupAppBarLayout(appBarLayout)
@@ -113,13 +122,10 @@ class DiscoverFragment : BaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_CODE_SCAN -> {
-                if (resultCode == CaptureActivity.RESULT_OK)
-                    isOkDialog.alertIsOkDialog("二维码包含内容", data?.getStringExtra(Intents.Scan.RESULT))
+                if (resultCode == CaptureActivity.RESULT_OK) parseQrCodeContent(data?.getStringExtra(Intents.Scan.RESULT))
             }
             REQUEST_CODE_SELECTOR_IMG -> {
-                if (resultCode == SelectorImgActivity.RESULT_CODE) {
-                    showToast(QRCodeParse.parseQRCode(BitmapFactory.decodeFile(data!!.getStringArrayListExtra(SelectorImgActivity.ALREADY_PATHS)[0])))
-                }
+                if (resultCode == SelectorImgActivity.RESULT_CODE) parseQrCodeContent(QRCodeParse.parseQRCode(BitmapFactory.decodeFile(data!!.getStringArrayListExtra(SelectorImgActivity.ALREADY_PATHS)[0])))
             }
         }
     }

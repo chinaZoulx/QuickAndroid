@@ -1,14 +1,14 @@
 package org.chris.quick.b
 
+import android.content.Intent
 import android.support.annotation.LayoutRes
+import android.widget.Toast
+import org.chris.quick.R
 import org.chris.quick.b.activities.ThemeActivity
 import org.chris.quick.function.IsOkDialog
 import org.chris.quick.function.LoadingDialog
-import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.AppSettingsDialog
-import android.widget.Toast
-import android.content.Intent
-import org.chris.quick.R
+import pub.devrel.easypermissions.EasyPermissions
 
 
 /**

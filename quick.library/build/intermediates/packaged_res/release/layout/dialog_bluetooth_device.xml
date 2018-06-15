@@ -12,7 +12,7 @@
         android:layout_height="@dimen/itemHeight"
         android:background="#090000FF"
         android:gravity="center"
-        android:text="温馨提示"
+        android:text="蓝牙列表"
         android:textColor="@color/colorBlack"
         android:textSize="36px" />
 

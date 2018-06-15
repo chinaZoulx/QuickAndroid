@@ -27,6 +27,8 @@ import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.DevicesUtils
 
 import android.support.v7.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
+import org.chris.quick.function.QuickStartActivity
+import org.chris.quick.listener.OnClickListener2
 
 
 /**
@@ -61,6 +63,20 @@ abstract class ThemeActivity : AutoLayoutActivity() {
      * 是否显示标题
      */
     open val isShowTitle get() = true
+
+
+    /**
+     * 返回资源文件ID
+     *
+     * @return
+     */
+    @LayoutRes
+    protected abstract fun onResultLayoutResId(): Int
+
+    /**
+     * 初始化操作
+     */
+    abstract fun init()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -205,6 +221,17 @@ abstract class ThemeActivity : AutoLayoutActivity() {
     </T> */
     fun <T : View> getView(@IdRes resId: Int, view: View): T = view.findViewById(resId)
 
+    protected fun setOnClickListener(onClickListener: OnClickListener2, @IdRes vararg resIds: Int) {
+        for (resId in resIds) {
+            setOnClickListener(onClickListener, getView<View>(resId))
+        }
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener2, vararg views: View) {
+        for (view in views)
+            view.setOnClickListener(onClickListener)
+    }
+
     fun getErrorServiceHint(): String {
         if (errorServiceHint.isEmpty()) errorServiceHint = getString(R.string.errorServiceHint)
         return errorServiceHint
@@ -272,25 +299,22 @@ abstract class ThemeActivity : AutoLayoutActivity() {
         Snackbar.make(tempView, content, Snackbar.LENGTH_SHORT).setAction(actionTxt, onClickListener).setActionTextColor(ContextCompat.getColor(activity, R.color.colorBlueShallow)).show()
     }
 
-    /**
-     * 返回资源文件ID
-     *
-     * @return
-     */
-    @LayoutRes
-    protected abstract fun onResultLayoutResId(): Int
 
-    /**
-     * 初始化操作
-     */
-    abstract fun init()
-
-    override fun onDestroy() {
-        super.onDestroy()
-        ExitApplication.getInstance().removeActivity(this)
+    protected fun startActivity(intent: Intent, onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)) {
+        QuickStartActivity.startActivity(activity, intent, onActivityResultListener)
     }
 
-   companion object {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        QuickStartActivity.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onDestroy() {
+        ExitApplication.getInstance().removeActivity(this)
+        super.onDestroy()
+    }
+
+    companion object {
         init {//兼容vector
             setCompatVectorFromResourcesEnabled(true)
         }

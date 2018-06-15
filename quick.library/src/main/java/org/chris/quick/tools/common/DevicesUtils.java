@@ -7,6 +7,7 @@ package org.chris.quick.tools.common;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
@@ -271,5 +272,22 @@ public class DevicesUtils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 全面屏适配
+     * @param context
+     */
+    public static void setMaxAspect(Context context) {
+        ApplicationInfo applicationInfo = null;
+        try {
+            applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if(applicationInfo == null){
+            throw new IllegalArgumentException(" get application info = null, has no meta data! ");
+        }
+        applicationInfo.metaData.putString("android.max_aspect", "2.1");
     }
 }

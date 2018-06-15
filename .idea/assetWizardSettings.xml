@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/F:/Program%20Files/Android/Android%20Studio%203.0.1/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_photo_size_select_actual_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/F:/Program%20Files/Android/Android%20Studio%203.0.1/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_lens_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,9 +28,11 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="autoMirrored" value="true" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_photo_size_select_actual_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\ChrisZou" />
+                            <entry key="outputName" value="ic_ring" />
+                            <entry key="sourceFile" value="H:\InstallPackage\戒指.svg" />
                           </map>
                         </option>
                       </PersistentState>

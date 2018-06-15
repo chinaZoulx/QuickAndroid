@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Created by chris Zou on 2016/6/12.
  * 基础适配器,继承便能快速生成adapter
- * 分割线需使用 {@link org.chris.quick.widgets.XRecyclerViewLine#setDivider(Drawable, int, int, int, int)}
+ * 分割线需使用 {@link org.chris.quick.widgets.XRecyclerViewUsingLine#setDivider(Drawable, int, int, int, int)}
  *
  * @author chris Zou
  * @Date 2016/6/12

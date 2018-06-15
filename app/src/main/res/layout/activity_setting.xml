@@ -63,6 +63,25 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_right_gray_24dp" />
+            app:srcCompat="@drawable/ic_keyboard_arrow_right_gray_24dp" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/otherActivityTv"
+        android:layout_width="match_parent"
+        android:text="其他"
+        style="@style/TitleTextStyleAllParams"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:layout_height="@dimen/itemHeight" />
+
+    <TextView
+        android:id="@+id/detailTv"
+        android:layout_width="match_parent"
+        android:text="其他"
+        style="@style/TitleTextStyleAllParams"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:layout_height="@dimen/itemHeight" />
 </org.chris.quick.widgets.AutoForegroundLinearLayout>

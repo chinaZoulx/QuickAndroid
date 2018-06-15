@@ -27,6 +27,8 @@ import org.chris.quick.widgets.CustomCompatViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.transform.Transformer;
+
 /**
  * Created by work on 2017/9/6.
  *
@@ -101,8 +103,10 @@ public abstract class BaseViewPagerFragment<M> extends ThemeFragment {
     private void setupLayout() {
         mAdapter = onResultAdapter();
         getViewPager().setAdapter(mAdapter);
-        getViewPager().setPageTransformer(true, onResultPageTransformer());
+        ViewPager.PageTransformer transformer = onResultPageTransformer();
+        if (transformer != null) getViewPager().setPageTransformer(true, transformer);
         setScrollTimeType(isAutoScroll() ? onResultScrollChangeTimeFocus() : onResultScrollChangeTimeNormal());
+//        getViewPager().setOffscreenPageLimit();
     }
 
     private void setupListener() {
@@ -340,8 +344,12 @@ public abstract class BaseViewPagerFragment<M> extends ThemeFragment {
         return 5000L + onResultScrollChangeTimeFocus();
     }
 
+    /**
+     *
+     * @return should using {@link CustomCompatViewPager.TransformerFactory.Companion#getInstance()} and {@link org.chris.quick.widgets.CustomCompatViewPager.TransformerFactory.TransformerType#Depth} or {@link org.chris.quick.widgets.CustomCompatViewPager.TransformerFactory.TransformerType#ZoomOut} {@link org.chris.quick.widgets.CustomCompatViewPager.TransformerFactory.TransformerType#Flag} {@link org.chris.quick.widgets.CustomCompatViewPager.TransformerFactory.TransformerType#Flyme}
+     */
     public ViewPager.PageTransformer onResultPageTransformer() {
-        return CustomCompatViewPager.TransformerFactory.Companion.getInstance().getTransformer(getViewPager(), CustomCompatViewPager.TransformerFactory.TransformerType.Flyme);
+        return null;
     }
 
     /**

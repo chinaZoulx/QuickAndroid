@@ -28,10 +28,11 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <org.chris.quick.widgets.XRecyclerViewLine
+        <org.chris.quick.widgets.XRecyclerViewUsingLine
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scrollbars="horizontal" />
     </FrameLayout>
 
     <FrameLayout

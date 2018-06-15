@@ -10,6 +10,7 @@ import android.net.http.SslError
 import android.os.Build
 import android.os.Message
 import android.support.v4.content.ContextCompat
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -88,10 +89,11 @@ class ProgressWebView(context: Context, attrs: AttributeSet) : WebView(context, 
          * @param url
          * @return
          */
-        fun supportIntentAndScheme(activity: Activity, url: String): Boolean {
+        fun supportIntentAndScheme(activity: Activity?, url: String?): Boolean {
+            if (TextUtils.isEmpty(url)) return false
             try {
                 //处理intent协议
-                if (url.startsWith("intent://")) {
+                if (url!!.startsWith("intent://")) {
                     val intent: Intent
                     try {
                         intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
@@ -100,8 +102,8 @@ class ProgressWebView(context: Context, attrs: AttributeSet) : WebView(context, 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                             intent.selector = null
                         }
-                        val resolves = activity.packageManager.queryIntentActivities(intent, 0)
-                        if (resolves.size > 0) {
+                        val resolves = activity?.packageManager?.queryIntentActivities(intent, 0)
+                        if (resolves != null && resolves.size > 0) {
                             activity.startActivityIfNeeded(intent, -1)
                         }
                         return true
@@ -110,25 +112,40 @@ class ProgressWebView(context: Context, attrs: AttributeSet) : WebView(context, 
                     }
 
                 } else if (!url.startsWith("http")) {
-                    Log.e("加载Url", "已识别为拉起本地启用-url:$url")
                     try {
                         // 以下固定写法
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                        activity.startActivity(intent)
+                        activity?.startActivity(intent)
                         return true
                     } catch (e: Exception) {
                         // 防止没有安装的情况
                         e.printStackTrace()
                         Toast.makeText(activity, "您所打开的App未安装！", Toast.LENGTH_LONG).show()
                     }
-
-                }// 处理自定义scheme协议
+                } else {// 处理自定义scheme协议
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        if (intent.resolveActivity(activity?.packageManager) == null) return false
+                        else {
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+                            activity?.startActivity(intent)
+                        }
+                        return true
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
             return false
+        }
+
+        fun isScheme(url: String?): Boolean {
+            val uri = Uri.parse(url)
+            return uri.pathSegments != null && uri.pathSegments.size > 0
         }
     }
 }

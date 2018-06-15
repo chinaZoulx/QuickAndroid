@@ -7,19 +7,20 @@
     <TextView
         android:id="@+id/bluetoothNameTv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/itemHeight"
+        android:layout_height="wrap_content"
         android:gravity="center|left"
         android:text="fdfdfdf"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/colorBlack"
-        android:textSize="32px" />
+        android:textSize="@dimen/textTitleSize" />
 
     <TextView
         android:id="@+id/macTv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/itemHeight"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="mac"
         android:textColor="@color/colorGray"
-        android:textSize="28px"
+        android:textSize="@dimen/textBodySize"
         android:visibility="gone" />
 </LinearLayout>

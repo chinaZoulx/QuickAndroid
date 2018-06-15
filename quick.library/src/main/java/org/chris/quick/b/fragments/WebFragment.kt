@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
-import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewConfiguration
 import android.webkit.*
+import android.widget.TextView
 import kotlinx.android.synthetic.main.app_fragment_web.*
 import org.chris.quick.R
 import org.chris.quick.b.BaseFragment
@@ -17,6 +17,7 @@ import org.chris.quick.m.Log
 import org.chris.quick.service.DownloadService
 import org.chris.quick.tools.DateUtils
 import org.chris.quick.tools.common.DevicesUtils
+import org.chris.quick.tools.common.HttpUtils
 import org.chris.quick.widgets.ProgressWebView
 
 /**
@@ -26,17 +27,20 @@ import org.chris.quick.widgets.ProgressWebView
  * @mail chrisSpringSmell@gmail.com
  */
 @SuppressLint("ValidFragment")
-open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragment() {
-    private var baseUrl: String? = url
+open class WebFragment @JvmOverloads constructor(private var baseUrl: String? = "") : BaseFragment() {
+
     private var webViewClient: WebViewClient? = null
+    private var lastErrorUrl: String = ""
+    private var errorView: View? = null
 
     override fun onResultLayoutResId() = R.layout.app_fragment_web
     override fun onInit() {
         webViewClient = object : WebViewClient() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                Log.e("加载状态", "开始加载:$url")
+                if (errorView != null) errorView!!.visibility = View.GONE
+                if (ProgressWebView.isScheme(url)) ProgressWebView.supportIntentAndScheme(activity, url)
+                else super.onPageStarted(view, url, favicon)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -51,23 +55,14 @@ open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragmen
                 } else
                     request.toString()
                 compat(view, url)
-                //                else {
-                //                    return super.shouldOverrideUrlLoading(view, request);//若无法调起app，网站将跳转到app下载页面，需网站支持
-                //                }
                 return true
-            }
-
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                return if (compat(view, url)) {
-                    true
-                } else
-                    true
             }
 
             override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
                 super.onReceivedError(view, request, error)
-                val url = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) request.url.toString() else request.toString()
-                Log.e("加载状态", "加载错误：$url")
+                lastErrorUrl = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) request.url.toString() else request.toString()
+                Log.e("加载状态", "加载错误：$lastErrorUrl")
+                setError()
             }
 
             override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
@@ -79,6 +74,7 @@ open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragmen
             }
         }
     }
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onInitLayout() {
         progressWebView.settings.setSupportZoom(true)// 设置可以支持缩放
@@ -92,10 +88,15 @@ open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragmen
         progressWebView.settings.domStorageEnabled = true//DOM Storage
         progressWebView.settings.allowContentAccess = true
         progressWebView.webViewClient = webViewClient
+
+        progressWebView.settings.pluginState = WebSettings.PluginState.ON//插件
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            progressWebView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        }
     }
 
-    override fun onBindData() {
-        start(baseUrl)
+    override fun start() {
+        if (!TextUtils.isEmpty(baseUrl)) start(baseUrl)
     }
 
     override fun onBindListener() {
@@ -103,31 +104,43 @@ open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragmen
     }
 
     fun start(url: String?) {
-        if (!TextUtils.isEmpty(url)) {
-            this.baseUrl = url
-            if (progressWebView != null) progressWebView!!.loadUrl(url)
+        this.baseUrl = url
+        when {
+            TextUtils.isEmpty(url) -> showToast("链接不能为空")
+            ProgressWebView.isScheme(url) -> ProgressWebView.supportIntentAndScheme(activity, url)
+            HttpUtils.isHttpUrlFormRight(url) -> progressWebView?.loadUrl(url)
+            else -> showToast("链接错误")
         }
     }
 
     private fun compat(view: WebView, url: String): Boolean {
         Log.e("加载状态", "页面状态-Url：$url")
-        var flag = false
-        if (isAuthorizationUrl(url) && ProgressWebView.Companion.supportIntentAndScheme(activity!!, url)) {
-            return true
-        } else if (url.startsWith("http") || url.startsWith("https") || url.startsWith("ftp")) {//正常Url
-            flag = if (url.endsWith(".apk")) {//apk下载链接
+        return when {
+            isAuthorizationUrl(url) && ProgressWebView.supportIntentAndScheme(activity!!, url)//支付
+            -> true
+            ProgressWebView.isScheme(url) -> ProgressWebView.supportIntentAndScheme(activity!!, baseUrl!!)
+            url.startsWith("http") || url.startsWith("https") || url.startsWith("ftp")//正常链接
+            -> if (url.endsWith(".apk")) {//apk下载链接
                 downloadApk(url)
                 true
             } else {
-                view.loadUrl(url)
+                start(url)
                 true
             }
-        } else if (ProgressWebView.Companion.supportIntentAndScheme(activity!!, baseUrl!!)) {//是否成功打开app
-            return true
-        } else if (url.contains("tbopen") || url.contains("tmall")) {//拦截
-            flag = true
+            else -> false
         }
-        return flag
+    }
+
+    private fun setError() {
+        if (errorView == null) {
+            errorView = layoutInflater.inflate(R.layout.include_no_msg, null)
+            appContentContainer.addView(errorView)
+            errorView!!.setBackgroundResource(R.color.colorBg)
+            getView<View>(R.id.refreshBtn, errorView!!).visibility = View.VISIBLE
+            getView<View>(R.id.refreshBtn, errorView!!).setOnClickListener { start(lastErrorUrl) }
+        }
+        getView<TextView>(R.id.hintErrorTv).text = if (HttpUtils.isNetWorkAvailable(activity)) "居然加载失败了！" else "网络无法连接，请检查"
+        errorView!!.visibility = View.VISIBLE
     }
 
     /**
@@ -145,21 +158,20 @@ open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragmen
                 false
             }
 
-
-    private fun goDownload(apkUrl: String) {
-        DownloadService.startAction(activity!!, DownloadService.DownloadModel("下载应用", apkUrl, DateUtils.getCurrentTimeInMillis().toInt(), R.mipmap.ic_cloud_download_white))
-    }
-
     private fun downloadApk(apkUrl: String) {
         if (DevicesUtils.isWifi()) {
             isOkDialog.alertIsOkDialog("是否下载应用?", "取消", "下载") { _, isRight ->
                 if (isRight) goDownload(apkUrl)
             }
         } else {
-            isOkDialog.alertIsOkDialog("当前并非WIFI网络，下载会消耗您的流量，确定下载？", "取消", "土豪，不差流量") { _, isRight ->
+            isOkDialog.alertIsOkDialog("当前并非WIFI网络，下载会消耗您的流量，确定下载？", "取消", "任性下载") { _, isRight ->
                 if (isRight) goDownload(apkUrl)
             }
         }
+    }
+
+    private fun goDownload(apkUrl: String) {
+        DownloadService.startAction(activity!!, DownloadService.DownloadModel("下载应用", apkUrl, DateUtils.getCurrentTimeInMillis().toInt(), R.mipmap.ic_cloud_download_white))
     }
 
     fun onBackPressed(): Boolean =
@@ -179,20 +191,8 @@ open class WebFragment @JvmOverloads constructor(url: String = "") : BaseFragmen
     }
 
     companion object {
+        val instance: WebFragment get() = getInstance("")
 
-        const val URL_KEY = "url"
-
-        val instance: WebFragment
-            get() = getInstance("")
-
-        fun getInstance(baseUrl: String): WebFragment {
-            val webFragment = WebFragment(baseUrl)
-            if (!TextUtils.isEmpty(baseUrl)) {
-                val bundle = Bundle()
-                bundle.putString(URL_KEY, baseUrl)
-                webFragment.arguments = bundle
-            }
-            return webFragment
-        }
+        fun getInstance(baseUrl: String): WebFragment = WebFragment(baseUrl)
     }
 }

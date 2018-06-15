@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Handler
+import com.example.chriszou.quicksample.MainApplication
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.index.IndexFragment
 import com.example.chriszou.quicksample.ui.mycenter.DiscoverFragment
@@ -12,10 +14,11 @@ import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.activity_main.*
 import org.chris.quick.b.BaseActivity
 import org.chris.quick.b.BaseApplication
+import org.chris.quick.b.application.ExitApplication
 import org.chris.quick.service.DownloadService
 
 class MainActivity : BaseActivity() {
-
+    private var isExit = false
     private var upgradeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (Beta.getUpgradeInfo().upgradeType) {
@@ -58,5 +61,18 @@ class MainActivity : BaseActivity() {
         (0 until tabFragmentViewPager.aAdapter?.getDataList()!!.size).map {
             tabFragmentViewPager.aAdapter?.getDataList()!![it]
         }.forEach { it.onActivityResult(requestCode, resultCode, data) }
+    }
+
+    override fun onBackPressed() {
+        if (isExit) {
+            super.onBackPressed()
+            ExitApplication.getInstance().exit()
+        } else {
+            showToast("再按一次退出程序")
+            isExit = true
+            Handler().postDelayed({
+                isExit = false
+            }, 2000)
+        }
     }
 }

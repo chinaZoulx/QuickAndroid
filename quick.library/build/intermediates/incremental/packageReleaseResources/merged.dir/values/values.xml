@@ -22,7 +22,6 @@
     <color name="colorBlueShallow50">#00a2e9</color>
     <color name="colorContent">#008FD7</color>
     <color name="colorContentBg">#f5f5f5</color>
-    <color name="colorDialogBtnOk">@color/colorPrimary</color>
     <color name="colorGray">#828282</color>
     <color name="colorGrayDark">#4b4b4b</color>
     <color name="colorGrayDarkDark">#1e1e1e</color>
@@ -96,13 +95,13 @@
     <declare-styleable name="RollView"><attr format="boolean" name="isLoop"/></declare-styleable>
     <declare-styleable name="RoundProgressBar"><attr format="color|string" name="roundColor"/><attr format="color|string" name="roundInsideColor"/><attr format="dimension" name="roundInsideSize"/><attr format="dimension" name="roundSize"/><attr format="dimension" name="roundBorderWidth"/><attr format="color|string" name="roundProgressColor"/><attr format="color|string" name="textColor"/><attr format="dimension" name="textSize"/><attr format="boolean" name="textIsDisplayable"/><attr format="integer" name="style"/></declare-styleable>
     <declare-styleable name="RoundRectView"><attr format="integer|dimension|float" name="roundRectRadius"/><attr format="color" name="roundRectColorStart"/><attr format="color" name="roundRectColorEnd"/></declare-styleable>
-    <declare-styleable name="SemicircleView"><attr format="integer|dimension|float" name="svRadius"/><attr format="reference|color" name="svStartColor"/><attr format="reference|color" name="svEndColor"/><attr format="dimension" name="svPaddingHeight"/><attr format="boolean" name="svIsShadow"/><attr format="dimension" name="svShadowRadius"/><attr format="dimension" name="svShadowDistance"/></declare-styleable>
+    <declare-styleable name="SemicircleBottomView"><attr format="integer|dimension|float" name="svRadius"/><attr format="reference|color" name="svStartColor"/><attr format="reference|color" name="svEndColor"/><attr format="dimension" name="svPaddingHeight"/><attr format="boolean" name="svIsShadow"/><attr format="dimension" name="svShadowRadius"/><attr format="dimension" name="svShadowDistance"/></declare-styleable>
     <declare-styleable name="ShadowRelativeLayout"><attr format="dimension|integer" name="shadowSize"/><attr format="dimension|integer" name="shadowDx"/><attr format="dimension|integer" name="shadowDy"/><attr format="dimension|integer|float" name="shadowRadius"/><attr format="reference|color" name="shadowColor"/></declare-styleable>
     <declare-styleable name="SimpleRatingBar"><attr format="color" name="srb_borderColor"/><attr format="color" name="srb_fillColor"/><attr format="color" name="srb_backgroundColor"/><attr format="color" name="srb_starBackgroundColor"/><attr format="color" name="srb_pressedBorderColor"/><attr format="color" name="srb_pressedFillColor"/><attr format="color" name="srb_pressedBackgroundColor"/><attr format="color" name="srb_pressedStarBackgroundColor"/><attr format="integer" name="srb_numberOfStars"/><attr format="dimension" name="srb_starSize"/><attr format="dimension" name="srb_maxStarSize"/><attr format="dimension" name="srb_starsSeparation"/><attr format="float" name="srb_starBorderWidth"/><attr format="float" name="srb_starCornerRadius"/><attr format="boolean" name="srb_isIndicator"/><attr format="float" name="srb_rating"/><attr format="float" name="srb_stepSize"/><attr format="boolean" name="srb_drawBorderEnabled"/><attr format="enum" name="srb_gravity">
             <enum name="left" value="0"/>
             <enum name="right" value="1"/>
         </attr></declare-styleable>
-    <declare-styleable name="XRecyclerViewLine"><attr format="dimension|reference" name="xDividerSize"/><attr format="dimension|reference" name="xDividerPadding"/><attr format="color|reference" name="xDivider"/><attr name="xShowDividers">
+    <declare-styleable name="XRecyclerViewUsingLine"><attr format="dimension|reference" name="xDividerSize"/><attr format="dimension|reference" name="xDividerPadding"/><attr format="color|reference" name="xDivider"/><attr name="xShowDividers">
             <flag name="top" value="0x01"/>
             <flag name="bottom" value="0x02"/>
             <flag name="middle" value="0x04"/>
@@ -253,12 +252,11 @@
         <item name="android:gravity">center</item>
         <item name="android:text">-</item>
         <item name="android:scaleType">centerInside</item>
-        <item name="android:src">@drawable/ic_image_gray_24dp</item>
     </style>
     <style name="BaseTitleStyle" parent="BaseStyle">
         <item name="android:textSize">@dimen/textTitleSize</item>
         <item name="android:textColor">@color/colorBlack</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
     </style>
     <style name="BodyTextStyle" parent="BaseStyle">
         <item name="android:textColor">@color/colorGrayDarkDark</item>
@@ -309,7 +307,7 @@
 
     </style>
     <style name="TitleTextStyleAllParams" parent="BaseTitleStyle">
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
     <style name="ucrop_ImageViewWidgetIcon">
         <item name="android:layout_width">wrap_content</item>

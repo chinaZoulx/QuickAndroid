@@ -42,6 +42,10 @@ public class CustomCompatSwipeRefreshLayout extends SwipeRefreshLayout {
         }
     };
 
+    public CustomCompatSwipeRefreshLayout(Context context) {
+        this(context, null);
+    }
+
     public CustomCompatSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

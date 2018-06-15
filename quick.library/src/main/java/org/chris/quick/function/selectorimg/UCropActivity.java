@@ -39,7 +39,6 @@ import com.kevin.crop.view.UCropView;
 
 import org.chris.quick.R;
 import org.chris.quick.b.activities.ThemeActivity;
-import org.chris.quick.function.DialogFactory;
 import org.chris.quick.function.LoadingDialog;
 import org.chris.quick.widgets.AspectRatioTextView;
 import org.chris.quick.widgets.HorizontalProgressWheelView;

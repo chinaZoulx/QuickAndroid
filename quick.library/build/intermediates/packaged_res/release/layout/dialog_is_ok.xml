@@ -8,15 +8,15 @@
     app:divider="@drawable/shape_app_divider_colorline"
     app:showDividers="middle">
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <!--<com.zhy.autolayout.AutoLinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
 
         <org.chris.quick.widgets.MarqueeTextView
             android:id="@+id/msgTitleTv"
             android:layout_width="match_parent"
-            android:layout_height="120px"
+            android:layout_height="60dp"
             android:background="#f4f4f4"
             android:ellipsize="marquee"
             android:focusableInTouchMode="true"
@@ -24,9 +24,8 @@
             android:marqueeRepeatLimit="marquee_forever"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="-"
             android:textColor="@color/colorBlack"
-            android:textSize="40px"
+            android:textSize="@dimen/textTitleSize"
             android:visibility="visible" />
 
         <FrameLayout
@@ -34,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:minHeight="100dp">
+            android:minHeight="120dp">
 
             <TextView
                 android:id="@+id/msgContentTv"
@@ -42,17 +41,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:maxHeight="300px"
-                android:text="-"
+                android:maxHeight="180dp"
                 android:textColor="@color/colorGrayDark"
                 android:textIsSelectable="true"
-                android:textSize="32px" />
+                android:textSize="@dimen/textTitleSizeSmall" />
         </FrameLayout>
-    </com.zhy.autolayout.AutoLinearLayout>
+    <!--</com.zhy.autolayout.AutoLinearLayout>-->
 
     <org.chris.quick.widgets.AutoForegroundLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="@dimen/itemHeight"
         android:orientation="horizontal"
         app:divider="@drawable/shape_app_divider_colorline"
         app:dividerPadding="10dp"
@@ -67,7 +65,7 @@
             android:gravity="center"
             android:text="@string/cancel"
             android:textColor="@color/colorGray"
-            android:textSize="32px"
+            android:textSize="@dimen/textTitleSizeSmall"
             android:visibility="visible" />
 
         <Button
@@ -78,8 +76,8 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:gravity="center"
             android:text="@string/sure"
-            android:textColor="@color/colorDialogBtnOk"
-            android:textSize="32px" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textTitleSizeSmall" />
     </org.chris.quick.widgets.AutoForegroundLinearLayout>
 
 </org.chris.quick.widgets.AutoForegroundLinearLayout>

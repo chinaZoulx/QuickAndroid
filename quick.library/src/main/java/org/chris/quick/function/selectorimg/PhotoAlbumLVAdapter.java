@@ -51,8 +51,7 @@ public class PhotoAlbumLVAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).
-                    inflate(R.layout.activity_photo_album_lv_item, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.activity_photo_album_lv_item, null);
             holder = new ViewHolder();
 
             holder.firstImageIV = (ImageView) convertView.findViewById (R.id.select_img_gridView_img );

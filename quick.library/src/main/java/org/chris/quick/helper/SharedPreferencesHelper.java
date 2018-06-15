@@ -1,5 +1,6 @@
 package org.chris.quick.helper;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ public class SharedPreferencesHelper {
     private SharedPreferences mSharedPreferences;
     private static SharedPreferences.Editor mEditor;
 
+    @SuppressLint("CommitPrefEdits")
     private SharedPreferencesHelper(Context context, String baseKeyName) {
         mSharedPreferences = context.getSharedPreferences(baseKeyName, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();

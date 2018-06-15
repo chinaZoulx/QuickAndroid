@@ -13,6 +13,7 @@ import android.support.v4.graphics.drawable.IconCompat
 import android.widget.Toast
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.service.FloatService
+import com.example.chriszou.quicksample.ui.main.index.detail.IndexListDetailActivity
 import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.activity_setting.*
 import org.chris.quick.b.BaseActivity
@@ -27,7 +28,7 @@ import org.chris.quick.b.BaseApplication
 class SettingActivity : BaseActivity() {
 
     companion object {
-        val REQUEST_CODE_SHORTCUT = 0x321
+        const val REQUEST_CODE_SHORTCUT = 0x321
     }
 
     class ShortcutBroadcastReceiver : BroadcastReceiver() {
@@ -46,7 +47,6 @@ class SettingActivity : BaseActivity() {
         versionTv.text = String.format("%s.%d", BaseApplication.appVersionName, BaseApplication.appVersionCode)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindListener() {
         addShortcutTv.setOnClickListener {
             //            setupShortcut()
@@ -54,6 +54,16 @@ class SettingActivity : BaseActivity() {
         }
         openFloatWindowTv.setOnClickListener {
             startService(Intent(applicationContext, FloatService::class.java))
+        }
+        otherActivityTv.setOnClickListener {
+            startActivity(Intent(activity, OtherActivity::class.java), { resultCode, data ->
+                showToast("返回了")
+            })
+        }
+        detailTv.setOnClickListener {
+            startActivity(Intent(activity, IndexListDetailActivity::class.java), { resultCode, data ->
+                showToast("返回了2")
+            })
         }
         checkUpgradeContainer.setOnClickListener { Beta.checkUpgrade() }
     }
@@ -108,6 +118,7 @@ class SettingActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SHORTCUT) {
             showToast("onActivityResult")
         }

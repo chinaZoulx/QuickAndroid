@@ -29,7 +29,7 @@ import org.chris.quick.function.LoadingDialog;
 import org.chris.quick.m.HttpManager;
 import org.chris.quick.tools.GsonUtils;
 import org.chris.quick.tools.common.HttpUtils;
-import org.chris.quick.widgets.XRecyclerViewLine;
+import org.chris.quick.widgets.XRecyclerViewUsingLine;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -440,8 +440,8 @@ public abstract class BaseListActivity extends ThemeActivity implements XRecycle
         return getDefaultCuttingLine(getActivity());
     }
 
-    public static XRecyclerViewLine.DividerItemDecoration getDefaultCuttingLine(Activity activity) {
-        return new XRecyclerViewLine.DividerItemDecoration(activity, ContextCompat.getDrawable(activity, R.drawable.shape_app_divider_colorline), DividerItemDecoration.VERTICAL, (int) AutoUtils.getPercentHeight1px(), AutoUtils.getPercentWidthSize(BaseApplication.APP_BORDER_MARGIN), XRecyclerViewLine.DividerItemDecoration.MIDDLE);
+    public static XRecyclerViewUsingLine.DividerItemDecoration getDefaultCuttingLine(Activity activity) {
+        return new XRecyclerViewUsingLine.DividerItemDecoration(activity, ContextCompat.getDrawable(activity, R.drawable.shape_app_divider_colorline), DividerItemDecoration.VERTICAL, (int) AutoUtils.getPercentHeight1px(), AutoUtils.getPercentWidthSize(BaseApplication.APP_BORDER_MARGIN), XRecyclerViewUsingLine.DividerItemDecoration.MIDDLE);
     }
 
     public boolean isShowCuttingLine() {

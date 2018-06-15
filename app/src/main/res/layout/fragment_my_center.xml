@@ -27,7 +27,7 @@
                     android:layout_height="200dp"
                     app:layout_collapseMode="parallax">
 
-                    <org.chris.quick.widgets.SemicircleView
+                    <org.chris.quick.widgets.SemicircleBottomView
                         android:id="@+id/semicircleView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -66,6 +66,7 @@
                             style="@style/ImgStyleAllParams"
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
+                            android:paddingBottom="10dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/ic_qr_code_white" />
 
@@ -74,6 +75,7 @@
                             style="@style/TitleTextStyle"
                             android:layout_width="0dp"
                             android:layout_height="?attr/actionBarSize"
+                            android:paddingBottom="10dp"
                             android:text=" "
                             android:textColor="@color/colorWhite"
                             app:layout_constraintLeft_toRightOf="@id/qrCodeIv"
@@ -84,6 +86,7 @@
                             style="@style/ImgStyleAllParams"
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
+                            android:paddingBottom="10dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/ic_settings_white_24dp"
                             app:layout_constraintRight_toRightOf="parent" />

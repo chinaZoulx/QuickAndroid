@@ -65,7 +65,7 @@
         <attr name="shadowColor" format="reference|color"/>
     </declare-styleable>
 
-    <declare-styleable name="SemicircleView">
+    <declare-styleable name="SemicircleBottomView">
         <attr name="svRadius" format="integer|dimension|float" />
         <attr name="svStartColor" format="reference|color" />
         <attr name="svEndColor" format="reference|color" />
@@ -138,7 +138,7 @@
         <attr name="pwContourSize" format="dimension"/>
     </declare-styleable>
 
-    <declare-styleable name="XRecyclerViewLine">
+    <declare-styleable name="XRecyclerViewUsingLine">
         <attr name="xDividerSize" format="dimension|reference" />
         <attr name="xDividerPadding" format="dimension|reference" />
         <attr name="xDivider" format="color|reference" />

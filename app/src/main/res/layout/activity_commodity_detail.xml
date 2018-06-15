@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBg"
+    tools:context=".ui.material.CommodityDetailActivity">
+
+    <fragment
+        android:id="@+id/commodityBannerFragment"
+        class="com.example.chriszou.quicksample.ui.material.CommodityBannerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+
+    <org.chris.quick.widgets.SemicircleTopView
+        android:id="@+id/semicircleTopView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="@id/commodityBannerFragment"
+        app:svPaddingHeight="40dp"
+        app:svStartColor="@color/colorBg" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/commodityListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="@id/commodityBannerFragment" />
+</android.support.constraint.ConstraintLayout>

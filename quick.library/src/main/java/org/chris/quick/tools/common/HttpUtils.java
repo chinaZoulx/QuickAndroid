@@ -100,7 +100,7 @@ public class HttpUtils {
     public static Boolean isFileUrlFormRight(String url) {
         if (!TextUtils.isEmpty(url)) {
             url = url.toLowerCase();
-            String[] postfixs = new String[]{".png", ".jpg", ".jpg", ".gif", ".mp3", ".mp4", ".zip"};
+            String[] postfixs = new String[]{".png", ".jpg", ".jpg", ".gif", ".mp3", ".mp4", ".zip",".apk"};
             if (url.startsWith("http://") || url.startsWith("https://")) {
                 for (String postfix : postfixs) {
                     if (url.endsWith(postfix)) {
