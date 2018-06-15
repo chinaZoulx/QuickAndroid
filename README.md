@@ -1,4 +1,5 @@
 # quick.library
+本项目包含完整的代码Demo,可直接clone
 # 快速开发框架
 zxing 扫描、生成、解析二维码、近距离扫码<br>
 ## BaseActivity
