@@ -25,8 +25,7 @@ object QuickStartActivity {
             activity.startActivity(intent)
         else {
             val requestCode = createRequestCode(intent.component.className)
-            if (requestParamsList[requestCode] == null)
-                requestParamsList.put(requestCode, onActivityResultListener)/*这里是以目的地存储的*/
+            requestParamsList.put(requestCode, onActivityResultListener)/*这里是以目的地存储的*/
             activity.startActivityForResult(intent, requestCode)
         }
     }
