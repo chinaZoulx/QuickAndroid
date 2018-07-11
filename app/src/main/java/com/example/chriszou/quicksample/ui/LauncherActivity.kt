@@ -53,7 +53,7 @@ class LauncherActivity : BaseActivity() {
     }
 
     private fun launcher() {
-//        val firstLoginDate = SharedPreferencesHelper.getValue(BaseApplication.APP_FIRST_LOGIN_DATE, -1L)
+//        val firstLoginDate = QuickSharedPreferencesHelper.getValue(BaseApplication.APP_FIRST_LOGIN_DATE, -1L)
         when {
 //            firstLoginDate == -1L -> startAction(this, LoginActivity::class.java, "")
 //            DateUtils.getCurrentTimeInMillis() - firstLoginDate > DateUtils.DAY * 7 -> startAction(this, LoginActivity::class.java, "")

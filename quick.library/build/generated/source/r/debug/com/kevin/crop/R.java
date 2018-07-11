@@ -577,12 +577,12 @@ public final class R {
         public static int time = 0x7f0c0154;
         public static int title = 0x7f0c0155;
         public static int title_template = 0x7f0c0158;
-        public static int topPanel = 0x7f0c015c;
-        public static int up = 0x7f0c016c;
-        public static int useLogo = 0x7f0c016d;
-        public static int view_overlay = 0x7f0c0171;
-        public static int withText = 0x7f0c0174;
-        public static int wrap_content = 0x7f0c0176;
+        public static int topPanel = 0x7f0c015d;
+        public static int up = 0x7f0c016d;
+        public static int useLogo = 0x7f0c016e;
+        public static int view_overlay = 0x7f0c0172;
+        public static int withText = 0x7f0c0175;
+        public static int wrap_content = 0x7f0c0177;
     }
     public static final class integer {
         public static int abc_config_activityDefaultDur = 0x7f0d0001;
@@ -629,7 +629,7 @@ public final class R {
         public static int select_dialog_multichoice_material = 0x7f0f005e;
         public static int select_dialog_singlechoice_material = 0x7f0f005f;
         public static int support_simple_spinner_dropdown_item = 0x7f0f0061;
-        public static int ucrop_view = 0x7f0f0067;
+        public static int ucrop_view = 0x7f0f0068;
     }
     public static final class string {
         public static int abc_action_bar_home_description = 0x7f150001;

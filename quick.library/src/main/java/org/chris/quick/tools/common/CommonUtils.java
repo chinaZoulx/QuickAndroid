@@ -301,7 +301,7 @@ public class CommonUtils {
      * @return
      */
     public static <T> T getIntentValue(Intent intent, String key, T defaultValue) {
-        Object value = defaultValue;
+        Object value;
         try {
             if (defaultValue instanceof String) {
                 value = intent.getStringExtra(key);
@@ -309,8 +309,6 @@ public class CommonUtils {
                 value = intent.getIntExtra(key, 0);
             } else if (defaultValue instanceof Boolean) {
                 value = intent.getBooleanExtra(key, false);
-            } else if (defaultValue instanceof Serializable) {
-                value = intent.getSerializableExtra(key);
             } else if (defaultValue instanceof Long) {
                 value = intent.getLongExtra(key, 0);
             } else if (defaultValue instanceof Float) {
@@ -321,7 +319,9 @@ public class CommonUtils {
                 value = intent.getStringArrayListExtra(key);
             } else if (defaultValue instanceof Bundle) {
                 value = intent.getBundleExtra(key);
-            }
+            } else if (defaultValue instanceof Serializable) {
+                value = intent.getSerializableExtra(key);
+            } else value = intent.getSerializableExtra(key);
         } catch (Exception o_O) {
             value = defaultValue;
             Log.e("转换错误", "获取intent内容失败：或许是因为Key不存在,若需要解决请手动添加类型转换");

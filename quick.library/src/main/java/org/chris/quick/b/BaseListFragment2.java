@@ -16,6 +16,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.chris.quick.R;
 import org.chris.quick.b.fragments.ThemeFragment;
+import org.chris.quick.config.QuickConfigConstant;
 import org.chris.quick.function.IsOkDialog;
 import org.chris.quick.function.LoadingDialog;
 import org.chris.quick.m.HttpManager;
@@ -166,7 +167,7 @@ public abstract class BaseListFragment2 extends ThemeFragment implements SwipeRe
                 }
                 BaseModel model = GsonUtils.INSTANCE.parseFromJson(response, BaseModel.class);
                 if (model != null) {
-                    if (model.getCode()==BaseApplication.APP_SUCCESS_TAG) {//成功了返回
+                    if (model.getCode()== QuickConfigConstant.APP_SUCCESS_TAG) {//成功了返回
                         setHasData(true);
                         onRequestDataSuccess(response, isPullRefresh());
                     } else if (isPullRefresh()) {//下拉刷新

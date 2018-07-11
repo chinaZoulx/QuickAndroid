@@ -16,8 +16,11 @@ import com.example.chriszou.quicksample.service.FloatService
 import com.example.chriszou.quicksample.ui.main.index.detail.IndexListDetailActivity
 import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.activity_setting.*
+import org.chris.quick.QuickAndroid
 import org.chris.quick.b.BaseActivity
 import org.chris.quick.b.BaseApplication
+import org.chris.quick.config.QuickConfigConstant
+import org.chris.quick.function.QuickBroadcast
 
 
 /**
@@ -44,7 +47,7 @@ class SettingActivity : BaseActivity() {
     }
 
     override fun onInitLayout() {
-        versionTv.text = String.format("%s.%d", BaseApplication.appVersionName, BaseApplication.appVersionCode)
+        versionTv.text = String.format("%s.%d", QuickAndroid.appVersionName, QuickAndroid.appVersionCode)
     }
 
     override fun onBindListener() {
@@ -61,9 +64,7 @@ class SettingActivity : BaseActivity() {
             })
         }
         detailTv.setOnClickListener {
-            startActivity(Intent(activity, IndexListDetailActivity::class.java), { resultCode, data ->
-                showToast("返回了2")
-            })
+            QuickBroadcast.sendBroadcast(Intent(), "MyCenterFragment")
         }
         checkUpgradeContainer.setOnClickListener { Beta.checkUpgrade() }
     }

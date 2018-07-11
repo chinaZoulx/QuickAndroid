@@ -746,8 +746,8 @@ public final class R {
         public static int notification_template_icon_low_bg = 0x7f0900a4;
         public static int notification_tile_bg = 0x7f0900a5;
         public static int notify_panel_notification_icon_bg = 0x7f0900a6;
-        public static int tooltip_frame_dark = 0x7f0900e3;
-        public static int tooltip_frame_light = 0x7f0900e4;
+        public static int tooltip_frame_dark = 0x7f0900e4;
+        public static int tooltip_frame_light = 0x7f0900e5;
     }
     public static final class id {
         public static int action0 = 0x7f0c001e;
@@ -881,19 +881,19 @@ public final class R {
         public static int title = 0x7f0c0155;
         public static int titleDividerNoCustom = 0x7f0c0156;
         public static int title_template = 0x7f0c0158;
-        public static int top = 0x7f0c015b;
-        public static int topPanel = 0x7f0c015c;
-        public static int touch_outside = 0x7f0c015d;
-        public static int transition_current_scene = 0x7f0c0160;
-        public static int transition_layout_save = 0x7f0c0161;
-        public static int transition_position = 0x7f0c0162;
-        public static int transition_scene_layoutid_cache = 0x7f0c0163;
-        public static int transition_transform = 0x7f0c0164;
-        public static int uniform = 0x7f0c016b;
-        public static int up = 0x7f0c016c;
-        public static int view_offset_helper = 0x7f0c0170;
-        public static int visible = 0x7f0c0172;
-        public static int wrap_content = 0x7f0c0176;
+        public static int top = 0x7f0c015c;
+        public static int topPanel = 0x7f0c015d;
+        public static int touch_outside = 0x7f0c015e;
+        public static int transition_current_scene = 0x7f0c0161;
+        public static int transition_layout_save = 0x7f0c0162;
+        public static int transition_position = 0x7f0c0163;
+        public static int transition_scene_layoutid_cache = 0x7f0c0164;
+        public static int transition_transform = 0x7f0c0165;
+        public static int uniform = 0x7f0c016c;
+        public static int up = 0x7f0c016d;
+        public static int view_offset_helper = 0x7f0c0171;
+        public static int visible = 0x7f0c0173;
+        public static int wrap_content = 0x7f0c0177;
     }
     public static final class integer {
         public static int abc_config_activityDefaultDur = 0x7f0d0001;

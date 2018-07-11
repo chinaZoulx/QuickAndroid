@@ -58,7 +58,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.lzp.floatingactionbutton:floatingactionbuttonplus:1.0.0'
     //    implementation 'com.android.support:percent:27.1.1'
-    implementation project(':quick.library')
-    implementation project(path: ':zxing.library')
-    implementation project(':viewpagerlayoutmanager')
+    implementation project(':quick.library')//基本开发组件
+    implementation project(path: ':zxing.library')//二维码
+    implementation project(':viewpagerlayoutmanager')//自定义的RecyclerViewLayoutManager的包
 }

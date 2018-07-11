@@ -23,6 +23,7 @@ import android.widget.Toast
 import org.chris.quick.R
 import org.chris.quick.b.activities.ThemeActivity
 import org.chris.quick.function.QuickStartActivity
+import org.chris.quick.function.QuickToast
 import org.chris.quick.listener.OnClickListener2
 import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.DevicesUtils
@@ -246,20 +247,17 @@ abstract class ThemeFragment : Fragment() {
     }
 
     protected fun showToast(content: CharSequence?) {
-        showToast(content, 0, Toast.LENGTH_SHORT)
+        showToast(content, Toast.LENGTH_SHORT)
     }
 
     protected fun showToast(content: CharSequence?, duration: Int) {
-        showToast(content, 0, duration)
+        showToast(content, 0, 0, 150, duration)
     }
 
-    protected fun showToast(content: CharSequence?, gravity: Int = 0, duration: Int = Toast.LENGTH_SHORT) {
-        if (activity == null) return
-        val toast = Toast.makeText(activity, content, duration)
-        if (gravity != 0)
-            toast.setGravity(gravity, 0, 0)
-        DevicesUtils.closeSoftInput(activity)
-        toast.show()
+    protected fun showToast(content: CharSequence?, gravity: Int = 0, xOffset: Int, yOffset: Int, duration: Int = Toast.LENGTH_SHORT) {
+        QuickToast.Builder().setGravity(gravity, xOffset, yOffset).setDuration(duration).build().showToast(content.toString())
+        if (activity != null)
+            DevicesUtils.closeSoftInput(activity)
     }
 
     protected fun showSnackbar(content: CharSequence, onClickListener: View.OnClickListener) {

@@ -13,7 +13,8 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.chris.quick.R;
 import org.chris.quick.b.BaseApplication;
 import org.chris.quick.b.BaseModel;
-import org.chris.quick.helper.SharedPreferencesHelper;
+import org.chris.quick.config.QuickConfigConstant;
+import org.chris.quick.helper.QuickSharedPreferencesHelper;
 import org.chris.quick.tools.CheckUtils;
 import org.chris.quick.tools.DateUtils;
 import org.chris.quick.tools.GsonUtils;
@@ -123,8 +124,8 @@ public class HttpManager {
         if (params == null) {
             params = new HashMap<>();
         }
-        if (!params.containsKey(BaseApplication.APP_TOKEN)) {
-            params.put(BaseApplication.APP_TOKEN, SharedPreferencesHelper.getValue(BaseApplication.APP_TOKEN, "chrisZou"));
+        if (!params.containsKey(QuickConfigConstant.INSTANCE.APP_TOKEN)) {
+            params.put(QuickConfigConstant.INSTANCE.APP_TOKEN, QuickSharedPreferencesHelper.getValue(QuickConfigConstant.INSTANCE.APP_TOKEN, "chrisZou"));
         }
         Log.e("okHttpUtils",
                 String.format("Start：%s URL:%s?%s",
@@ -216,8 +217,8 @@ public class HttpManager {
         if (params == null) {
             params = new HashMap<>();
         }
-        if (!params.containsKey(BaseApplication.APP_TOKEN)) {
-            params.put(BaseApplication.APP_TOKEN, SharedPreferencesHelper.getValue(BaseApplication.APP_TOKEN, "chrisZou"));
+        if (!params.containsKey(QuickConfigConstant.INSTANCE.APP_TOKEN)) {
+            params.put(QuickConfigConstant.INSTANCE.APP_TOKEN, QuickSharedPreferencesHelper.getValue(QuickConfigConstant.INSTANCE.APP_TOKEN, "chrisZou"));
         }
         Log.e("okHttpUtils",
                 String.format("Start：%s URL:%s?%s",

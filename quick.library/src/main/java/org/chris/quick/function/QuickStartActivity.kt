@@ -6,9 +6,9 @@ import android.util.SparseArray
 
 /**
  * @describe 快速简洁的返回startActivityForResult值
- *  每个目的地只支持一个回调，比如A跳转至B，A应该将所有跳转写在一起，而不是分散开来
  * @author ChrisZou
  * @date 2018/6/14-14:33
+ * @from https://github.com/SpringSmell/quick.library
  * @email chrisSpringSmell@gmail.com
  */
 object QuickStartActivity {

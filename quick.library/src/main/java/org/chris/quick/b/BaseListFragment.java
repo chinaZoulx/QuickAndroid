@@ -24,6 +24,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.chris.quick.R;
 import org.chris.quick.b.fragments.ThemeFragment;
+import org.chris.quick.config.QuickConfigConstant;
 import org.chris.quick.function.IsOkDialog;
 import org.chris.quick.function.LoadingDialog;
 import org.chris.quick.listener.OnClickListener2;
@@ -210,7 +211,7 @@ public abstract class BaseListFragment extends ThemeFragment implements XRecycle
                 }
                 BaseModel model = GsonUtils.INSTANCE.parseFromJson(response, BaseModel.class);
                 if (model != null) {
-                    if (model.getCode() == BaseApplication.APP_SUCCESS_TAG) {//成功了返回
+                    if (model.getCode() == QuickConfigConstant.APP_SUCCESS_TAG) {//成功了返回
                         getRecyclerView().setNoMore(false);
                         setHasData(true);
                         onRequestDataSuccess(response, isPullRefresh());

@@ -10,16 +10,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.bluetooth.BluetoothActivity
-import com.example.chriszou.quicksample.ui.main.MainActivity
 import com.example.chriszou.quicksample.ui.setting.SettingActivity
 import com.jcodecraeer.xrecyclerview.AppBarStateChangeListener
 import kotlinx.android.synthetic.main.fragment_my_center.*
 import org.chris.quick.b.BaseFragment
-import org.chris.quick.b.activities.ThemeActivity
 import org.chris.quick.b.activities.ThemeActivity.Companion.TITLE
+import org.chris.quick.function.QuickBroadcast
 import org.chris.quick.function.QuickStartActivity
 import org.chris.quick.function.SelectorImgActivity
-import org.chris.quick.helper.SharedPreferencesHelper
+import org.chris.quick.helper.QuickSharedPreferencesHelper
 import org.chris.quick.m.glide.GlideCircleTransform
 import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.ImageUtils
@@ -39,8 +38,11 @@ class MyCenterFragment : BaseFragment() {
     override fun onInit() = Unit
 
     override fun onInitLayout() {
+        QuickBroadcast.addBroadcastListener(this, { action, intent ->
+            showToast(String.format("收到广播，action:%s", action))
+        }, "MyCenterFragment")
         setTitle("个人中心")
-        Glide.with(context).load(File(SharedPreferencesHelper.getValue(COVER_PATH, ""))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)
+        Glide.with(context).load(File(QuickSharedPreferencesHelper.getValue(COVER_PATH, ""))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)
         customCompatSwipeRefreshLayout.setOnRefreshListener {
             Handler().postDelayed({ customCompatSwipeRefreshLayout.isRefreshing = false }, 500)
         }
@@ -77,16 +79,26 @@ class MyCenterFragment : BaseFragment() {
             //            ThemeActivity.startAction(activity, SettingActivity::class.java, "设置")
             val intent = Intent(activity, SettingActivity::class.java)
             intent.putExtra(TITLE, "设置")
-            QuickStartActivity.startActivity(activity, intent, { resultCode, data ->
-                showToast("设置数据返回了哟")
-            })
+            QuickStartActivity.startActivity(activity, intent) { resultCode, data ->
+                //do something...
+            }
         }
         bluetoothTv.setOnClickListener {
             val intent = Intent(activity, BluetoothActivity::class.java)
             intent.putExtra(TITLE, "蓝牙管理")
-            QuickStartActivity.startActivity(activity,intent,{resultCode, data ->
+            QuickStartActivity.startActivity(activity, intent) { resultCode, data ->
                 showToast("蓝牙返回了哟")
-            })
+            }
+        }
+        broadcastTv.setOnClickListener {
+            val intent = Intent()
+            intent.putExtra("test", "广播1")
+            QuickBroadcast.sendBroadcast(intent, "test")
+        }
+        broadcastTv2.setOnClickListener {
+            val intent = Intent()
+            intent.putExtra("test", "广播2")
+            QuickBroadcast.sendBroadcast(intent, "test2")
         }
     }
 
@@ -99,7 +111,7 @@ class MyCenterFragment : BaseFragment() {
             if (data != null && data.hasExtra(SelectorImgActivity.ALREADY_PATHS)) {
                 val imgList = data.getStringArrayListExtra(SelectorImgActivity.ALREADY_PATHS)
                 if (imgList != null && imgList.size > 0) {
-                    SharedPreferencesHelper.putValue(COVER_PATH, imgList[0])
+                    QuickSharedPreferencesHelper.putValue(COVER_PATH, imgList[0])
                     Glide.with(context).load(File(imgList[0])).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)
                 }
             }

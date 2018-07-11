@@ -68,7 +68,7 @@
     <TextView
         android:id="@+id/otherActivityTv"
         android:layout_width="match_parent"
-        android:text="其他"
+        android:text="测试QuickStartActivity"
         style="@style/TitleTextStyleAllParams"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/borderWidth"
@@ -78,7 +78,7 @@
     <TextView
         android:id="@+id/detailTv"
         android:layout_width="match_parent"
-        android:text="其他"
+        android:text="测试QuickBroadcast"
         style="@style/TitleTextStyleAllParams"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/borderWidth"

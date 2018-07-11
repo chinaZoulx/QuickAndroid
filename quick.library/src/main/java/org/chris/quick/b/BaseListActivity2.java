@@ -18,6 +18,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.chris.quick.R;
 import org.chris.quick.b.activities.ThemeActivity;
+import org.chris.quick.config.QuickConfigConstant;
 import org.chris.quick.function.IsOkDialog;
 import org.chris.quick.function.LoadingDialog;
 import org.chris.quick.m.HttpManager;
@@ -38,7 +39,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 /**
  * Created by work on 2017/8/10.
- *
+ *带header的基类列表
  * @author chris zou
  * @mail chrisSpringSmell@gmail.com
  */
@@ -210,7 +211,7 @@ public abstract class BaseListActivity2<M> extends ThemeActivity implements Swip
             public void onResponse(String response, int id) {
                 BaseModel model = GsonUtils.INSTANCE.parseFromJson(response, BaseModel.class);
                 if (model != null) {
-                    if (model.getCode()==BaseApplication.APP_SUCCESS_TAG) {//成功了返回
+                    if (model.getCode()== QuickConfigConstant.APP_SUCCESS_TAG) {//成功了返回
                         setHasData(true);
                         onRequestDataSuccess(response, isPullRefresh());
                     } else if (isPullRefresh()) {//下拉刷新

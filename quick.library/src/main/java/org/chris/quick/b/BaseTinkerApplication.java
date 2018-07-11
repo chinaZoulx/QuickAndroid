@@ -13,6 +13,8 @@ import com.tencent.bugly.beta.interfaces.BetaPatchListener;
 import com.tencent.bugly.beta.upgrade.UpgradeListener;
 import com.tencent.bugly.beta.upgrade.UpgradeStateListener;
 
+import org.chris.quick.config.QuickConfigConstant;
+import org.chris.quick.function.QuickToast;
 import org.chris.quick.m.Log;
 import org.chris.quick.tools.DateUtils;
 
@@ -48,7 +50,7 @@ public class BaseTinkerApplication extends BaseApplication {
             @Override
             public void onUpgrade(int i, UpgradeInfo upgradeInfo, boolean b, boolean b1) {
                 if (upgradeInfo != null) {
-                    sendBroadcast(new Intent(APP_UPGRADE));
+                    sendBroadcast(new Intent(QuickConfigConstant.APP_UPGRADE));
                 }
             }
         };
@@ -68,12 +70,12 @@ public class BaseTinkerApplication extends BaseApplication {
 
             @Override
             public void onUpgradeNoVersion(boolean b) {
-                Toast.makeText(getApplicationContext(), "最新版本", Toast.LENGTH_SHORT).show();
+                QuickToast.Companion.showToastDefault("最新版本");
             }
 
             @Override
             public void onUpgrading(boolean b) {
-                Toast.makeText(getApplicationContext(), "开始检查更新", Toast.LENGTH_SHORT).show();
+                QuickToast.Companion.showToastDefault("开始检查更新");
             }
 
             @Override

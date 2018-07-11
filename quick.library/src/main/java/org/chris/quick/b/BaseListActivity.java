@@ -24,6 +24,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.chris.quick.R;
 import org.chris.quick.b.activities.ThemeActivity;
+import org.chris.quick.config.QuickConfigConstant;
 import org.chris.quick.function.IsOkDialog;
 import org.chris.quick.function.LoadingDialog;
 import org.chris.quick.m.HttpManager;
@@ -218,7 +219,7 @@ public abstract class BaseListActivity extends ThemeActivity implements XRecycle
             public void onResponse(String response, int id) {
                 BaseModel model = GsonUtils.INSTANCE.parseFromJson(response, BaseModel.class);
                 if (model != null) {
-                    if (model.getCode() == BaseApplication.APP_SUCCESS_TAG) {//成功了返回
+                    if (model.getCode() == QuickConfigConstant.APP_SUCCESS_TAG) {//成功了返回
                         xRecyclerView.setNoMore(false);
                         setHasData(true);
                         onRequestDataSuccess(response, isPullRefresh());
@@ -441,7 +442,7 @@ public abstract class BaseListActivity extends ThemeActivity implements XRecycle
     }
 
     public static XRecyclerViewUsingLine.DividerItemDecoration getDefaultCuttingLine(Activity activity) {
-        return new XRecyclerViewUsingLine.DividerItemDecoration(activity, ContextCompat.getDrawable(activity, R.drawable.shape_app_divider_colorline), DividerItemDecoration.VERTICAL, (int) AutoUtils.getPercentHeight1px(), AutoUtils.getPercentWidthSize(BaseApplication.APP_BORDER_MARGIN), XRecyclerViewUsingLine.DividerItemDecoration.MIDDLE);
+        return new XRecyclerViewUsingLine.DividerItemDecoration(activity, ContextCompat.getDrawable(activity, R.drawable.shape_app_divider_colorline), DividerItemDecoration.VERTICAL, (int) AutoUtils.getPercentHeight1px(), AutoUtils.getPercentWidthSize(QuickConfigConstant.APP_BORDER_MARGIN), XRecyclerViewUsingLine.DividerItemDecoration.MIDDLE);
     }
 
     public boolean isShowCuttingLine() {

@@ -3,12 +3,17 @@ package com.example.chriszou.quicksample.ui.main.index
 import android.content.Intent
 import android.net.Uri
 import com.example.chriszou.quicksample.R
-import com.example.chriszou.quicksample.ui.cuttoanim.CutToAnimActivity
 import com.example.chriszou.quicksample.ui.material.CommodityDetailActivity
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_index.*
 import kotlinx.android.synthetic.main.include_btn_index.*
 import org.chris.quick.b.BaseFragment
 import org.chris.quick.b.activities.WebActivity
+import org.chris.quick.function.QuickBroadcast
+import org.chris.quick.function.QuickToast
+import org.chris.quick.m.Log
+import java.util.concurrent.TimeUnit
 
 class IndexFragment : BaseFragment() {
 
@@ -16,14 +21,20 @@ class IndexFragment : BaseFragment() {
     override val isShowTitle: Boolean get() = true
     //    override fun onResultToolbar(): Toolbar? = getView(R.id.toolbar)
     override fun onInit() {
-        setParentMenu(R.menu.navigation, { menu ->
+        QuickBroadcast.addBroadcastListener(this, { action, intent ->
+            when (action) {
+                "test" -> showToast(intent.getStringExtra("test"))
+                "test2" -> showToast(intent.getStringExtra("test"))
+            }
+        }, "test", "test2")
+        setParentMenu(R.menu.navigation) { menu ->
             when (menu?.itemId) {
                 R.id.navigation0 -> showToast("首页")
                 R.id.navigation1 -> showToast("发现")
                 R.id.navigation3 -> showToast("我的")
             }
             true
-        })
+        }
     }
 
     override fun onInitLayout() {
@@ -52,6 +63,26 @@ class IndexFragment : BaseFragment() {
         }
         tabTv3.setOnClickListener {
             startActivity(Intent(activity, CustomPullRefreshActivity::class.java))
+        }
+        tabTv4.setOnClickListener {
+            Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread()).take(10).subscribe {
+                Log.e("test", it.toString())
+                val temp = it.toString()
+                QuickToast.showToastDefault("发现七彩还魂草:$temp")
+            }
+//            QuickToast.Builder().setDuration(Toast.LENGTH_LONG).create().showToast("发现七彩还魂草")
+//            QuickToast.showToastDefault("")
+        }
+
+        tabTv5.setOnClickListener {
+            showToast("发现七彩还魂草")
+//            Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread()).take(10).subscribe {
+//                Log.e("test", it.toString())
+//                val temp = it.toString()
+//                QuickToast.showToastDefault("发现七彩还魂草:$temp")
+//            }
+//            QuickToast.Builder().setDuration(Toast.LENGTH_LONG).create().showToast("发现七彩还魂草")
+//            QuickToast.showToastDefault("")
         }
         fabContainer.setOnItemClickListener { tagView, position ->
             //            startActivity(Intent(activity, CutToAnimActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())

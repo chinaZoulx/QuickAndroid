@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.chris.quick.b.BaseActivity
 import org.chris.quick.b.BaseApplication
 import org.chris.quick.b.application.ExitApplication
+import org.chris.quick.config.QuickConfigConstant
 import org.chris.quick.service.DownloadService
 
 class MainActivity : BaseActivity() {
@@ -36,7 +37,7 @@ class MainActivity : BaseActivity() {
     override val isShowTitle: Boolean get() = false
     override fun onResultLayoutResId(): Int = R.layout.activity_main
     override fun onInit() {
-        registerReceiver(upgradeReceiver, IntentFilter(BaseApplication.APP_UPGRADE))
+        registerReceiver(upgradeReceiver, IntentFilter(QuickConfigConstant.APP_UPGRADE))
         setBackInvalid()
     }
 

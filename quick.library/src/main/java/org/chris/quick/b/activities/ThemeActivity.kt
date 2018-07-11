@@ -28,6 +28,7 @@ import org.chris.quick.tools.common.DevicesUtils
 
 import android.support.v7.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
 import org.chris.quick.function.QuickStartActivity
+import org.chris.quick.function.QuickToast
 import org.chris.quick.listener.OnClickListener2
 
 
@@ -262,19 +263,16 @@ abstract class ThemeActivity : AutoLayoutActivity() {
     }
 
     protected fun showToast(content: CharSequence) {
-        showToast(content, 0, Toast.LENGTH_SHORT)
+        showToast(content, Toast.LENGTH_SHORT)
     }
 
     protected fun showToast(content: CharSequence, duration: Int) {
-        showToast(content, 0, duration)
+        showToast(content, 0, 0, 150, duration)
     }
 
-    protected fun showToast(content: CharSequence, gravity: Int = 0, duration: Int = Toast.LENGTH_SHORT) {
-        val toast = Toast.makeText(this, content, duration)
-        if (gravity != 0)
-            toast.setGravity(gravity, 0, 0)
+    protected fun showToast(content: CharSequence, gravity: Int = 0, xOffset: Int, yOffset: Int, duration: Int = Toast.LENGTH_SHORT) {
+        QuickToast.Builder().setGravity(gravity, xOffset, yOffset).setDuration(duration).build().showToast(content.toString())
         DevicesUtils.closeSoftInput(this)
-        toast.show()
     }
 
     protected fun showSnackbar(content: CharSequence, onClickListener: View.OnClickListener) {

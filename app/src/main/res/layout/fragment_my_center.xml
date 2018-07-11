@@ -119,6 +119,27 @@
                     android:paddingLeft="@dimen/borderWidth"
                     android:paddingRight="@dimen/borderWidth"
                     android:text="蓝牙管理" />
+                <TextView
+                    android:id="@+id/broadcastTv"
+                    style="@style/TitleTextStyleAllParams"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/itemHeight"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_right_gray_24dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/borderWidth"
+                    android:paddingRight="@dimen/borderWidth"
+                    android:text="快速广播测试1" />
+
+                <TextView
+                    android:id="@+id/broadcastTv2"
+                    style="@style/TitleTextStyleAllParams"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/itemHeight"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_right_gray_24dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/borderWidth"
+                    android:paddingRight="@dimen/borderWidth"
+                    android:text="快速广播测试2" />
             </org.chris.quick.widgets.AutoForegroundLinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
