@@ -19,6 +19,7 @@ import org.chris.quick.function.QuickBroadcast
 import org.chris.quick.function.QuickStartActivity
 import org.chris.quick.function.SelectorImgActivity
 import org.chris.quick.helper.QuickSharedPreferencesHelper
+import org.chris.quick.m.Log
 import org.chris.quick.m.glide.GlideCircleTransform
 import org.chris.quick.tools.common.CommonUtils
 import org.chris.quick.tools.common.ImageUtils
@@ -39,7 +40,7 @@ class MyCenterFragment : BaseFragment() {
 
     override fun onInitLayout() {
         QuickBroadcast.addBroadcastListener(this, { action, intent ->
-            showToast(String.format("收到广播，action:%s", action))
+            Log.e("test",String.format("收到广播，action:%s", action))
         }, "MyCenterFragment")
         setTitle("个人中心")
         Glide.with(context).load(File(QuickSharedPreferencesHelper.getValue(COVER_PATH, ""))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)

@@ -7,10 +7,12 @@ import android.support.annotation.LayoutRes
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import org.chris.quick.QuickAndroid
 import org.chris.quick.R
 import org.chris.quick.b.BaseRecyclerViewAdapter
+import kotlin.coroutines.experimental.coroutineContext
 
 /**
  * @describe
@@ -19,11 +21,13 @@ import org.chris.quick.b.BaseRecyclerViewAdapter
  * @from https://github.com/SpringSmell/quick.library
  * @email chrisSpringSmell@gmail.com
  */
-class QuickToast {
+open class QuickToast {
     private val mainHandler: Handler by lazy { return@lazy Handler(Looper.getMainLooper()) }
     private lateinit var builder: Builder
     private var toast: Toast? = null
     private lateinit var holder: BaseRecyclerViewAdapter.BaseViewHolder
+
+    open val context get() = QuickAndroid.getApplicationContext
 
     private fun setupToast(builder: Builder): QuickToast {
         this.builder = builder
@@ -38,15 +42,14 @@ class QuickToast {
     }
 
     private fun configToast(msg: String?): Toast {
-        if (toast == null) {
-            toast = Toast(QuickAndroid.getApplicationContext)
-            holder = BaseRecyclerViewAdapter.BaseViewHolder((QuickAndroid.getApplicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(builder.layoutRes, null))
-            holder.itemView.tag = builder.layoutRes
+        if (toast == null || (builder.layoutView != null && toast!!.view != builder.layoutView)) {/*布局发生变化将重新初始化*/
+            toast = Toast(context)
+            holder = if (builder.layoutView != null) BaseRecyclerViewAdapter.BaseViewHolder(builder.layoutView) else BaseRecyclerViewAdapter.BaseViewHolder((context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(R.layout.transient_notification, null))
             toast?.view = holder.itemView
         }
-        holder.setText(R.id.toastMsgTv, msg)
-        toast?.duration = builder.duration
-        toast?.setGravity(builder.gravity, builder.xOffset, builder.yOffset)
+        if (builder.layoutView == null) holder.setText(R.id.toastMsgTv, msg)/*自定义View将不会设置msg*/
+        toast!!.duration = builder.duration
+        toast!!.setGravity(builder.gravity, builder.xOffset, builder.yOffset)
         return toast!!
     }
 
@@ -67,10 +70,10 @@ class QuickToast {
         internal var duration: Int = Toast.LENGTH_SHORT
         internal var xOffset = 0
         internal var yOffset = 150
-        internal var layoutRes = R.layout.transient_notification
+        internal var layoutView: View? = null
 
-        fun setLayoutRes(@LayoutRes res: Int): Builder {
-            this.layoutRes = res
+        fun setLayoutView(res: View): Builder {
+            this.layoutView = res
             return this
         }
 
@@ -97,5 +100,7 @@ class QuickToast {
         }
 
         fun build() = QuickToast.ClassHolder.INSTANCE.setupToast(this)
+
+        fun create(msg: String?) = QuickToast.ClassHolder.INSTANCE.setupToast(this).configToast(msg)
     }
 }

@@ -22,11 +22,13 @@ class IndexFragment : BaseFragment() {
     //    override fun onResultToolbar(): Toolbar? = getView(R.id.toolbar)
     override fun onInit() {
         QuickBroadcast.addBroadcastListener(this, { action, intent ->
-            when (action) {
-                "test" -> showToast(intent.getStringExtra("test"))
-                "test2" -> showToast(intent.getStringExtra("test"))
-            }
-        }, "test", "test2")
+            Log.e("test",String.format("收到广播，action:%s", action))
+//            when (action) {
+//                "test" -> Log.e("test", "test")
+//                "test2" -> Log.e("test", "test2")
+//                "MyCenterFragment" -> Log.e("test", "MyCenterFragment")
+//            }
+        }, "test", "test2", "MyCenterFragment")
         setParentMenu(R.menu.navigation) { menu ->
             when (menu?.itemId) {
                 R.id.navigation0 -> showToast("首页")

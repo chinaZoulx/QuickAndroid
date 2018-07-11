@@ -64,7 +64,7 @@ class SettingActivity : BaseActivity() {
             })
         }
         detailTv.setOnClickListener {
-            QuickBroadcast.sendBroadcast(Intent(), "MyCenterFragment")
+            QuickBroadcast.sendBroadcast(Intent(), "test","test2")
         }
         checkUpgradeContainer.setOnClickListener { Beta.checkUpgrade() }
     }

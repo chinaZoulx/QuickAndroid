@@ -8,7 +8,7 @@ import android.util.SparseArray
 import org.chris.quick.QuickAndroid
 
 /**
- * @describe 方便的使用广播
+ * @describe 方便的使用动态广播
  * @author ChrisZou
  * @date 2018/7/10-15:59
  * @from https://github.com/SpringSmell/quick.library
@@ -23,8 +23,6 @@ object QuickBroadcast {
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             val actions = intent.getStringArrayExtra(ACTION)
-            var isBroadcast = false
-            var key = 0
             var action = ""
             for (index in 0 until onBroadcastListenerActions.size()) {
                 if (onBroadcastListenerActions.valueAt(index).any { tempAction ->
@@ -35,13 +33,11 @@ object QuickBroadcast {
                                 } else false
                             }
                         }) {
-                    isBroadcast = true
-                    key = onBroadcastListenerActions.keyAt(index)
-                    break
+                    onBroadcastListeners[onBroadcastListenerActions.keyAt(index)]?.invoke(action, intent)
                 }
             }
-            if (isBroadcast)
-                onBroadcastListeners[key]?.invoke(action, intent)
+//            if (isBroadcast)
+//                onBroadcastListeners[key]?.invoke(action, intent)
         }
     }
 
