@@ -349,6 +349,21 @@ QuickBroadcast.sendBroadcast(Intent(), "test","MyCenterFragment")
 ~~~
 对于发送只需增加接收者即可，这样注册了test与MyCenterFragment的接收者都将收到你的消息。<br><br>
 
+并且此组件同一时刻不会同时触发接收者为同一监听的广播
+~~~java
+QuickBroadcast.addBroadcastListener(绑定者, { action, intent ->
+            when (action) {
+                "test" -> showToast(intent.getStringExtra("test"))
+                "test2" -> showToast(intent.getStringExtra("test"))
+            }
+        }, "test", "test2")/*天呐，这里居然可以指定多个接受者*/
+~~~
+比如，test,test2为同一组接收者。<br>
+如果发送同时发送test,test2
+~~~java
+QuickBroadcast.sendBroadcast(Intent(), "test","test2")
+~~~
+那只会触发早先的test，test2将不再触发。<br><br>
 此组件需要注意的是注册时需要传递唯一的绑定者。
 
 ## 蓝牙终端管理
