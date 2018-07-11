@@ -182,33 +182,6 @@ class TestListActivity2 : BaseListActivity2<String>() {
 考虑到不同使用场景，提供了fragment版本，使用方法同上
 ## BaseListFragment2
 同上
-## QuickStartActivity
-以回调的方式管理onActivityForResult的返回值。无需再向传统那样，先startActivityForResult,然后再监听onActivityForResult，真正做到在哪开始，就在哪结束，方便开发者debug，并且无需再为担心requestCode怎么传，会不会有重复的，有没有超出65536上限而担心，因为已经生成了唯一的requestCode,每个Activity对应一个requestCode。<br>
-开始调用
-~~~java
-var intent=Intent(this,YourActivity::class.java)
-intent.putExtra("TYPE","this is a type")
-QuickStartActivity.startActivity(activity, intent, { resultCode, data ->
-                
-})
-~~~
-在这里绑定
-~~~java
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        QuickStartActivity.onActivityResult(requestCode, resultCode, data)
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-~~~
-
-一般来讲，A跳转到B，A中只会有一处跳转到B。如果有特殊需求，A存在多处跳转到B，就像按钮1跳转B，按钮2也要跳转到B，因为每个Activity只对应一个requestCode,所以应该以动态传值的方法来写
-
-~~~java
-fun startActionB(intent:Intent){
-  QuickStartActivity.startActivity(activity, intent, { resultCode, data ->
-    
-  })
-}
-~~~
 ## BaseRecyclerViewAdapter
 recyclerView基类，集成了点击事件、长按、item内的view点击<br><br>
 
@@ -262,6 +235,121 @@ inner class Adapter : BaseRecyclerViewAdapter<String>() {
         }
     }
 ~~~
+
+## 以下是实用组件
+
+## QuickStartActivity
+以回调的方式管理onActivityForResult的返回值。无需再向传统那样，先startActivityForResult,然后再监听onActivityForResult，真正做到在哪开始，就在哪结束，方便开发者debug，并且无需再为担心requestCode怎么传，会不会有重复的，有没有超出65536上限而担心，因为已经生成了唯一的requestCode,每个Activity对应一个requestCode。<br>
+开始调用
+~~~java
+var intent=Intent(this,YourActivity::class.java)
+intent.putExtra("TYPE","this is a type")
+QuickStartActivity.startActivity(activity, intent, { resultCode, data ->
+                
+})
+~~~
+在这里绑定
+~~~java
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        QuickStartActivity.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+~~~
+
+一般来讲，A跳转到B，A中只会有一处跳转到B。如果有特殊需求，A存在多处跳转到B，就像按钮1跳转B，按钮2也要跳转到B，因为每个Activity只对应一个requestCode,所以应该以动态传值的方法来写
+
+~~~java
+fun startActionB(intent:Intent){
+  QuickStartActivity.startActivity(activity, intent, { resultCode, data ->
+    
+  })
+}
+~~~
+
+## QuickToast
+可在任意线程弹出，方便的使用Toast，无需在使用的时候频繁传递context，一次初始化，终生受益。<br>
+传统使用方式
+~~~java
+Toast.makeText(activity,"这是一个Toast",Toast.LENGTH_SHORT).show()
+~~~
+如果需要自定义时
+~~~java
+val toast = Toast.makeText(activity, "这是一个Toast", Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER,0,0)
+        toast.show()
+~~~
+这种方式使用时每次都需要依赖context，如果需要在子线程使用，将会变得很不方便，那么此组件如何呢<br>
+所以请看
+~~~java
+QuickToast.showToastDefault("这是一个Toast")
+~~~
+或者，使用链式配置参数，或者自定义Toast
+~~~java
+QuickToast.Builder().setGravity(Gravity.CENTER).setDuration(Toast.LENGTH_SHORT).setLayoutView(customView).build().showToast("这是一个Toast")
+~~~
+看到这里或许就有疑问了，在哪里初始化context呢，使用quickLibrary将无需处理，若只需使用此组件，重写QuickToast中的context方法即可。<br>
+示例
+~~~java
+class CustomToast:QuickToast() {
+
+    override val context: Context
+        get() = super.context/*这里替换为自定义context*/
+}
+~~~
+如此就能愉快的玩耍了。
+
+## QuickBroadcast
+方便的使用动态广播，告别繁琐的注册与注销广播。<br>
+正常写法<br>
+先写一个广播
+~~~java
+val broadcastRecevier=object :BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            
+        }
+    }
+~~~
+再根据action注册一个
+~~~java 
+registerReceiver(broadcastRecevier, IntentFilter("action"))
+~~~
+再onDestroy中注销
+~~~java
+unregisterReceiver(broadcastRecevier)
+~~~
+再发送广播
+~~~java
+sendBroadcast(Intent("test"))
+~~~
+每个页面都需这样去写，你到底累不累？<br><br>
+现在来看看新的写法，只需两步即可实现<br>
+1、注册
+~~~java
+QuickBroadcast.addBroadcastListener(绑定者, { action, intent ->
+            when (action) {
+                "test" -> showToast(intent.getStringExtra("test"))
+                "test2" -> showToast(intent.getStringExtra("test"))
+            }
+        }, "test", "test2")/*天呐，这里居然可以指定多个接受者*/
+~~~
+2、发送广播
+~~~java
+QuickBroadcast.sendBroadcast(Intent(), "test")
+~~~
+如此简单的两步就完成了广播的注册与发送，so easy!<br><br>
+如果更复杂的使用呢，当前页面发送给多个页面。<br><br>
+正常写法
+~~~java
+sendBroadcast(Intent("test"))
+sendBroadcast(Intent("MyCenterFragment"))
+~~~
+新写法
+~~~java
+QuickBroadcast.sendBroadcast(Intent(), "test","MyCenterFragment")
+~~~
+对于发送只需增加接收者即可，这样注册了test与MyCenterFragment的接收者都将收到你的消息。<br><br>
+
+此组件需要注意的是注册时需要传递唯一的绑定者。
 
 ## 蓝牙终端管理
 
