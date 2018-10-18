@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center|bottom"
+    android:background="@color/colorLine"
+    tools:context=".ui.main.mycenter.CheckAnimActivity">
+
+    <org.quick.component.widget.CheckAnimView
+        android:id="@+id/checkAniView0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:durationBg="400"
+        app:durationTick="400"
+        app:focusColorBg="@color/colorPrimary"
+        app:focusColorStar="@color/colorWhite"
+        app:focusColorTick="@color/colorWhite"
+        app:focusDrawType="drawTick|drawStar|drawBg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/checkAniView1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:normalDrawType="drawCir|drawTick" />
+
+    <org.quick.component.widget.CheckAnimView
+        android:id="@+id/checkAniView1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:durationBg="500"
+        app:durationCir="500"
+        app:durationTick="500"
+        app:focusColorCir="@color/colorAccent"
+        app:focusColorStar="@color/colorAccent"
+        app:focusColorTick="@color/colorAccent"
+        app:focusDrawType="drawCir|drawStar|drawTick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/checkAniView0"
+        app:layout_constraintRight_toLeftOf="@+id/checkAniView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <org.quick.component.widget.CheckAnimView
+        android:id="@+id/checkAniView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:durationBg="600"
+        app:durationCir="600"
+        app:durationTick="600"
+        app:focusColorBg="@color/colorPrimary"
+        app:focusDrawType="drawBg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/checkAniView1"
+        app:layout_constraintRight_toLeftOf="@id/checkAniView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:normalDrawType="drawCir" />
+
+    <org.quick.component.widget.CheckAnimView
+        android:id="@+id/checkAniView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:durationBg="600"
+        app:durationCir="600"
+        app:durationTick="600"
+        app:focusColorStar="@color/colorPrimary"
+        app:focusColorTick="@color/colorPrimary"
+        app:focusDrawType="drawTick|drawStar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/checkAniView2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:normalColorTick="@color/colorHoloOrangeLight"
+        app:normalDrawType="drawTick"
+        app:sizeCir="2dp" />
+
+    <TextView
+        android:id="@+id/selectedTv0"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="开始1"
+        android:textColor="@color/selector_blue_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/selectedTv1" />
+
+    <TextView
+        android:id="@+id/selectedTv1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="开始2"
+        android:textColor="@color/selector_blue_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/selectedTv0"
+        app:layout_constraintRight_toLeftOf="@id/selectedTv2" />
+
+    <TextView
+        android:id="@+id/selectedTv2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="开始3"
+        android:textColor="@color/selector_blue_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/selectedTv1"
+        app:layout_constraintRight_toLeftOf="@+id/selectedTv3" />
+
+    <TextView
+        android:id="@+id/selectedTv3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="开始4"
+        android:textColor="@color/selector_blue_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/selectedTv2"
+        app:layout_constraintRight_toLeftOf="@+id/selectedTv4" />
+
+    <TextView
+        android:id="@+id/selectedTv4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="开始5"
+        android:textColor="@color/selector_blue_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/selectedTv3"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <org.quick.component.widget.DashedLineView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        app:dashLineHeight="2dp"
+        app:dashLineWidth="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/selectedTv0" />
+
+    <org.quick.component.widget.DashedLineView
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        app:dashLineColor="@color/colorPrimary"
+        app:dashLineHeight="10dp"
+        app:dashLineWidth="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:orientation="vertical" />
+
+    <org.quick.component.widget.ProgressBarCircleSector
+        android:id="@+id/progressBarCircle0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cir3ColorBg="@color/colorWhite"
+        app:cir3ColorCover="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/progressBarCircle1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:progress="270"
+        app:progressIsLoop="true" />
+
+    <org.quick.component.widget.ProgressBarCircleSector
+        android:id="@+id/progressBarCircle1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cir1Color="@color/colorWhite"
+        app:cir1Width="3dp"
+        app:cir2Width="5dp"
+        app:cir3ColorBg="@color/colorWhite"
+        app:cir3ColorCover="@color/colorBlack30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintLeft_toRightOf="@id/progressBarCircle0"
+        app:layout_constraintRight_toLeftOf="@+id/progressBarCircle2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:progress="190" />
+
+    <org.quick.component.widget.ProgressBarCircleSector
+        android:id="@+id/progressBarCircle2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cir1Color="@color/colorPrimary"
+        app:cir1Width="10dp"
+        app:cir2Color="@color/colorHoloOrangeLight"
+        app:cir2Width="10dp"
+        app:cir3ColorBg="@color/colorWhite"
+        app:cir3ColorCover="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.2"
+        app:layout_constraintLeft_toRightOf="@id/progressBarCircle1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:progress="900"
+        app:progressIsLoop="true" />
+
+    <org.quick.component.widget.ProgressBarHorizontal
+        android:id="@+id/progressBarHorizontal0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:coverColorStart="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.27"
+        app:progress="20" />
+
+    <org.quick.component.widget.ProgressBarHorizontal
+        android:id="@+id/progressBarHorizontal1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.325" />
+
+    <org.quick.component.widget.ProgressBarHorizontal
+        android:id="@+id/progressBarHorizontal3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.05"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+</android.support.constraint.ConstraintLayout>

@@ -1,30 +1,19 @@
 package com.example.chriszou.quicksample.ui.material
 
 import android.graphics.Color
-import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import com.example.chriszou.quicksample.R
-import com.leochuan.CircleLayoutManager
-import kotlinx.android.synthetic.main.fragment_my_center.view.*
-import org.chris.quick.b.BaseListFragment
-import org.chris.quick.b.BaseRecyclerViewAdapter
-import org.chris.quick.b.BaseViewPagerFragment
-import org.chris.quick.m.ImageManager
+import org.quick.library.b.BaseViewHolder
 
 /**
  * @Author ChrisZou
  * @Date 2018/6/7-14:58
  * @Email chrisSpringSmell@gmail.com
  */
-class CommodityListFragment : BaseListFragment() {
-    override fun onInit() {
-        appContentContainer.setBackgroundColor(Color.TRANSPARENT)
-    }
+class CommodityListFragment : org.quick.library.b.BaseListFragment() {
 
     override fun start() {
+        appContentContainer.setBackgroundColor(Color.TRANSPARENT)
         val dataList = mutableListOf<Int>()
         dataList.add(R.drawable.ic_ring)
         dataList.add(R.drawable.ic_ring)
@@ -35,12 +24,14 @@ class CommodityListFragment : BaseListFragment() {
         dataList.add(R.drawable.ic_ring)
         dataList.add(R.drawable.ic_ring)
         dataList.add(R.drawable.ic_ring)
-        getAdapter<Adapter>().dataList = dataList
+        getAdapter<Adapter>()?.setDataList(dataList)
     }
 
-    override fun isPullRefreshEnable(): Boolean = false
+    override val isPullRefreshEnable: Boolean
+        get() = false
 
-    override fun isLoadMoreEnable(): Boolean = false
+    override val isLoadMoreEnable: Boolean
+        get() = false
 
 
     override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
@@ -49,14 +40,13 @@ class CommodityListFragment : BaseListFragment() {
 
     override fun onResultParams(params: MutableMap<String, String>) = Unit
 
-    override fun onRequestDataSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
+    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
 
-    class Adapter : BaseRecyclerViewAdapter<Int>() {
-        override fun onResultLayoutResId(): Int = R.layout.item_commodity_list
+    class Adapter : org.quick.library.b.BaseAdapter<Int>() {
+        override fun onResultLayoutResId(viewType: Int): Int =R.layout.item_commodity_list
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: Int?) {
-//            holder.setImg(R.id.coverIv, itemData!!)
-            holder.getImageView(R.id.coverIv).setImageResource(itemData!!)
+        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: Int, viewType: Int) {
+            holder.getImageView(R.id.coverIv)?.setImageResource(itemData)
         }
     }
 

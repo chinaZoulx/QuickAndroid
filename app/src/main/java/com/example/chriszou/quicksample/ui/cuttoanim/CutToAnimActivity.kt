@@ -11,14 +11,13 @@ import android.view.View
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.cuttoanim.transition.*
 import kotlinx.android.synthetic.main.activity_cut_to_anim.*
-import org.chris.quick.b.BaseActivity
 
 /**
  * @Author ChrisZou
  * @Date 2018/6/6-17:07
  * @Email chrisSpringSmell@gmail.com
  */
-class CutToAnimActivity : BaseActivity() {
+class CutToAnimActivity : org.quick.library.b.BaseActivity() {
 
     companion object {
         fun startAction(activity: Activity, title: String, view: View) {

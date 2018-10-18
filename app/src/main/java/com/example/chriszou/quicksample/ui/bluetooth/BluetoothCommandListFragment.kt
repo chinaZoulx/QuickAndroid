@@ -2,45 +2,38 @@ package com.example.chriszou.quicksample.ui.bluetooth
 
 import android.support.v7.widget.RecyclerView
 import com.example.chriszou.quicksample.R
-import org.chris.quick.b.BaseListFragment
-import org.chris.quick.b.BaseRecyclerViewAdapter
+import org.quick.library.b.BaseViewHolder
 
 /**
  * @Author ChrisZou
  * @Date 2018/6/1-11:32
  * @Email chrisSpringSmell@gmail.com
  */
-class BluetoothCommandListFragment : BaseListFragment() {
+class BluetoothCommandListFragment : org.quick.library.b.BaseListFragment() {
 
     lateinit var parent: BluetoothActivity
 
-    override fun onInit() {
+    override fun start() {
         parent = activity as BluetoothActivity
     }
 
-    override fun start() {
+    override val isPullRefreshEnable: Boolean
+        get() = false
 
-    }
-
-    override fun isPullRefreshEnable(): Boolean = false
-
-    override fun isLoadMoreEnable(): Boolean = false
-
+    override val isLoadMoreEnable: Boolean
+        get() = false
     override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
 
     override fun onResultUrl(): String = ""
     override fun onResultParams(params: MutableMap<String, String>) = Unit
-    override fun onRequestDataSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
 
-    class Adapter : BaseRecyclerViewAdapter<String>() {
-        override fun onResultLayoutResId(): Int = R.layout.item_bluetooth
+    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String) {
+    class Adapter : org.quick.library.b.BaseAdapter<String>() {
+        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String, viewType: Int) {
             holder.setText(R.id.contentTv, itemData)
         }
 
-        override fun onResultItemMargin(): Int =40
-/*        override fun onResultItemPaddingTop(position: Int): Int =20
-        override fun onResultItemPaddingBottom(position: Int): Int =20*/
+        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_bluetooth
     }
 }

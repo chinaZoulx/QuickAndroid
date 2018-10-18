@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBgDark"></LinearLayout>
-        <!--<org.chris.quick.widgets.CustomCompatSwipeRefreshLayout-->
+        <!--<org.quick.library.widgets.CustomCompatSwipeRefreshLayout-->
         <!--android:id="@+id/customCompatSwipeRefreshLayout"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
@@ -78,7 +78,7 @@
         <!--class="com.example.chriszou.quicksample.ui.main.index.IndexListFragment"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->
-        <!--</org.chris.quick.widgets.CustomCompatSwipeRefreshLayout>-->
+        <!--</org.quick.library.widgets.CustomCompatSwipeRefreshLayout>-->
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton

@@ -5,18 +5,20 @@ import android.graphics.BitmapFactory
 import android.os.Handler
 import android.widget.TextView
 import com.example.chriszou.quicksample.R
+import com.example.chriszou.quicksample.test.TestListViewActivity
 import com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment
 import com.example.chriszou.quicksample.ui.search.InputFiltrateListActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
-import org.chris.quick.b.BaseFragment
-import org.chris.quick.b.activities.WebActivity
-import org.chris.quick.function.SelectorImgActivity
-import org.chris.quick.tools.common.CommonUtils
-import org.chris.quick.tools.common.HttpUtils
-import org.chris.quick.tools.common.ResourceUtils
+import org.quick.library.b.BaseFragment
+import org.quick.library.b.activities.WebActivity
 import org.chris.zxing.library.CaptureActivity
 import org.chris.zxing.library.Intents
 import org.chris.zxing.library.QRCodeParse
+import org.quick.component.Log2
+import org.quick.component.QuickBroadcast
+import org.quick.component.QuickActivity
+import org.quick.component.utils.HttpUtils
+import org.quick.component.utils.ViewUtils
 
 class DiscoverFragment : BaseFragment() {
 
@@ -38,10 +40,13 @@ class DiscoverFragment : BaseFragment() {
 
     override fun onInitLayout() {
         setTitle("发现")
-        CommonUtils.setupFitsSystemWindows(activity, appBarLayout)
+        ViewUtils.setupFitsSystemWindows(activity!!, appBarLayout)
     }
 
     override fun onBindListener() {
+        QuickBroadcast.addBroadcastListener(this, { action, intent ->
+            Log2.e("test", String.format("收到广播，action:%s", action))
+        }, "MyCenterFragment")
         customCompatSwipeRefreshLayout.setOnRefreshListener {
             customCompatSwipeRefreshLayout.isRefreshing = true
             Handler().postDelayed({
@@ -55,13 +60,14 @@ class DiscoverFragment : BaseFragment() {
             CaptureActivity.startActionScan(activity, REQUEST_CODE_SCAN, "请将二维码/条形码，置于框内")
         }
         filtrateIv.setOnClickListener {
-            SelectorImgActivity.startAction(activity, REQUEST_CODE_SELECTOR_IMG, "选择二维码图片", true)
+            org.quick.library.function.SelectorImgActivity.startAction(activity, REQUEST_CODE_SELECTOR_IMG, "选择二维码图片", true)
         }
 
         for (index in 0..9) {
-            getView<TextView>(ResourceUtils.getId(activity, "searchKeyTv", index.toString())).setOnClickListener {
+            getView<TextView>(ViewUtils.getViewId("searchKeyTv", index.toString())).setOnClickListener {
                 when (it.id) {
                     R.id.searchKeyTv0 -> WebActivity.startAction(activity, "搜索", "http://www.taobao.com")
+                    R.id.searchKeyTv1 -> QuickActivity.Builder(activity!!, TestListViewActivity::class.java).startActivity()
                     else -> WebActivity.startAction(activity, "搜索", "http://www.taobao.com")
                 }
             }
@@ -98,12 +104,12 @@ class DiscoverFragment : BaseFragment() {
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/33/52/95/335295727ee98f2158c3a810ca4e1d2f.jpg")
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/49/54/af/4954af624f05e1e01cb93272904fddda.jpg")
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/f4/f8/4f/f4f84ff78e2b01b2a466b4b721c81114.jpg")
-        discoverListFragment.getAdapter<DiscoverListFragment.Adapter>().dataList = tempDataList
+        discoverListFragment.getAdapter<DiscoverListFragment.Adapter>()?.setDataList(tempDataList)
     }
 
     private fun parseQrCodeContent(content: String?) {
         when {
-            HttpUtils.isHttpUrlFormRight(content) -> WebActivity.startAction(activity, "链接", content)
+            HttpUtils.isHttpUrlFormRight(content!!) -> WebActivity.startAction(activity, "链接", content)
             else ->
                 isOkDialog.alertIsOkDialog("二维码包含内容", content)
         }
@@ -125,7 +131,7 @@ class DiscoverFragment : BaseFragment() {
                 if (resultCode == CaptureActivity.RESULT_OK) parseQrCodeContent(data?.getStringExtra(Intents.Scan.RESULT))
             }
             REQUEST_CODE_SELECTOR_IMG -> {
-                if (resultCode == SelectorImgActivity.RESULT_CODE) parseQrCodeContent(QRCodeParse.parseQRCode(BitmapFactory.decodeFile(data!!.getStringArrayListExtra(SelectorImgActivity.ALREADY_PATHS)[0])))
+                if (resultCode == org.quick.library.function.SelectorImgActivity.RESULT_CODE) parseQrCodeContent(QRCodeParse.parseQRCode(BitmapFactory.decodeFile(data!!.getStringArrayListExtra(org.quick.library.function.SelectorImgActivity.ALREADY_PATHS)[0])))
             }
         }
     }

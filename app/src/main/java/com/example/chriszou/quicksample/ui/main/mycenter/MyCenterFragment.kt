@@ -1,29 +1,28 @@
 package com.example.chriszou.quicksample.ui.main.mycenter
 
 import android.content.Intent
-import android.os.Handler
+import android.os.Build
 import android.support.design.widget.AppBarLayout
+import android.support.design.widget.BottomSheetDialog
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.chriszou.quicksample.R
+import com.example.chriszou.quicksample.model.TestModel
 import com.example.chriszou.quicksample.ui.bluetooth.BluetoothActivity
 import com.example.chriszou.quicksample.ui.setting.SettingActivity
-import com.jcodecraeer.xrecyclerview.AppBarStateChangeListener
 import kotlinx.android.synthetic.main.fragment_my_center.*
-import org.chris.quick.b.BaseFragment
-import org.chris.quick.b.activities.ThemeActivity.Companion.TITLE
-import org.chris.quick.function.QuickBroadcast
-import org.chris.quick.function.QuickStartActivity
-import org.chris.quick.function.SelectorImgActivity
-import org.chris.quick.helper.QuickSharedPreferencesHelper
-import org.chris.quick.m.Log
-import org.chris.quick.m.glide.GlideCircleTransform
-import org.chris.quick.tools.common.CommonUtils
-import org.chris.quick.tools.common.ImageUtils
+import org.quick.library.b.BaseFragment
+import org.quick.library.b.activities.ThemeActivity.Companion.TITLE
 import org.chris.zxing.library.QRCodeParse
+import org.quick.component.*
+import org.quick.component.utils.DevicesUtils
+import org.quick.component.utils.ImageUtils
+import org.quick.library.config.GlideApp
+import org.quick.library.callback.AppBarStateChangeListener
 import java.io.File
 
 class MyCenterFragment : BaseFragment() {
@@ -39,20 +38,21 @@ class MyCenterFragment : BaseFragment() {
     override fun onInit() = Unit
 
     override fun onInitLayout() {
-        QuickBroadcast.addBroadcastListener(this, { action, intent ->
-            Log.e("test",String.format("收到广播，action:%s", action))
+        QuickBroadcast.addBroadcastListener(this, { action, _ ->
+            Log2.e("test", String.format("收到广播，action:%s", action))
         }, "MyCenterFragment")
         setTitle("个人中心")
-        Glide.with(context).load(File(QuickSharedPreferencesHelper.getValue(COVER_PATH, ""))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)
+        GlideApp.with(context!!).load(File(QuickSPHelper.getValue(COVER_PATH, ""))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(CircleCrop()).into(coverIv)
         customCompatSwipeRefreshLayout.setOnRefreshListener {
-            Handler().postDelayed({ customCompatSwipeRefreshLayout.isRefreshing = false }, 500)
+            QuickAsync.asyncDelay({ customCompatSwipeRefreshLayout.isRefreshing = false }, 500)
         }
         qrCodeView = LayoutInflater.from(activity).inflate(R.layout.include_qr_code, null)
-        appBarLayout.setPadding(0, CommonUtils.getStatusHeight(activity), 0, 0)
+        appBarLayout.setPadding(0, DevicesUtils.getStatusHeight(activity!!), 0, 0)
     }
 
+
     override fun onBindListener() {
-        coverIv.setOnClickListener { SelectorImgActivity.startAction(activity!!, REQUEST_SELECTOR_COVER, "选择头像", true) }
+        coverIv.setOnClickListener { org.quick.library.function.SelectorImgActivity.startAction(activity!!, REQUEST_SELECTOR_COVER, "选择头像", true) }
         appBarLayout.addOnOffsetChangedListener(object : AppBarStateChangeListener() {
             override fun onStateChanged(appBarLayout: AppBarLayout, state: AppBarStateChangeListener.State) {
                 when (state) {
@@ -78,28 +78,97 @@ class MyCenterFragment : BaseFragment() {
         }
         settingIv.setOnClickListener {
             //            ThemeActivity.startAction(activity, SettingActivity::class.java, "设置")
-            val intent = Intent(activity, SettingActivity::class.java)
-            intent.putExtra(TITLE, "设置")
-            QuickStartActivity.startActivity(activity, intent) { resultCode, data ->
+            startActivity(QuickActivity.Builder(activity, SettingActivity::class.java).addParams(TITLE, "设置")) { resultCode, data ->
                 //do something...
             }
         }
         bluetoothTv.setOnClickListener {
-            val intent = Intent(activity, BluetoothActivity::class.java)
-            intent.putExtra(TITLE, "蓝牙管理")
-            QuickStartActivity.startActivity(activity, intent) { resultCode, data ->
+            QuickActivity.Builder(activity, BluetoothActivity::class.java).addParams(TITLE, "蓝牙管理").startActivity { resultCode, data ->
                 showToast("蓝牙返回了哟")
             }
         }
         broadcastTv.setOnClickListener {
             val intent = Intent()
             intent.putExtra("test", "广播1")
-            QuickBroadcast.sendBroadcast(intent, "test")
+            QuickBroadcast.sendBroadcast(intent)
         }
         broadcastTv2.setOnClickListener {
             val intent = Intent()
             intent.putExtra("test", "广播2")
             QuickBroadcast.sendBroadcast(intent, "test2")
+        }
+        quickDialogTv.setOnClickListener {
+            QuickDialog.Builder(activity!!, R.layout.dialog_is_ok).show()
+                    .setText(R.id.msgTitleTv, "这是标题").setText(R.id.msgContentTv, "这是内容").setOnClickListener(View.OnClickListener {
+                        when (it.id) {
+                            R.id.msgCancelBtn -> showToast("点击了取消按钮")
+                            else -> showToast("点击了确定按钮")
+                        }
+                        QuickDialog.dismiss()
+                    }, R.id.msgCancelBtn, R.id.msgOkBtn)
+        }
+        logTv.setOnClickListener {
+            val testMode = TestModel()
+            testMode.anInt = 10
+            testMode.isMan = true
+            testMode.setaDouble(12.0)
+            testMode.setaFloat(11.0f)
+            testMode.setaShort(12)
+            testMode.string = "这是String"
+            Log2.e(testMode)
+        }
+        quickRecyclerViewTv.setOnClickListener {
+            QuickActivity.Builder(activity, QuickRecyclerViewActivity::class.java).startActivity()
+        }
+        QSwipeRefreshLayout2Tv.setOnClickListener {
+            QuickActivity.Builder(activity, QSwipeRefreshLayoutActivity::class.java).startActivity()
+        }
+        screenShotTv.setOnClickListener {
+            QuickAsync.asyncDelay({
+                val tempBitmap = ImageUtils.screenshot(activity)
+                QuickDialog.Builder(activity!!, R.layout.include_qr_code).setWindowPadding(0, 0, 0, 0).setSize(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT).show().getImageView(R.id.qrCodeIv)?.setImageBitmap(tempBitmap)
+            }, 1000)
+        }
+
+        fingerprintTv.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity != null) {
+                QuickBiometric.showFingerprintDialog(activity!!) { type, resultMsg ->
+                    when (type) {
+                        QuickBiometric.TYPE.AuthenticationSucceeded -> {/*成功*/
+
+                        }
+                        QuickBiometric.TYPE.AuthenticationFailed -> {/*失败*/
+
+                        }
+                        else -> {/*其他提示消息*/
+                        }
+                    }
+                }
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity != null) {
+            QuickBiometric.startFingerprintListener { type, resultMsg ->
+                when (type) {
+                    QuickBiometric.TYPE.AuthenticationSucceeded -> {/*成功*/
+
+                    }
+                    QuickBiometric.TYPE.AuthenticationFailed -> {/*失败*/
+
+                    }
+                    else -> {/*其他提示消息*/
+                    }
+                }
+            }
+        }
+
+        checkAnimViewTv.setOnClickListener {
+            QuickActivity.Builder(activity, CheckAnimActivity::class.java).startActivity()
+        }
+
+        bottomSheetDialogTv.setOnClickListener {
+            val dialog = BottomSheetDialog(activity!!)
+            dialog.setContentView(LayoutInflater.from(activity!!).inflate(R.layout.dialog_bottom_sheet, null))
+            dialog.show()
         }
     }
 
@@ -108,12 +177,12 @@ class MyCenterFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_SELECTOR_COVER && resultCode == SelectorImgActivity.RESULT_CODE) {
-            if (data != null && data.hasExtra(SelectorImgActivity.ALREADY_PATHS)) {
-                val imgList = data.getStringArrayListExtra(SelectorImgActivity.ALREADY_PATHS)
+        if (requestCode == REQUEST_SELECTOR_COVER && resultCode == org.quick.library.function.SelectorImgActivity.RESULT_CODE) {
+            if (data != null && data.hasExtra(org.quick.library.function.SelectorImgActivity.ALREADY_PATHS)) {
+                val imgList = data.getStringArrayListExtra(org.quick.library.function.SelectorImgActivity.ALREADY_PATHS)
                 if (imgList != null && imgList.size > 0) {
-                    QuickSharedPreferencesHelper.putValue(COVER_PATH, imgList[0])
-                    Glide.with(context).load(File(imgList[0])).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(GlideCircleTransform(context)).dontAnimate().into(coverIv)
+                    QuickSPHelper.putValue(COVER_PATH, imgList[0])
+                    GlideApp.with(context!!).load(File(imgList[0])).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(CircleCrop()).dontAnimate().into(coverIv)
                 }
             }
         }

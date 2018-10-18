@@ -14,13 +14,10 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.include_filtrate_toolbar.*
-import org.chris.quick.b.BaseListActivity
-import org.chris.quick.b.BaseRecyclerViewAdapter
-import org.chris.quick.m.DBManager
-import org.chris.quick.tools.ViewUtils
-import org.chris.quick.widgets.XStickyListHeadersListView
+import org.quick.library.b.BaseViewHolder
+import org.quick.component.utils.ViewUtils
 
-class InputFiltrateListActivity : BaseListActivity() {
+class InputFiltrateListActivity : org.quick.library.b.BaseListActivity() {
 
     companion object {
         fun startAction(activity: Activity?, requestCode: Int, title: String) {
@@ -35,9 +32,7 @@ class InputFiltrateListActivity : BaseListActivity() {
         headerView = ViewUtils.getView(activity, R.layout.include_filtrate_toolbar)
         return headerView.findViewById(R.id.filtrateToolbar)
     }
-
-    override fun onInit() {
-        setHeaderContainer(headerView)
+    override fun start() {
         filtrateEtc.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || event.keyCode == 66) {
                 setResult()
@@ -47,12 +42,9 @@ class InputFiltrateListActivity : BaseListActivity() {
         filtrateTv.setOnClickListener {
             setResult()
         }
-        getAdapter<Adapter>().setOnItemClickListener { v, position ->
+        getAdapter<Adapter>().setOnItemClickListener { view, viewHolder, position, itemData ->
 
         }
-    }
-
-    override fun start() {
         onRefresh()
     }
 
@@ -71,58 +63,61 @@ class InputFiltrateListActivity : BaseListActivity() {
     override fun onRefresh() {
         pageNumber = 1
         Observable.create<MutableList<FiltrateModel>> { subscriber ->
-            subscriber.onNext(DBManager.limit(XStickyListHeadersListView.PAGE_ITEM_COUNT).order("id desc").find(FiltrateModel::class.java))
+            subscriber.onNext(org.quick.library.m.DBManager.limit(org.quick.library.widgets.XStickyListHeadersListView.PAGE_ITEM_COUNT).order("id desc").find(FiltrateModel::class.java))
         }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe { actionModels ->
-            recyclerView.refreshComplete()
+            refreshComplete()
             if (actionModels.size > 0) {
-                getAdapter<Adapter>().dataList = actionModels
-                setHasData(true)
-                recyclerView.setNoMore(false)
+                getAdapter<Adapter>().setDataList(actionModels)
+                dataHas(true)
+                dataNoMore(false)
             } else
-                setHasData(false)
+                dataHas(false)
         }
     }
 
-    override fun onLoadMore() {
+    override fun onLoading() {
         Observable.create<MutableList<FiltrateModel>> { subscriber ->
-            subscriber.onNext(DBManager.limit(XStickyListHeadersListView.PAGE_ITEM_COUNT).offset(pageNumber * XStickyListHeadersListView.PAGE_ITEM_COUNT).order("id desc").find(FiltrateModel::class.java))
+            subscriber.onNext(org.quick.library.m.DBManager.limit(org.quick.library.widgets.XStickyListHeadersListView.PAGE_ITEM_COUNT).offset(pageNumber * org.quick.library.widgets.XStickyListHeadersListView.PAGE_ITEM_COUNT).order("id desc").find(FiltrateModel::class.java))
         }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe { actionModels ->
             if (actionModels.size > 0) {
-                getAdapter<Adapter>().addDataAll(actionModels)
+                getAdapter<Adapter>().addDataList(actionModels)
                 pageNumber++
-            } else recyclerView.setNoMore(true)
-            recyclerView.loadMoreComplete()
+            } else dataNoMore(true)
+            loadMoreComplete()
         }
     }
 
-    override fun isPullRefreshEnable(): Boolean = true
+    override val isLoadMoreEnable: Boolean
+        get() = false
 
-    override fun isLoadMoreEnable(): Boolean = true
+    override val isPullRefreshEnable: Boolean
+        get() = false
+
     override fun onResultLayoutManager(): RecyclerView.LayoutManager = StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL)
     override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
 
     override fun onResultUrl(): String = ""
 
-    override fun onResultParams(params: MutableMap<String, String>?) = Unit
+    override fun onResultParams(params: MutableMap<String, String>) = Unit
 
-    override fun onRequestDataSuccess(jsonData: String?, isPullRefresh: Boolean) = Unit
+    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
 
-    class Adapter : BaseRecyclerViewAdapter<FiltrateModel>() {
-        override fun onResultLayoutResId(): Int = R.layout.item_filtrate
+    class Adapter : org.quick.library.b.BaseAdapter<FiltrateModel>() {
+        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_filtrate
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: FiltrateModel?) {
+        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: FiltrateModel, viewType: Int) {
             holder.setText(R.id.filtrateBtn, itemData?.filtrateKey)
         }
 
-        override fun onResultItemMargin(): Int = 40
-        override fun onResultItemMarginLeft(position: Int): Int = when {
-            position % 4 == 0 -> 40
-            else -> 20
+        override fun onResultItemMargin(position: Int): Float = 40f
+        override fun onResultItemMarginLeft(position: Int): Float = when {
+            position % 4 == 0 -> 40f
+            else -> 20f
         }
 
-        override fun onResultItemMarginRight(position: Int): Int = when {
-            (position + 1) % 4 == 0 -> 40
-            else -> 20
+        override fun onResultItemMarginRight(position: Int): Float = when {
+            (position + 1) % 4 == 0 -> 40f
+            else -> 20f
         }
     }
 }

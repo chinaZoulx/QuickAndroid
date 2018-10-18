@@ -2,7 +2,6 @@ package com.example.chriszou.quicksample.ui.setting
 
 import android.app.Activity
 import com.example.chriszou.quicksample.R
-import org.chris.quick.b.BaseActivity
 
 /**
  * @describe
@@ -10,7 +9,7 @@ import org.chris.quick.b.BaseActivity
  * @date 2018/6/15-11:38
  * @email chrisSpringSmell@gmail.com
  */
-class OtherActivity : BaseActivity() {
+class OtherActivity : org.quick.library.b.BaseActivity() {
     override fun onInit() {
 
     }

@@ -1,13 +1,10 @@
 package com.example.chriszou.quicksample.ui.main.index
 
 import android.os.Handler
-import android.support.v7.widget.LinearLayoutManager
 import com.example.chriszou.quicksample.R
 import com.leochuan.CircleLayoutManager
 import kotlinx.android.synthetic.main.activity_custom_pull_refresh.*
-import org.chris.quick.b.BaseActivity
-import org.chris.quick.b.BaseRecyclerViewAdapter
-import org.chris.quick.widgets.CustomPullRefreshRecyclerView
+import org.quick.library.widgets.CustomPullRefreshRecyclerView
 
 /**
  * @describe
@@ -15,8 +12,8 @@ import org.chris.quick.widgets.CustomPullRefreshRecyclerView
  * @date 2018/6/8-15:16
  * @email chrisSpringSmell@gmail.com
  */
-class CustomPullRefreshActivity : BaseActivity() {
-    private var adapter: BaseRecyclerViewAdapter<String>? = null
+class CustomPullRefreshActivity : org.quick.library.b.BaseActivity() {
+    private var adapter: org.quick.library.b.BaseAdapter<String>? = null
     override fun onResultLayoutResId(): Int = R.layout.activity_custom_pull_refresh
 
     override fun onInit() {
@@ -47,7 +44,7 @@ class CustomPullRefreshActivity : BaseActivity() {
                     dataList.add("http://up.enterdesk.com/edpic/36/e6/bc/36e6bc8653381fe8f43ac1bd720d3f72.jpg")
                     dataList.add("http://p2.so.qhmsg.com/t01ba41296165d80487.jpg")
                     dataList.add("http://up.enterdesk.com/edpic_source/28/b0/8e/28b08ee6d59ed9693e0b180ffdcf5e9c.jpg")
-                    adapter!!.addDataAll(dataList)
+                    adapter!!.addDataList(dataList)
                     customPullRefreshRecyclerView.loadMoreComplete()
                 }, 1000)
 
@@ -68,7 +65,7 @@ class CustomPullRefreshActivity : BaseActivity() {
         dataList.add("http://pic41.nipic.com/20140602/14680244_170645522110_2.jpg")
         dataList.add("http://pic34.nipic.com/20131028/1175293_134103150121_2.jpg")
         adapter = IndexListFragment.Adapter()
-        adapter?.dataList = dataList
+        adapter?.addDataList(dataList)
 
         customPullRefreshRecyclerView.setAdapter(adapter!!)
         customPullRefreshRecyclerView.setLayoutManager(CircleLayoutManager(activity))

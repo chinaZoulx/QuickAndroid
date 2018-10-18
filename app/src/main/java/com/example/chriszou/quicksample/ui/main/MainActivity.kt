@@ -1,27 +1,24 @@
 package com.example.chriszou.quicksample.ui.main
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Handler
-import com.example.chriszou.quicksample.MainApplication
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.index.IndexFragment
-import com.example.chriszou.quicksample.ui.mycenter.DiscoverFragment
+import com.example.chriszou.quicksample.ui.main.index.IndexListFragment
 import com.example.chriszou.quicksample.ui.main.mycenter.MyCenterFragment
+import com.example.chriszou.quicksample.ui.mycenter.DiscoverFragment
 import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.activity_main.*
-import org.chris.quick.b.BaseActivity
-import org.chris.quick.b.BaseApplication
-import org.chris.quick.b.application.ExitApplication
-import org.chris.quick.config.QuickConfigConstant
-import org.chris.quick.service.DownloadService
+import org.quick.component.QuickBroadcast
+import org.quick.library.config.QuickConfigConstant
+import org.quick.library.service.DownloadService
 
-class MainActivity : BaseActivity() {
+class MainActivity : org.quick.library.b.BaseActivity() {
     private var isExit = false
-    private var upgradeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+    override val isShowTitle: Boolean get() = false
+    override fun onResultLayoutResId(): Int = R.layout.activity_main
+    override fun onInit() {
+        QuickBroadcast.addBroadcastListener(this,{action, intent ->
             when (Beta.getUpgradeInfo().upgradeType) {
             //强制
                 2 -> isOkDialog.alertIsOkDialog(String.format("发现新版本%s", Beta.getUpgradeInfo().versionName), Beta.getUpgradeInfo().newFeature, "", "马上更新", { _, isRight -> if (isRight) DownloadService.startAction(this@MainActivity, DownloadService.DownloadModel(getString(R.string.app_name) + "新版下载", Beta.getUpgradeInfo().apkUrl, 11, R.mipmap.ic_launcher)) })
@@ -30,19 +27,13 @@ class MainActivity : BaseActivity() {
 //            //手工
 //                3 -> isOkDialog.alertIsOkDialog(String.format("发现新版本%s", Beta.getUpgradeInfo().versionName), Beta.getUpgradeInfo().newFeature, "暂不更新", "马上更新", { view, isRight -> Beta.startDownload()})
             }
-            abortBroadcast()
-        }
-    }
+        },QuickConfigConstant.APP_UPGRADE)
 
-    override val isShowTitle: Boolean get() = false
-    override fun onResultLayoutResId(): Int = R.layout.activity_main
-    override fun onInit() {
-        registerReceiver(upgradeReceiver, IntentFilter(QuickConfigConstant.APP_UPGRADE))
         setBackInvalid()
     }
 
     override fun onInitLayout() {
-        tabFragmentViewPager.setupData(supportFragmentManager, IndexFragment(), DiscoverFragment(), MyCenterFragment())
+        tabFragmentViewPager.setupData(supportFragmentManager, IndexFragment(), DiscoverFragment(), RecyclerListFragment(),IndexListFragment(),MyCenterFragment())
     }
 
     override fun onBindListener() {
@@ -67,7 +58,7 @@ class MainActivity : BaseActivity() {
     override fun onBackPressed() {
         if (isExit) {
             super.onBackPressed()
-            ExitApplication.getInstance().exit()
+            org.quick.library.b.application.ExitApplication.getInstance().exit()
         } else {
             showToast("再按一次退出程序")
             isExit = true

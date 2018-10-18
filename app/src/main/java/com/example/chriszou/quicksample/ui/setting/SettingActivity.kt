@@ -6,21 +6,16 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.v4.content.pm.ShortcutInfoCompat
 import android.support.v4.content.pm.ShortcutManagerCompat
 import android.support.v4.graphics.drawable.IconCompat
 import android.widget.Toast
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.service.FloatService
-import com.example.chriszou.quicksample.ui.main.index.detail.IndexListDetailActivity
 import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.activity_setting.*
-import org.chris.quick.QuickAndroid
-import org.chris.quick.b.BaseActivity
-import org.chris.quick.b.BaseApplication
-import org.chris.quick.config.QuickConfigConstant
-import org.chris.quick.function.QuickBroadcast
+import org.quick.component.QuickBroadcast
+import org.quick.component.QuickActivity
 
 
 /**
@@ -28,7 +23,7 @@ import org.chris.quick.function.QuickBroadcast
  * @Date 2018/5/23-10:43
  * @Email chrisSpringSmell@gmail.com
  */
-class SettingActivity : BaseActivity() {
+class SettingActivity : org.quick.library.b.BaseActivity() {
 
     companion object {
         const val REQUEST_CODE_SHORTCUT = 0x321
@@ -47,7 +42,7 @@ class SettingActivity : BaseActivity() {
     }
 
     override fun onInitLayout() {
-        versionTv.text = String.format("%s.%d", QuickAndroid.appVersionName, QuickAndroid.appVersionCode)
+//        versionTv.text = String.format("%s.%d", QuickAndroid.appVersionName, QuickAndroid.appVersionCode)
     }
 
     override fun onBindListener() {
@@ -59,12 +54,12 @@ class SettingActivity : BaseActivity() {
             startService(Intent(applicationContext, FloatService::class.java))
         }
         otherActivityTv.setOnClickListener {
-            startActivity(Intent(activity, OtherActivity::class.java), { resultCode, data ->
+            startActivity(QuickActivity.Builder(activity, OtherActivity::class.java)) { resultCode, data ->
                 showToast("返回了")
-            })
+            }
         }
         detailTv.setOnClickListener {
-            QuickBroadcast.sendBroadcast(Intent(), "test","test2")
+            QuickBroadcast.sendBroadcast(Intent(), "test", "test2", "MyCenterFragment")
         }
         checkUpgradeContainer.setOnClickListener { Beta.checkUpgrade() }
     }
@@ -107,14 +102,14 @@ class SettingActivity : BaseActivity() {
         //如果用以下Intent会造成从快捷方式进入和从应用集合进入 会开启两遍SplashActivity的问题
         //解决的关键在于添加Action_Main
         //Intent intent = new Intent(this, SplashActivity.class);
-        var comp = ComponentName(this.getPackageName(), this.getPackageName() + "." + this.getLocalClassName());
-        var intent = Intent(Intent.ACTION_MAIN).setComponent(comp);
-        intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        intent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+        var comp = ComponentName(this.packageName, this.packageName + "." + this.localClassName)
+        var intent = Intent(Intent.ACTION_MAIN).setComponent(comp)
+        intent.flags = Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+        intent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY)
+        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent)
         //发送广播让Launcher接收来创建shortcut
-        sendBroadcast(shortcut);
+        sendBroadcast(shortcut)
 
     }
 

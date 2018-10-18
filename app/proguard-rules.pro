@@ -33,7 +33,7 @@
 # For retrolambda
 -dontwarn java.lang.invoke.*
 ##---------------Begin: proguard configuration for Gson  ----------
-# Gson uses generic type information stored in a class file when working with fields. Proguard
+# Gson uses generic type information stored in activity class file when working with fields. Proguard
 # removes such information by default, so configure it to keep all of it.
 -keepattributes Signature
 
@@ -73,9 +73,9 @@
 -keep class android.support.**{*;}
 #下拉刷新
 -keep class com.jcodecraeer.**{*;}
-#-keep class org.chris.quick.b.BaseApplication{*;}
-#-keep public class * extends org.chris.quick.b.BaseApplication
-#-keep class org.chris.quick.helper.**{*;}
+#-keep class org.quick.library.b.BaseApplication{*;}
+#-keep public class * extends org.quick.library.b.BaseApplication
+#-keep class org.quick.library.helper.**{*;}
 #-keep class org.chriszou.redpackthelper.config.**{*;}
 #-keep class **.R$*{*;}
 -keepattributes SourceFile,LineNumberTable

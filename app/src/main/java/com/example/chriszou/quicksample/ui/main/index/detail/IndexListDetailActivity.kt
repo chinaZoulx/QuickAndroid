@@ -7,11 +7,10 @@ import android.support.v7.widget.Toolbar
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.setting.OtherActivity
 import kotlinx.android.synthetic.main.activity_index_list_detail.*
-import org.chris.quick.b.BaseActivity
-import org.chris.quick.m.ImageManager
-import org.chris.quick.tools.common.CommonUtils
+import org.quick.component.QuickActivity
+import org.quick.component.utils.ViewUtils
 
-class IndexListDetailActivity : BaseActivity() {
+class IndexListDetailActivity : org.quick.library.b.BaseActivity() {
     companion object {
         fun startAction(context: Context, title: String, coverUrl: String) {
             val intent = Intent(context, IndexListDetailActivity::class.java)
@@ -38,15 +37,15 @@ class IndexListDetailActivity : BaseActivity() {
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE)
         collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE)
 
-        CommonUtils.setupFitsSystemWindowsFromToolbar(this, appBaseToolbar)
+        ViewUtils.setupFitsSystemWindowsFromToolbar(activity,appBaseToolbar!!)
     }
 
     override fun onBindListener() {
-        coverIv.setOnClickListener { startActivity(Intent(activity,OtherActivity::class.java),{resultCode, data -> showToast("dfdfdf") }) }
+        coverIv.setOnClickListener { startActivity(QuickActivity.Builder(activity,OtherActivity::class.java)) { resultCode, data -> showToast("dfdfdf") } }
     }
 
     override fun start() {
-        ImageManager.loadImage(this, getTransmitValue("coverIv", ""), coverIv)
+        org.quick.library.m.ImageManager.loadImage(this, getTransmitValue("coverIv", ""), coverIv)
     }
 
     override fun onResume() {

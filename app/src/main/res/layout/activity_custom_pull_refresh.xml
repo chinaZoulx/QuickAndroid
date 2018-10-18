@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.index.CustomPullRefreshActivity">
 
-    <org.chris.quick.widgets.CustomPullRefreshRecyclerView
+    <org.quick.library.widgets.CustomPullRefreshRecyclerView
         android:id="@+id/customPullRefreshRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </org.chris.quick.widgets.CustomPullRefreshRecyclerView>
+    </org.quick.library.widgets.CustomPullRefreshRecyclerView>
 </android.support.constraint.ConstraintLayout>

@@ -4,15 +4,14 @@ import android.support.v4.view.ViewPager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import org.chris.quick.b.BaseViewPagerFragment
-import org.chris.quick.m.ImageManager
+import org.quick.library.m.ImageManager
 
 /**
  * @Author ChrisZou
  * @Date 2018/6/7-14:58
  * @Email chrisSpringSmell@gmail.com
  */
-class CommodityBannerFragment : BaseViewPagerFragment<String>() {
+class CommodityBannerFragment : org.quick.library.b.BaseViewPagerFragment<String>() {
     override fun onInit() {
 
     }
@@ -38,7 +37,7 @@ class CommodityBannerFragment : BaseViewPagerFragment<String>() {
         val img = ImageView(activity)
         img.layoutParams = ViewGroup.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.MATCH_PARENT)
         img.scaleType = ImageView.ScaleType.CENTER_CROP
-        ImageManager.loadImage(activity, itemData, img)
+        ImageManager.loadImage(activity!!, itemData!!, img)
         return img
     }
 }

@@ -6,7 +6,6 @@ import com.leochuan.CenterSnapHelper
 import com.leochuan.CircleLayoutManager
 import com.leochuan.ViewPagerLayoutManager
 import kotlinx.android.synthetic.main.activity_commodity_detail.*
-import org.chris.quick.b.BaseActivity
 
 /**
  * material design 示例
@@ -14,7 +13,7 @@ import org.chris.quick.b.BaseActivity
  * @Date 2018/6/7-14:52
  * @Email chrisSpringSmell@gmail.com
  */
-class CommodityDetailActivity : BaseActivity() {
+class CommodityDetailActivity : org.quick.library.b.BaseActivity() {
 
     private lateinit var commodityBannerFragment: CommodityBannerFragment
     override val isShowTitle: Boolean get() = false
@@ -52,7 +51,7 @@ class CommodityDetailActivity : BaseActivity() {
         dataList.add(R.drawable.ic_ring)
         dataList.add(R.drawable.ic_ring)
         dataList.add(R.drawable.ic_ring)
-        adapter.dataList = dataList
+        adapter.setDataList(dataList)
         commodityListFragment.adapter = adapter
         CenterSnapHelper().attachToRecyclerView(commodityListFragment)
     }

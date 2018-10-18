@@ -13,14 +13,11 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.Window
 import android.widget.Button
 import android.widget.Toast
-
-import com.jcodecraeer.xrecyclerview.ProgressStyle
-import com.jcodecraeer.xrecyclerview.XRecyclerView
-
-import org.chris.quick.b.BaseRecyclerViewAdapter
+import com.example.chriszou.quicksample.R
+import org.quick.component.widget.QRecyclerView
+import org.quick.library.b.BaseViewHolder
 
 /**
  * Created by work on 2017/6/28.
@@ -29,7 +26,7 @@ import org.chris.quick.b.BaseRecyclerViewAdapter
  * @mail chrisSpringSmell@gmail.com
  */
 
-class BluetoothDeviceDialog(var context: Context, internal var onItemClickedListener: BaseRecyclerViewAdapter.OnItemClickListener?) {
+class BluetoothDeviceDialog(var context: Context, var onItemClickListener: (view: View, viewHolder: BaseViewHolder, position: Int, itemData: BluetoothDevice) -> Unit) {
 
     lateinit var dialog: Dialog
     lateinit var holder: ViewHolder
@@ -41,7 +38,7 @@ class BluetoothDeviceDialog(var context: Context, internal var onItemClickedList
                     val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                     when (device.bondState) {
                         BluetoothDevice.BOND_BONDED -> Unit
-                        else -> if (!holder.adapter.dataList.contains(device)) holder.adapter.add(device)
+                        else -> if (!holder.adapter.getDataList().contains(device)) holder.adapter.add(device)
                     }
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {//搜索完成
@@ -59,14 +56,14 @@ class BluetoothDeviceDialog(var context: Context, internal var onItemClickedList
 
     private fun initDialog(context: Context) {
         this.context = context
-        val builder = AlertDialog.Builder(context, org.chris.quick.R.style.AppTheme_SexDialog)
-        val view = LayoutInflater.from(context).inflate(org.chris.quick.R.layout.dialog_bluetooth_device, null)
+        val builder = AlertDialog.Builder(context, org.quick.library.R.style.AppTheme_SexDialog)
+        val view = LayoutInflater.from(context).inflate(org.quick.library.R.layout.dialog_bluetooth_device, null)
         builder.setView(view)
         builder.setCancelable(true)
         dialog = builder.create()
         val window = dialog.window
         window!!.setGravity(Gravity.CENTER)
-        window.setWindowAnimations(org.chris.quick.R.style.SelectSexAnimation)
+        window.setWindowAnimations(org.quick.library.R.style.SelectSexAnimation)
         holder = ViewHolder(view)
         initBluetooth()
     }
@@ -80,10 +77,10 @@ class BluetoothDeviceDialog(var context: Context, internal var onItemClickedList
 
     fun show() {
         if (!dialog.isShowing) dialog.show()
-        holder.recyclerView.refresh()
+        holder.recyclerView.refresh(true)
         val pairedDevices = BluetoothAdapter.getDefaultAdapter().bondedDevices
         for (device in pairedDevices) {
-            if (device != null && !holder.adapter.dataList.contains(device))
+            if (device != null && !holder.adapter.getDataList().contains(device))
                 holder.adapter.add(device)
         }
     }
@@ -102,46 +99,35 @@ class BluetoothDeviceDialog(var context: Context, internal var onItemClickedList
 
     inner class ViewHolder(view: View) {
 
-        var recyclerView: XRecyclerView
-        var confirmBtn: Button
-        var adapter: Adapter
+        var recyclerView: QRecyclerView = view.findViewById<View>(org.quick.library.R.id.recyclerView) as QRecyclerView
+        var confirmBtn: Button = view.findViewById<View>(org.quick.library.R.id.confirmBtn) as Button
+        var adapter: Adapter = Adapter()
 
         init {
-            confirmBtn = view.findViewById<View>(org.chris.quick.R.id.confirmBtn) as Button
-            recyclerView = view.findViewById<View>(org.chris.quick.R.id.recyclerView) as XRecyclerView
-
-            recyclerView.setPullRefreshEnabled(true)
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader)
-            recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallScale)
-            recyclerView.setArrowImageView(org.chris.quick.R.drawable.ic_refresh_downward_gray)
-            adapter = Adapter()
-            recyclerView.setLoadingListener(object : XRecyclerView.LoadingListener {
+            adapter.setOnItemClickListener(onItemClickListener)
+            recyclerView.setRefreshListener(true, false, object : QRecyclerView.OnRefreshListener {
                 override fun onRefresh() {
                     if (!BluetoothAdapter.getDefaultAdapter().isDiscovering) BluetoothAdapter.getDefaultAdapter().startDiscovery()
                     else showToast("已开始搜索")
                 }
 
-                override fun onLoadMore() {
+                override fun onLoading() {
 
                 }
+
             })
-            recyclerView.adapter = adapter
-            adapter.setOnItemClickListener(onItemClickedListener)
+            recyclerView.setLayoutManager(LinearLayoutManager(context))
+            recyclerView.setAdapter(adapter)
             confirmBtn.setOnClickListener { dismiss() }
         }
     }
 
-    class Adapter : BaseRecyclerViewAdapter<BluetoothDevice>() {
-
-        override fun onBindData(holder: BaseRecyclerViewAdapter.BaseViewHolder, position: Int, itemData: BluetoothDevice) {
-            holder.setText(org.chris.quick.R.id.bluetoothNameTv, if (!TextUtils.isEmpty(itemData.name)) itemData.name else itemData.address)
-            holder.setText(org.chris.quick.R.id.macTv, itemData.address)
+    class Adapter : org.quick.library.b.BaseAdapter<BluetoothDevice>() {
+        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: BluetoothDevice, viewType: Int) {
+            holder.setText(org.quick.library.R.id.bluetoothNameTv, if (!TextUtils.isEmpty(itemData.name)) itemData.name else itemData.address)
+            holder.setText(org.quick.library.R.id.macTv, itemData.address)
         }
 
-        override fun onResultItemPadding(): Int = 40
-        override fun onResultLayoutResId(): Int {
-            return org.chris.quick.R.layout.item_bluetooth_device_dialog
-        }
+        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_bluetooth_device_dialog
     }
 }

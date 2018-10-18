@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="progress" format="float" /><!--其他地方引用-->
+
+    <declare-styleable name="CheckView">
+        <attr name="uncheck_color" format="color" />
+        <!--选中后的基调颜色-->
+        <attr name="check_color" format="color" />
+        <!--选中后钩的颜色-->
+        <attr name="check_right_color" format="color" />
+        <!--圆的半径-->
+        <attr name="radius_size" format="dimension" />
+    </declare-styleable>
+
+    <!--虚线-->
+    <declare-styleable name="DashedLineView">
+
+        <attr name="dashLineHeight" format="dimension|integer" />
+        <attr name="dashLineColor" format="color|integer" />
+        <attr name="dashLineWidth" format="dimension|integer" />
+        <!--线条方向-->
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0x1" />
+            <enum name="vertical" value="0x2" />
+        </attr>
+    </declare-styleable>
+    <!--
+    选中动画View
+    cir:空心圆圈
+    tick:打勾
+    star:星星
+    bg:背景（实心圆）
+    -->
+    <declare-styleable name="CheckAnimView">
+        <attr name="checked" format="boolean" />
+        <!--尺寸-->
+        <attr name="sizeCir" format="dimension" />
+        <attr name="sizeTick" format="dimension" />
+        <attr name="sizeStar" format="dimension" />
+        <!--动画延迟-->
+        <attr name="durationBg" format="integer" />
+        <attr name="durationCir" format="integer" />
+        <attr name="durationTick" format="integer" />
+        <attr name="durationStar" format="integer" />
+        <!--选中时颜色-->
+        <attr name="focusColorCir" format="color" />
+        <attr name="focusColorTick" format="color" />
+        <attr name="focusColorBg" format="color" />
+        <attr name="focusColorStar" format="color" />
+        <!--选中状态时需要绘制的内容-->
+        <attr name="focusDrawType">
+            <flag name="drawBg" value="0x01" />
+            <flag name="drawCir" value="0x02" />
+            <flag name="drawTick" value="0x04" />
+            <flag name="drawStar" value="0x08" />
+        </attr>
+        <!--未选中时的颜色-->
+        <attr name="normalColorCir" format="color" />
+        <attr name="normalColorTick" format="color" />
+        <attr name="normalColorBg" format="color" />
+        <!--未选中状态时需要绘制的内容-->
+        <attr name="normalDrawType">
+            <flag name="drawBg" value="0x01" />
+            <flag name="drawCir" value="0x02" />
+            <flag name="drawTick" value="0x04" />
+        </attr>
+    </declare-styleable>
+
+
+</resources>

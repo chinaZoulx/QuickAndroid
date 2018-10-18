@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <org.quick.library.widgets.ImageViewScale
+        android:id="@+id/imageScaleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        android:visibility="gone" />
+
+    <org.quick.library.widgets.ProgressWheel
+        android:id="@+id/loadingAnimView"
+        android:layout_width="130px"
+        android:layout_height="130px"
+        android:layout_gravity="center"
+        app:pwBarColor="@color/colorBlueShallow"
+        app:pwBarWidth="5dp"
+        app:pwCircleColor="@color/colorPrimary"
+        app:pwContourColor="@color/colorBlueShallow"
+        app:pwRimColor="@color/colorTransparent"
+        app:pwRimWidth="5dp"
+        app:pwText="0"
+        app:pwTextColor="@color/colorBlueShallow"
+        app:pwTextSize="18dp" />
+</FrameLayout>

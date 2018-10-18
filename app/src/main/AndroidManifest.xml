@@ -68,12 +68,20 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".ui.main.mycenter.QuickRecyclerViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
         <activity
             android:name=".ui.main.index.CustomPullRefreshActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".test.TestListViewActivity"/>
+        <activity android:name=".ui.main.mycenter.QSwipeRefreshLayoutActivity"/>
+        <activity android:name=".ui.main.mycenter.CheckAnimActivity"/>
 
         <receiver android:name=".ui.setting.SettingActivity$ShortcutBroadcastReceiver" />
         <service android:name=".service.FloatService" />

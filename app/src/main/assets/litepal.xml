@@ -37,7 +37,7 @@
     </list>
 
     <!--
-    	Define the cases of the tables and columns name. Java is a
+    	Define the cases of the tables and columns name. Java is activity
     	case sensitive language, while database is case insensitive.
     	LitePal will turn all classes names and fields names into lowercase
     	by default while creating or upgrading database. Developers can change

@@ -106,26 +106,22 @@
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.widget.NestedScrollView
+        <fragment
+            android:id="@+id/indexListFragment"
+            class="com.example.chriszou.quicksample.ui.main.index.IndexListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:fillViewport="true"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
-            <org.chris.quick.widgets.CustomCompatSwipeRefreshLayout
-                android:id="@+id/customCompatSwipeRefreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false">
 
-                <fragment
-                    android:id="@+id/indexListFragment"
-                    class="com.example.chriszou.quicksample.ui.main.index.IndexListFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </org.chris.quick.widgets.CustomCompatSwipeRefreshLayout>
-        </android.support.v4.widget.NestedScrollView>
+                <!---->
+
+        <!--</ScrollView>-->
 
         <include layout="@layout/include_btn_index" />
     </android.support.design.widget.CoordinatorLayout>

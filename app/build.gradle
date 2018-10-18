@@ -19,14 +19,10 @@ android {
             storeFile file("./keystore/debug.keystore")
         }
         release {
-            try {
-                storeFile file("./keystore/Android.jks")
-                storePassword "android"
-                keyAlias "android"
-                keyPassword "android"
-            } catch (ex) {
-                throw new InvalidUserDataException(ex.toString())
-            }
+            storeFile file("./keystore/Android.jks")
+            storePassword "android"
+            keyAlias "android"
+            keyPassword "android"
         }
     }
     buildTypes {
@@ -51,14 +47,19 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.lzp.floatingactionbutton:floatingactionbuttonplus:1.0.0'
-    //    implementation 'com.android.support:percent:27.1.1'
-    implementation project(':quick.library')//基本开发组件
-    implementation project(path: ':zxing.library')//二维码
-    implementation project(':viewpagerlayoutmanager')//自定义的RecyclerViewLayoutManager的包
+    implementation project(':quick-library')
+    //基本开发组件
+    implementation project(path: ':zxing-library')
+    //二维码
+    implementation project(':viewpagerlayoutmanager')
+    //自定义的RecyclerViewLayoutManager的包
 }

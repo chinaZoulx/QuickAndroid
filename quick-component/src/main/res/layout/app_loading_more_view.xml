@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/animView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/shape_oval_gray_dark" />
+
+    <TextView
+        android:id="@+id/loadTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="正在加载"
+        android:textColor="#828282"
+        android:textSize="14sp" />
+
+</LinearLayout>

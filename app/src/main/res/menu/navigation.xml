@@ -11,6 +11,14 @@
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="发现" />
     <item
+        android:id="@+id/tab2"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="首页" />
+    <item
+        android:id="@+id/tab3"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="测试" />
+    <item
         android:id="@+id/navigation3"
         android:icon="@drawable/ic_add_cir_black_24dp"
         android:title="我的" />

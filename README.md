@@ -72,7 +72,7 @@ class TestListActivity : BaseListActivity() {
         getAdapter<Adapter>().setOnItemClickListener { v, position ->
             showToast(String.format("点击了第%d项", position))
         }
-        getAdapter<Adapter>().setOnClickListener(BaseRecyclerViewAdapter.OnClickListener{ view, holder, position -> 
+        getAdapter<Adapter>().setOnClickListener(BaseRecyclerViewAdapter.OnClickListener{ view, holderRv, position ->
             
         },R.id.你的ID1,R.id.你的ID2)
     }
@@ -114,7 +114,7 @@ class TestListActivity : BaseListActivity() {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String?) {
+        override fun onBindData(holderRv: BaseViewHolder, position: Int, itemData: String?) {
             TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         }
     }
@@ -167,12 +167,12 @@ class TestListActivity2 : BaseListActivity2<String>() {
     }
 
     /*绑定item数据*/
-    override fun onBindDataItemView(holder: BaseRecyclerViewAdapter.BaseViewHolder?, itemData: String?, position: Int) {
+    override fun onBindDataItemView(holderRv: BaseRecyclerViewAdapter.BaseViewHolder?, itemData: String?, position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /*绑定header数据*/
-    override fun onBindDataHeaderView(holder: BaseRecyclerViewAdapter.BaseViewHolder?, itemData: String?, position: Int) {
+    override fun onBindDataHeaderView(holderRv: BaseRecyclerViewAdapter.BaseViewHolder?, itemData: String?, position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
@@ -190,9 +190,9 @@ recyclerView基类，集成了点击事件、长按、item内的view点击<br><b
 class Adapter : BaseRecyclerViewAdapter<Int>() {
         override fun onResultLayoutResId(): Int = R.layout.item_commodity_list<br>
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: Int?) {
-//            holder.setImg(R.id.coverIv, itemData!!)
-            holder.getImageView(R.id.coverIv).setImageResource(itemData!!)
+        override fun onBindData(holderRv: BaseViewHolder, position: Int, itemData: Int?) {
+//            holderRv.setImg(R.id.coverIv, itemData!!)
+            holderRv.getImageView(R.id.coverIv).setImageResource(itemData!!)
     }
 ~~~
 设置margin与padding。<br>
@@ -200,8 +200,8 @@ class Adapter : BaseRecyclerViewAdapter<Int>() {
 inner class Adapter : BaseRecyclerViewAdapter<String>() {
         override fun onResultLayoutResId(): Int = R.layout.item_discover_list
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String?) {
-            holder.setImg(R.id.contentIv, itemData)
+        override fun onBindData(holderRv: BaseViewHolder, position: Int, itemData: String?) {
+            holderRv.setImg(R.id.contentIv, itemData)
         }
 
         //----------margin 一般用于CardView

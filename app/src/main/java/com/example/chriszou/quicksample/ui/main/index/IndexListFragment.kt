@@ -4,18 +4,13 @@ import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.index.detail.IndexListDetailActivity
-import org.chris.quick.b.BaseListFragment
-import org.chris.quick.b.BaseRecyclerViewAdapter
+import org.quick.library.b.BaseViewHolder
 
-class IndexListFragment : BaseListFragment() {
-    override fun onInit() {
-        getAdapter<Adapter>().setOnItemClickListener { v, position ->
-            if (activity != null)
-                IndexListDetailActivity.startAction(activity!!, "详细", getAdapter<Adapter>().getItem(position))
-        }
-    }
-
+class IndexListFragment : org.quick.library.b.BaseListFragment() {
     override fun start() {
+        getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
+            IndexListDetailActivity.startAction(activity!!, "详细", getAdapter<Adapter>()!!.getItem(position))
+        }
         onRefresh()
     }
 
@@ -32,12 +27,13 @@ class IndexListFragment : BaseListFragment() {
             dataList.add("http://up.enterdesk.com/edpic_source/3d/09/c4/3d09c4f52338fbaa1ea3f6ff6fceeea0.jpg")
             dataList.add("http://pic41.nipic.com/20140602/14680244_170645522110_2.jpg")
             dataList.add("http://pic34.nipic.com/20131028/1175293_134103150121_2.jpg")
-            getAdapter<Adapter>().dataList = dataList
-            recyclerView.refreshComplete()
+            getAdapter<Adapter>()?.setDataList(dataList)
+            refreshComplete()
         }, 1000)
     }
 
-    override fun onLoadMore() {
+    override fun onLoading() {
+
         Handler().postDelayed({
             val dataList = mutableListOf<String>()
             dataList.add("http://up.enterdesk.com/edpic_source/bf/f2/5c/bff25c52adda065475059b31c2214228.jpg")
@@ -50,14 +46,16 @@ class IndexListFragment : BaseListFragment() {
             dataList.add("http://up.enterdesk.com/edpic/36/e6/bc/36e6bc8653381fe8f43ac1bd720d3f72.jpg")
             dataList.add("http://p2.so.qhmsg.com/t01ba41296165d80487.jpg")
             dataList.add("http://up.enterdesk.com/edpic_source/28/b0/8e/28b08ee6d59ed9693e0b180ffdcf5e9c.jpg")
-            getAdapter<Adapter>().addDataAll(dataList)
-            recyclerView.loadMoreComplete()
-        }, 1000)
+            getAdapter<Adapter>()?.addDataList(dataList)
+            loadMoreComplete()
+        }, 5000)
     }
 
-    override fun isPullRefreshEnable(): Boolean = true
+    override val isPullRefreshEnable: Boolean
+        get() = true
 
-    override fun isLoadMoreEnable(): Boolean = true
+    override val isLoadMoreEnable: Boolean
+        get() = true
 
     override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
 
@@ -67,17 +65,17 @@ class IndexListFragment : BaseListFragment() {
 
     }
 
-    override fun onRequestDataSuccess(jsonData: String, isPullRefresh: Boolean) {
+    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) {
 
     }
 
-    class Adapter : BaseRecyclerViewAdapter<String>() {
-        override fun onResultLayoutResId(): Int = R.layout.item_index_list
+    class Adapter : org.quick.library.b.BaseAdapter<String>() {
+        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_index_list
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String?) {
+        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String, viewType: Int) {
             holder.setImg(R.id.coverIv, itemData)
         }
 
-        override fun onResultItemMargin(): Int = 40
+        override fun onResultItemMargin(position: Int): Float = 40f
     }
 }

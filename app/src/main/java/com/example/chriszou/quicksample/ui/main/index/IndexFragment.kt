@@ -8,11 +8,11 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_index.*
 import kotlinx.android.synthetic.main.include_btn_index.*
-import org.chris.quick.b.BaseFragment
-import org.chris.quick.b.activities.WebActivity
-import org.chris.quick.function.QuickBroadcast
-import org.chris.quick.function.QuickToast
-import org.chris.quick.m.Log
+import org.quick.library.b.BaseFragment
+import org.quick.library.b.activities.WebActivity
+import org.quick.component.Log2
+import org.quick.component.QuickBroadcast
+import org.quick.component.QuickToast
 import java.util.concurrent.TimeUnit
 
 class IndexFragment : BaseFragment() {
@@ -22,7 +22,7 @@ class IndexFragment : BaseFragment() {
     //    override fun onResultToolbar(): Toolbar? = getView(R.id.toolbar)
     override fun onInit() {
         QuickBroadcast.addBroadcastListener(this, { action, intent ->
-            Log.e("test",String.format("收到广播，action:%s", action))
+            Log2.e("test",String.format("收到广播，action:%s", action))
 //            when (action) {
 //                "test" -> Log.e("test", "test")
 //                "test2" -> Log.e("test", "test2")
@@ -41,7 +41,6 @@ class IndexFragment : BaseFragment() {
 
     override fun onInitLayout() {
         setTitle("Index")
-        customCompatSwipeRefreshLayout.isEnabled = false
     }
 
     override fun onBindListener() {
@@ -68,7 +67,7 @@ class IndexFragment : BaseFragment() {
         }
         tabTv4.setOnClickListener {
             Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread()).take(10).subscribe {
-                Log.e("test", it.toString())
+                Log2.e("test", it.toString())
                 val temp = it.toString()
                 QuickToast.showToastDefault("发现七彩还魂草:$temp")
             }
@@ -86,7 +85,7 @@ class IndexFragment : BaseFragment() {
 //            QuickToast.Builder().setDuration(Toast.LENGTH_LONG).create().showToast("发现七彩还魂草")
 //            QuickToast.showToastDefault("")
         }
-        fabContainer.setOnItemClickListener { tagView, position ->
+        fabContainer.setOnItemClickListener { _, _ ->
             //            startActivity(Intent(activity, CutToAnimActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
 //            CutToAnimActivity.startAction(activity!!,"转场动画",tagView)
             startActivity(Intent(activity, CommodityDetailActivity::class.java))

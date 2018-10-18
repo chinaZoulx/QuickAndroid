@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-    <org.chris.quick.widgets.TabFragmentViewPager
+    <org.quick.library.widgets.ViewPagerTabFragment
         android:id="@+id/tabFragmentViewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -24,5 +24,5 @@
         app:menu="@menu/navigation"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"></android.support.design.widget.BottomNavigationView>
+        app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp" />
 
-    <org.chris.quick.widgets.SemicircleTopView
+    <org.quick.library.widgets.SemicircleTopView
         android:id="@+id/semicircleTopView"
         android:layout_width="match_parent"
         android:layout_height="100dp"

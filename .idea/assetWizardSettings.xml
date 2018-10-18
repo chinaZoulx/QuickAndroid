@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/F:/Program%20Files/Android/Android%20Studio%203.0.1/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_lens_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/F:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_fingerprint_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,10 +29,9 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="autoMirrored" value="true" />
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_ring" />
-                            <entry key="sourceFile" value="H:\InstallPackage\戒指.svg" />
+                            <entry key="color" value="292929" />
+                            <entry key="outputName" value="ic_star_rec" />
+                            <entry key="sourceFile" value="I:\InstallPackage\star (3).svg" />
                           </map>
                         </option>
                       </PersistentState>

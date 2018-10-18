@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--横向的进度条-->
+    <declare-styleable name="ProgressBarHorizontal">
+        <!--背景-->
+        <attr name="bgSrc" format="reference" />
+        <attr name="bgColorStart" format="color" />
+        <attr name="bgColorEnd" format="color" />
+        <attr name="bgRadius" format="dimension" />
+        <attr name="bgLtRadius" format="dimension" />
+        <attr name="bgLbRadius" format="dimension" />
+        <attr name="bgRbRadius" format="dimension" />
+        <attr name="bgRtRadius" format="dimension" />
+
+        <!--封面-->
+        <attr name="coverSrc" format="reference" />
+        <attr name="coverColorStart" format="color" />
+        <attr name="coverColorEnd" format="color" />
+        <attr name="coverRadius" format="dimension" />
+        <attr name="coverLtRadius" format="dimension" />
+        <attr name="coverLbRadius" format="dimension" />
+        <attr name="coverRbRadius" format="dimension" />
+        <attr name="coverRtRadius" format="dimension" />
+
+        <attr name="progress"/>
+        <attr name="scaleType">
+            <enum name="match_parent" value="0" />
+            <enum name="wrap_content" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

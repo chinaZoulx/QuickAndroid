@@ -7,12 +7,13 @@ import android.os.Build
 import android.provider.Settings
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.MainActivity
-import org.chris.quick.b.BaseActivity
-import org.chris.quick.tools.common.PermissionUtils
+import org.quick.component.QuickPermissions
+
+import org.quick.component.utils.PermissionUtils
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 
-class LauncherActivity : BaseActivity() {
+class LauncherActivity : org.quick.library.b.BaseActivity() {
     companion object {
         const val REQUEST_PERMISSIONS_CODE = 0x23
         const val APP_SETTINGS_RC = 0x863
@@ -53,7 +54,7 @@ class LauncherActivity : BaseActivity() {
     }
 
     private fun launcher() {
-//        val firstLoginDate = QuickSharedPreferencesHelper.getValue(BaseApplication.APP_FIRST_LOGIN_DATE, -1L)
+//        val firstLoginDate = QuickSPHelper.getValue(BaseApplication.APP_FIRST_LOGIN_DATE, -1L)
         when {
 //            firstLoginDate == -1L -> startAction(this, LoginActivity::class.java, "")
 //            DateUtils.getCurrentTimeInMillis() - firstLoginDate > DateUtils.DAY * 7 -> startAction(this, LoginActivity::class.java, "")

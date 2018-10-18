@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="H:\StudioProject\QuickSample\zxing.library\libs"><file name="core-3.3.2.jar" path="H:\StudioProject\QuickSample\zxing.library\libs\core-3.3.2.jar"/></source></dataSet><dataSet config="debug"><source path="H:\StudioProject\QuickSample\zxing.library\src\debug\jniLibs"/></dataSet></merger>

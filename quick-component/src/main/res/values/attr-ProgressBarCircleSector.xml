@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressBarCircleSector">
+        <!--最外层-->
+        <attr name="cir1Color" format="color" />
+        <attr name="cir1Width" format="dimension" />
+        <!--第二层-->
+        <attr name="cir2Width" format="dimension" />
+        <attr name="cir2Color" format="color" />
+        <!--中间的扇形-->
+        <attr name="cir3ColorCover" format="color" />
+        <attr name="cir3ColorBg" format="color" />
+        <!--是否循环进度：超过360的倍数，余下的算角度，例：380等于380%360=20  750%360=30-->
+        <attr name="progressIsLoop" format="boolean" />
+        <attr name="progress" />
+    </declare-styleable>
+</resources>

@@ -1,8 +1,6 @@
 package com.example.chriszou.quicksample
 
-import org.chris.quick.b.BaseTinkerApplication
-
-class MainApplication:BaseTinkerApplication() {
+class MainApplication:org.quick.library.b.BaseTinkerApplication() {
     override fun onInit() {
 
     }

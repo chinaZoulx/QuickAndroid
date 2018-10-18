@@ -1,7 +1,6 @@
 package com.example.chriszou.quicksample.test
 
-import org.chris.quick.b.BaseListActivity2
-import org.chris.quick.b.BaseRecyclerViewAdapter
+import org.quick.library.b.BaseViewHolder
 
 /**
  * @describe
@@ -9,7 +8,7 @@ import org.chris.quick.b.BaseRecyclerViewAdapter
  * @date 2018/7/4-15:39
  * @email chrisSpringSmell@gmail.com
  */
-class TestListActivity2 : BaseListActivity2<String>() {
+class TestListActivity2 : org.quick.library.b.BaseListActivity2<String>() {
     override fun onInit() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -51,12 +50,13 @@ class TestListActivity2 : BaseListActivity2<String>() {
     }
 
     /*绑定item数据*/
-    override fun onBindDataItemView(holder: BaseRecyclerViewAdapter.BaseViewHolder?, itemData: String?, position: Int) {
+    override fun onBindDataItemView(holderRv: BaseViewHolder?, itemData: String?, position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /*绑定header数据*/
-    override fun onBindDataHeaderView(holder: BaseRecyclerViewAdapter.BaseViewHolder?, itemData: String?, position: Int) {
+    override fun onBindDataHeaderView(holderRv: BaseViewHolder?, itemData: String?, position: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        javaClass
     }
 }

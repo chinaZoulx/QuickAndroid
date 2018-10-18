@@ -5,101 +5,87 @@ import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import com.example.chriszou.quicksample.R
-import org.chris.quick.b.BaseListFragment
-import org.chris.quick.b.BaseRecyclerViewAdapter
-import org.chris.quick.function.selectorimg.photoandselectorshow.PhotoShowAndSelectorActivity
+import org.quick.library.b.BaseViewHolder
 
-class DiscoverListFragment : BaseListFragment() {
-    override fun onInit() {
-        getAdapter<Adapter>().setOnItemClickListener { v, position ->
+class DiscoverListFragment : org.quick.library.b.BaseListFragment() {
+
+    override fun start() {
+        getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
             if (activity != null)
-                PhotoShowAndSelectorActivity.startAction(activity!!, v, getAdapter<Adapter>().dataList, position)
+                org.quick.library.function.selectorimg.photoandselectorshow.PhotoShowAndSelectorActivity.startAction(activity!!, view, getAdapter<Adapter>()!!.getDataList(), position)
         }
-        getAdapter<Adapter>().setOnClickListener(BaseRecyclerViewAdapter.OnClickListener { view, holder, _ ->
+        getAdapter<Adapter>()?.setOnClickListener({ view, viewHolder, position, itemData ->
             when (view.id) {
                 R.id.delBtn -> {
-                    holder.getButton(R.id.delBtn).setBackgroundResource(R.drawable.shape_cir_prim)
-                    holder.getTextView(R.id.delBtn).setTextColor(Color.WHITE)
-                    showToast("关注")
+                    viewHolder.getButton(R.id.delBtn)?.setBackgroundResource(R.drawable.shape_cir_prim)
+                    viewHolder.getTextView(R.id.delBtn)?.setTextColor(Color.WHITE)
+                    getAdapter<Adapter>()?.remove(position)
                 }
             }
         }, R.id.delBtn)
-    }
-
-    override fun start() {
 /*onRefresh()*/
     }
 
-    override fun isPullRefreshEnable(): Boolean = false
+    override val isPullRefreshEnable: Boolean
+        get() = false
 
-    override fun isLoadMoreEnable(): Boolean = false
+    override val isLoadMoreEnable: Boolean
+        get() = true
 
     override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
 
     override fun onResultUrl(): String = ""
 
     override fun onResultParams(params: MutableMap<String, String>) {
-        params["token"] = ""
+
     }
 
     override fun onResultLayoutManager(): RecyclerView.LayoutManager = StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL)
 
-    override fun isShowCuttingLine(): Boolean {
-        return super.isShowCuttingLine()
-    }
-
-    override fun onResultCuttingLine(): RecyclerView.ItemDecoration {
-        return super.onResultCuttingLine()
-    }
-
-    override fun onResultPullRefreshIcon(): Int {
-        return super.onResultPullRefreshIcon()
-    }
-
-
-    override fun onRequestDataSuccess(jsonData: String, isPullRefresh: Boolean) {
+    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) {
         if (isPullRefresh) {//下拉刷新
-            setHasData(false)//没有数据
+            dataHas(false)//没有数据
         } else {//上拉加载
-            setNoMore(true)//没有更多
+            dataHas(true)//没有更多
         }
     }
 
-    inner class Adapter : BaseRecyclerViewAdapter<String>() {
-        override fun onResultLayoutResId(): Int = R.layout.item_discover_list
+    class Adapter : org.quick.library.b.BaseAdapter<String>() {
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String?) {
+        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_discover_list
+
+        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String, viewType: Int) {
             holder.setImg(R.id.contentIv, itemData)
         }
 
         //----------margin 一般用于CardView
-        override fun onResultItemMargin(): Int = 40
-
-        override fun onResultItemMarginLeft(position: Int): Int = when {
-            position % 2 == 0 -> 40
-            else -> 20
-        }
-
-        override fun onResultItemMarginRight(position: Int): Int = when {
-            position % 2 != 0 -> 40
-            else -> 20
-        }
-
-        override fun onResultItemMarginTop(position: Int): Int {
-            return super.onResultItemMarginTop(position)
-        }
-
-        override fun onResultItemMarginBottom(position: Int): Int {
-            return super.onResultItemMarginBottom(position)
-        }
-
-        //------------Padding，一般用于常规列表
-        override fun onResultItemPadding(): Int {
-            return super.onResultItemPadding()
-        }
-
-        override fun onResultItemPaddingLeft(position: Int): Int {
-            return super.onResultItemPaddingLeft(position)
-        }
+        override fun onResultItemMargin(position: Int): Float = 40f
+//
+////        override fun onResultItemMarginLeft(position: Int): Float = when {
+////            position % 2 == 0 -> 20f
+////            else -> 10f
+////        }
+////
+////        override fun onResultItemMarginRight(position: Int): Float = when {
+////            position % 2 != 0 -> 20f
+////            else -> 10f
+////        }
+//
+//        override fun onResultItemMarginTop(position: Int): Float {
+//            return super.onResultItemMarginTop(position)
+//        }
+//
+//        override fun onResultItemMarginBottom(position: Int): Float {
+//            return super.onResultItemMarginBottom(position)
+//        }
+//
+//        //------------Padding，一般用于常规列表
+//        override fun onResultItemPadding(position: Int): Float {
+//            return super.onResultItemPadding(position)
+//        }
+//
+//        override fun onResultItemPaddingLeft(position: Int): Float {
+//            return super.onResultItemPaddingLeft(position)
+//        }
     }
 }

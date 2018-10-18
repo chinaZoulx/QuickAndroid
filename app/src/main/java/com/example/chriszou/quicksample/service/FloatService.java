@@ -18,7 +18,7 @@ import android.view.WindowManager;
 import com.example.chriszou.quicksample.R;
 import com.example.chriszou.quicksample.ui.setting.SettingActivity;
 
-import org.chris.quick.b.activities.ThemeActivity;
+import org.quick.library.b.activities.ThemeActivity;
 
 /**
  * Created by work on 2017/9/25.

@@ -21,7 +21,7 @@
             android:src="@drawable/ic_arrow_back_white_24dp"
             android:visibility="gone" />
 
-        <org.chris.quick.widgets.EditTextClear
+        <org.quick.library.widgets.EditTextClear
             android:id="@+id/filtrateEtc"
             android:gravity="center"
             android:textSize="@dimen/textBodySize"
