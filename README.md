@@ -1,3 +1,4 @@
+# 持续更新中，本项目基于[QuickComponent开发](https://github.com/SpringSmell/quick-component)
 # quick.library
 本项目包含完整的代码Demo,可直接clone
 # 快速开发框架
