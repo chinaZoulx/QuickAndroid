@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.os.Handler
 import android.os.Message
+import android.text.TextUtils
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.bluetooth.BluetoothChatService.STATE_CONNECTED
 import kotlinx.android.synthetic.main.activity_bluetooth.*
@@ -50,7 +51,7 @@ class BluetoothActivity : org.quick.library.b.BaseActivity() {
             bluetoothDeviceDialog.show()
         }
         sendMsgBtn.setOnClickListener {
-            if (!msgContentEtc.text.isEmpty()) {
+            if (TextUtils.isEmpty(msgContentEtc.text)) {
                 if (bluetoothChatService.state == STATE_CONNECTED) bluetoothChatService.write(CommonUtils.parseCommand(msgContentEtc.textStr))
                 else showToast("设备未连接")
             } else showToast("请输入命令")

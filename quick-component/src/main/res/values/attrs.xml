@@ -66,5 +66,15 @@
         </attr>
     </declare-styleable>
 
+    <!--带刷新的RecyclerView-->
+    <declare-styleable name="QRecyclerView">
+        <attr name="loadDuration" format="integer" />
+        <attr name="loadTxt" format="string|reference" />
+        <attr name="divider" />
+        <attr name="dividerPadding" format="dimension" />
+        <!--drawable没有指定尺寸时，使用默认尺寸-->
+        <attr name="dividerSizeDefault" format="dimension" />
+    </declare-styleable>
+
 
 </resources>

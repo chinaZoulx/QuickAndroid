@@ -1,1 +1,1 @@
-include ':app', 'quick-library','zxing-library','viewpagerlayoutmanager','quick-component'
+include ':app', 'quick-library','zxing-library','quick-component'

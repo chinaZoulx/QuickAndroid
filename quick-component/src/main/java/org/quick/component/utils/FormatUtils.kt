@@ -54,7 +54,7 @@ object FormatUtils {
      * @return
      * @formula |AB| = sqrt((X1-X2)^2 + (Y1-Y2)^2)
      */
-    fun getFormatDistance(x1: Point, x2: Point): Double =getFormatDistance(x1.x.toFloat(), x2.x.toFloat(), x1.y.toFloat(), x2.y.toFloat())
+    fun getFormatDistance(x1: Point, x2: Point): Double = getFormatDistance(x1.x.toFloat(), x2.x.toFloat(), x1.y.toFloat(), x2.y.toFloat())
 
 
     fun getFormatDistance(x1: Float, x2: Float, y1: Float, y2: Float): Double {
@@ -63,46 +63,35 @@ object FormatUtils {
         return Math.sqrt((x * x + y * y).toDouble())
     }
 
+    fun formatNumberWithMarkSplit(number: Double): String {
+        return formatNumberWithMarkSplit(number, ",", 3, 2)
+    }
+
+    fun formatNumberWithMarkSplit(number: Double, endLength: Int): String {
+        return formatNumberWithMarkSplit(number, ",", 3, endLength)
+    }
+
     /**
      * 格式化数字，用逗号分割
      *
-     * @param number 1000000.7569 to 1,000,000.76 or
-     * @return
+     * @param number      1000000.7569 to 1,000,000.76 or
+     * @param splitChar   分割符号
+     * @param endLength   保存多少小数位
+     * @param splitLength 分割位数
+     * @return 格式化完成的字符串
      */
-    @JvmOverloads
-    fun formatNumberWithMarkSplit(number: Double, splitChar: String = ","): String {
-        var firstStr = ""//第一个字符
-        var middleStr = ""//中间字符
-        var endStr = "00"//小数后两位
-        if (number < 0) {
-            firstStr = "-"
-        } else if (number == 0.0) {
-            return "0.00"
-        }
+    fun formatNumberWithMarkSplit(number: Double, splitChar: String, splitLength: Int, endLength: Int): String {
 
-        val format = NumberFormat.getInstance()//解决超大数字直接转换为字符串的问题
-        format.isGroupingUsed = false
-        val tempNumberStr = format.format(number) + "00"
-        val endIndex = tempNumberStr.lastIndexOf(".")
-        if (endIndex != -1) {
-            endStr = tempNumberStr.substring(endIndex + 1, endIndex + 3)
-        }
+        var tempPattern: String
+        var tempSplitStr = ""
 
-        val numberStr = Math.abs(number.toLong()).toString() + ""//取正
+        for (index in 0 until splitLength) tempSplitStr += "#"
 
-        val firstIndex = numberStr.length % 3
-        val bitCount = numberStr.length / 3
+        tempPattern = tempSplitStr + splitChar + tempSplitStr.substring(0, splitLength - 1) + "0." /*###,##0.*/
 
-        if (firstIndex > 0) {
-            middleStr += numberStr.substring(0, firstIndex) + splitChar
-        }
-        for (i in 0 until bitCount) {
-            middleStr += numberStr.substring(firstIndex + i * 3, firstIndex + i * 3 + 3) + splitChar
-        }
-        if (middleStr.length > 1) {
-            middleStr = middleStr.substring(0, middleStr.length - 1)
-        }
-        return "$firstStr$middleStr.$endStr"
+        for (index in 0 until endLength) tempPattern += "0" /*###,##0.00*/
+
+        return DecimalFormat(tempPattern).format(number)
     }
 
     /**
@@ -192,18 +181,18 @@ object FormatUtils {
      * @param bytes 字节
      * @return
      */
-    fun formatFlow(bytes: Float): String {
+    fun formatFlow(bytes: Double): String {
         val gb = bytes / 8f / 1024f / 1024f / 1024f
         val mb = bytes / 8f / 1024f / 1024f
         val kb = bytes / 8f / 1024f
         val bit = bytes / 8
         return if (gb > 1) {//GB
-            String.format("%sGB", formatNumberWithMarkSplit(gb.toDouble()))
+            String.format("%sGB", formatNumberWithMarkSplit(gb))
         } else if (mb > 1) {
-            String.format("%sMB", formatNumberWithMarkSplit(mb.toDouble()))
+            String.format("%sMB", formatNumberWithMarkSplit(mb))
         } else if (kb > 1) {
-            String.format("%sKB", formatNumberWithMarkSplit(kb.toDouble()))
+            String.format("%sKB", formatNumberWithMarkSplit(kb))
         } else
-            String.format("%sByte", formatNumberWithMarkSplit(bit.toDouble()))
+            String.format("%sByte", formatNumberWithMarkSplit(bit))
     }
 }

@@ -6,6 +6,6 @@ uploadArchives{
         repository(url: uri('../repository'))
         pom.groupId = "org.quick.library"// 唯一标识（通常为模块包名，也可以任意）
         pom.artifactId = "quick-component" // 项目名称（通常为类库模块名称，也可以任意）
-        pom.version = "0.0.1" // 版本号
+        pom.version = "0.0.7" // 版本号
     }
 }

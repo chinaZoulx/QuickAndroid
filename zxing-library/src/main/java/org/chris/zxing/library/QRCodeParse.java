@@ -104,7 +104,7 @@ public class QRCodeParse {
             canvas.drawRoundRect(new RectF(borderLeft, borderTop, borderRight, borderBottom), logoBorderRadius, logoBorderRadius, paint);
             canvas.drawBitmap(logo, logoLeft, logoTop, null);
 
-            canvas.save(Canvas.ALL_SAVE_FLAG);
+            canvas.save();//canvas.save(Canvas.ALL_SAVE_FLAG)
             canvas.restore();
         } catch (Exception e) {
             bitmap = null;

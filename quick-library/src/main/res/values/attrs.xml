@@ -4,12 +4,6 @@
     <declare-styleable name="RollView">
         <attr name="isLoop" format="boolean" />
     </declare-styleable>
-
-    <declare-styleable name="DashedLineView">
-        <attr name="lineHeight" format="dimension|integer"/>
-        <attr name="lineColor" format="color|integer"/>
-        <attr name="dashWidth" format="dimension|integer"/>
-    </declare-styleable>
     <declare-styleable name="RoundProgressBar">
 
         <attr name="roundColor" format="color|string"/>

@@ -2,15 +2,21 @@ package org.quick.component.utils
 
 import android.os.Environment
 import org.quick.component.QuickAndroid
+import org.quick.component.QuickAsync
+import org.quick.component.callback.OnWriteListener
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.lang.Exception
 
 /**
  * Created by zoulx on 2018/1/25.
  */
 object FileUtils {
+    const val DirPath = "cachePath"
+    const val FileName = "FileName"
+    const val MAX_SKIP_BUFFER_SIZE = 2048/*最大缓冲区大小*/
 
     val sdCardPath = Environment.getExternalStorageDirectory().absolutePath/*内存卡可读写的根目录*/
     val sdCardPathCache = Environment.getDownloadCacheDirectory().absolutePath/*缓存目录*/
@@ -36,56 +42,58 @@ object FileUtils {
      * @param inputStream
      * @param filePathDir   文件路径
      * @param fileName      文件名
-     * @param isRewriteFile 是否覆盖
-     * @return
+     * @param isAppend 是否追加文件
      */
-    fun writeFile(inputStream: InputStream?, filePathDir: String?, fileName: String?, isRewriteFile: Boolean): Boolean {
-        return if (inputStream != null && filePathDir != null && fileName != null) {
-            try {
-                val e = File(filePathDir)
-                if (!e.exists()) {
-                    e.mkdirs()
-                }
+    fun writeFile(inputStream: InputStream?, filePathDir: String, fileName: String, isAppend: Boolean, onWriteListener: OnWriteListener) {
+        if (inputStream != null) {
+            QuickAsync.async(object : QuickAsync.OnASyncListener<File> {
+                override fun onASync(): File {
+                    val dir = File(filePathDir)
+                    if (!dir.exists())
+                        dir.mkdirs()
+                    val filePath = filePathDir + File.separatorChar + fileName
+                    val file = File(filePath)
 
-                val filePath = filePathDir + File.separatorChar + fileName
-                val file = File(filePath)
-                val fileOutputStream: FileOutputStream
-                val buffer: ByteArray
-                var count1 = 0
-                if (file.exists() && file.isFile) {
-                    if (!isRewriteFile) {
-                        inputStream.close()
-                        false
-                    } else {
-                        file.delete()
-                        fileOutputStream = FileOutputStream(filePath)
-                        buffer = ByteArray(1024)
-                        while (count1 > 0) {
-                            count1 = inputStream.read(buffer)
-                            fileOutputStream.write(buffer, 0, count1)
+                    val buffer = ByteArray(MAX_SKIP_BUFFER_SIZE)
+                    val totalCount = inputStream.available().toLong()/*如果inputStream是网络流，此处数据将不准确*/
+                    var redCount = 0L
+                    var redBytesCount = inputStream.read(buffer)
+                    val fileOutputStream = FileOutputStream(filePath, isAppend)
+
+                    var lastTime = 0L
+                    var tempTime: Long
+
+                    var isDone = false
+
+                    while (redBytesCount != -1) {
+                        redCount += redBytesCount.toLong()
+                        fileOutputStream.write(buffer, 0, redBytesCount)
+                        redBytesCount = inputStream.read(buffer)
+
+                        tempTime = System.currentTimeMillis() - lastTime
+                        if (tempTime > 100L) {/*间隔80毫秒触发一次，否则队列阻塞*/
+                            if (!isDone) {/*完成后只触发一次*/
+                                isDone = redBytesCount == -1
+                                QuickAsync.runOnUiThread { onWriteListener.onLoading(fileName, redCount, totalCount, isDone) }
+                            }
+                            lastTime = System.currentTimeMillis()
                         }
-
-                        fileOutputStream.close()
-                        inputStream.close()
-                        true
                     }
-                } else {
-                    fileOutputStream = FileOutputStream(filePath)
-                    buffer = ByteArray(1024)
-
-                    while (count1 > 0) {
-                        count1 = inputStream.read(buffer)
-                        fileOutputStream.write(buffer, 0, count1)
-                    }
-
+                    if (!isDone) QuickAsync.runOnUiThread { onWriteListener.onLoading(fileName, redCount, totalCount, true) }/*之前有延迟100毫秒，或许会造成最后一次未返回*/
                     fileOutputStream.close()
                     inputStream.close()
-                    true
+                    return file
                 }
-            } catch (var11: Exception) {
-                var11.printStackTrace()
-                false
-            }
+
+                override fun onError(O_O: Exception) {
+                    onWriteListener.onFailure(O_O as IOException)
+                }
+
+                override fun onAccept(value: File) {
+                    onWriteListener.onResponse(value)
+                }
+
+            })
 
         } else {
             throw NullPointerException()

@@ -126,16 +126,19 @@ class ProgressBarHorizontal @JvmOverloads constructor(context: Context, attrs: A
             }
             else -> drawPath(canvas, bgLtRadius, bgLbRadius, bgRbRadius, bgRtRadius, width.toFloat(), bgPaint)
         }
+        val scale = (maxProgress - progress) / maxProgress/*剩余多少的比例*/
+        val progressWidth = width - width * scale
+
+        if (progressWidth <= 0) return
         //cover
         coverPaint.shader = LinearGradient(0f, (height / 2).toFloat(), width.toFloat(), (height / 2).toFloat(), coverColors, null, Shader.TileMode.MIRROR)
-        val progressWidth = width - width * ((maxProgress - progress) / maxProgress)
         when {
             coverBitmap != null -> {
-                val dst = RectF(0f, 0f, width.toFloat(), height.toFloat())
-                val src = Rect(0, 0, width, height)
+                val dst = RectF(0f, 0f, progressWidth, height.toFloat())/*展示在哪*/
+                val src = Rect(0, 0, (coverBitmap!!.width * progress / maxProgress).toInt(), coverBitmap!!.height)/*控制显示哪部分*/
                 canvas.drawBitmap(coverBitmap!!, src, dst, null)
             }
-            coverRadius != 0 -> {
+            coverRadius > 0 -> {
                 val coverRec = RectF(0f, 0f, progressWidth, height.toFloat())
                 canvas.drawRoundRect(coverRec, coverRadius.toFloat(), coverRadius.toFloat(), coverPaint)
             }

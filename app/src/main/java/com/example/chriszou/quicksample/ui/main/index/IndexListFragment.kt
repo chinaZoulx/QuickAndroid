@@ -1,12 +1,12 @@
 package com.example.chriszou.quicksample.ui.main.index
 
 import android.os.Handler
-import android.support.v7.widget.RecyclerView
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.index.detail.IndexListDetailActivity
+import org.quick.component.QuickAdapter
 import org.quick.library.b.BaseViewHolder
 
-class IndexListFragment : org.quick.library.b.BaseListFragment() {
+class IndexListFragment : org.quick.library.b.QuickListFragment<String>() {
     override fun start() {
         getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
             IndexListDetailActivity.startAction(activity!!, "详细", getAdapter<Adapter>()!!.getItem(position))
@@ -57,7 +57,7 @@ class IndexListFragment : org.quick.library.b.BaseListFragment() {
     override val isLoadMoreEnable: Boolean
         get() = true
 
-    override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
+    override fun onResultAdapter(): QuickAdapter<*, *> = Adapter()
 
     override fun onResultUrl(): String = ""
 

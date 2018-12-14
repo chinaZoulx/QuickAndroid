@@ -1,7 +1,7 @@
 package com.example.chriszou.quicksample.ui.bluetooth
 
-import android.support.v7.widget.RecyclerView
 import com.example.chriszou.quicksample.R
+import org.quick.component.QuickAdapter
 import org.quick.library.b.BaseViewHolder
 
 /**
@@ -9,7 +9,7 @@ import org.quick.library.b.BaseViewHolder
  * @Date 2018/6/1-11:32
  * @Email chrisSpringSmell@gmail.com
  */
-class BluetoothCommandListFragment : org.quick.library.b.BaseListFragment() {
+class BluetoothCommandListFragment : org.quick.library.b.QuickListFragment<String>() {
 
     lateinit var parent: BluetoothActivity
 
@@ -22,7 +22,7 @@ class BluetoothCommandListFragment : org.quick.library.b.BaseListFragment() {
 
     override val isLoadMoreEnable: Boolean
         get() = false
-    override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
+    override fun onResultAdapter(): QuickAdapter<*, *> = Adapter()
 
     override fun onResultUrl(): String = ""
     override fun onResultParams(params: MutableMap<String, String>) = Unit

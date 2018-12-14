@@ -5,9 +5,10 @@ import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import com.example.chriszou.quicksample.R
+import org.quick.component.QuickAdapter
 import org.quick.library.b.BaseViewHolder
 
-class DiscoverListFragment : org.quick.library.b.BaseListFragment() {
+class DiscoverListFragment : org.quick.library.b.QuickListFragment<String>() {
 
     override fun start() {
         getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
@@ -32,7 +33,7 @@ class DiscoverListFragment : org.quick.library.b.BaseListFragment() {
     override val isLoadMoreEnable: Boolean
         get() = true
 
-    override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
+    override fun onResultAdapter(): QuickAdapter<*,*> = Adapter()
 
     override fun onResultUrl(): String = ""
 

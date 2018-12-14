@@ -12,10 +12,12 @@ import android.support.v4.graphics.drawable.IconCompat
 import android.widget.Toast
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.service.FloatService
+import com.example.chriszou.quicksample.ui.AppListActivity
 import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.activity_setting.*
 import org.quick.component.QuickBroadcast
 import org.quick.component.QuickActivity
+import org.quick.component.QuickAndroid
 
 
 /**
@@ -62,6 +64,7 @@ class SettingActivity : org.quick.library.b.BaseActivity() {
             QuickBroadcast.sendBroadcast(Intent(), "test", "test2", "MyCenterFragment")
         }
         checkUpgradeContainer.setOnClickListener { Beta.checkUpgrade() }
+        appListTv.setOnClickListener { QuickActivity.Builder(this, AppListActivity::class.java).addParams(TITLE, "已安装列表").startActivity() }
     }
 
     override fun start() {

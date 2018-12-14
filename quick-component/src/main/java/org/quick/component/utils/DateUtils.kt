@@ -1,6 +1,5 @@
 package org.quick.component.utils
 
-import android.annotation.SuppressLint
 import android.support.annotation.Size
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -17,8 +16,9 @@ object DateUtils {
     val HOURS = MINUTE * 60
     val DAY = HOURS * 24
 
-    val formatDefault = "yyyy-MM-dd HH:mm:ss"
-    val formatDefault2 = "yyyyMMddHHmmss"
+    val YMDHMS = "yyyy-MM-dd HH:mm:ss"
+    val YMDHM = "yyyy-MM-dd HH:mm"
+    val YMD = "yyyy-MM-dd"
 
     var sdf: SimpleDateFormat? = null
 
@@ -52,11 +52,11 @@ object DateUtils {
         return result
     }
 
-    fun formatToStr(timestamp: Long): String = formatToStr(timestamp, formatDefault)
+    fun formatToStr(timestamp: Long): String = formatToStr(timestamp, YMDHMS)
 
     fun formatToStr(timestamp: Long, patter: String): String = getDateFormat(patter).format(timestamp * getTimestampLength(timestamp))
 
-    fun formatToStr(date: Date): String = formatToStr(date, formatDefault)
+    fun formatToStr(date: Date): String = formatToStr(date, YMDHMS)
 
     fun formatToStr(date: Date, patter: String): String = getDateFormat(patter).format(date)
 
@@ -66,7 +66,7 @@ object DateUtils {
      * @param l
      * @return
      */
-    fun formatToDate(l: Long): Date = formatToDate(l, formatDefault)
+    fun formatToDate(l: Long): Date = formatToDate(l, YMDHMS)
 
     fun formatToDate(l: Long, patter: String): Date = try {
         getDateFormat(patter).parse(formatToStr(l, patter))
@@ -74,7 +74,7 @@ object DateUtils {
         Date()
     }
 
-    fun formatToDate(dateStr: String): Date = formatToDate(dateStr, formatDefault)
+    fun formatToDate(dateStr: String): Date = formatToDate(dateStr, YMDHMS)
 
     fun formatToDate(dateStr: String, patter: String): Date = try {
         getDateFormat(patter).parse(dateStr)
@@ -90,7 +90,7 @@ object DateUtils {
      */
     fun formatToLong(date: Date): Long = date.time
 
-    fun formatToLong(dateStr: String): Long = formatToLong(dateStr, formatDefault)
+    fun formatToLong(dateStr: String): Long = formatToLong(dateStr, YMDHMS)
 
     fun formatToLong(dateStr: String, patter: String): Long = try {
         getDateFormat(patter).parse(dateStr).time
@@ -107,7 +107,7 @@ object DateUtils {
     fun before(timestamp1: Long, timestamp2: Long): Boolean = timestamp1 < timestamp2
 
 
-    fun before(timestamp1: String, timestamp2: String) = before(timestamp1, timestamp2, formatDefault)
+    fun before(timestamp1: String, timestamp2: String) = before(timestamp1, timestamp2, YMDHMS)
     /**
      * timestamp1 在 timestamp2 之前
      * timestamp1<timestamp2
@@ -132,7 +132,7 @@ object DateUtils {
      */
     fun after(timestamp1: Long, timestamp2: Long): Boolean = timestamp1 > timestamp2
 
-    fun after(timestamp1: String, timestamp2: String) = after(timestamp1, timestamp2, formatDefault)
+    fun after(timestamp1: String, timestamp2: String) = after(timestamp1, timestamp2, YMDHMS)
     /**
      * timestamp1 在 timestamp2 之后
      * timestamp1>timestamp2

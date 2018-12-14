@@ -1,5 +1,8 @@
 package org.quick.component
 
+import org.quick.component.utils.GsonUtils
+import java.util.*
+
 /**
  * 请填写方法内容
  *
@@ -9,7 +12,7 @@ package org.quick.component
  * @modifyContent
  */
 object Log2 {
-    val defaultTag: String by lazy { javaClass.`package`.name + "-" + javaClass.simpleName }
+    val defaultTag: String by lazy { javaClass.`package`!!.name + "-" + javaClass.simpleName }
     var isDebug = true
 
     enum class TYPE(var value: Int) {
@@ -105,31 +108,32 @@ object Log2 {
         print(TYPE.I, tag, msg, o_o)
     }
 
-    fun parse(params: Any): String {
-        var resultStr = ""
-        val fields = params.javaClass.declaredFields
-        fields.forEach {
-            it.isAccessible = true
-            resultStr += it.name + ":" +
-                    try {
-                        when (it.type.simpleName.toLowerCase()) {
-                            String::class.java.simpleName.toLowerCase() -> it.get(params)
-                            Int::class.java.simpleName.toLowerCase() -> it.getInt(params)
-                            Short::class.java.simpleName.toLowerCase() -> it.getShort(params)
-                            Long::class.java.simpleName.toLowerCase() -> it.getLong(params)
-                            Char::class.java.simpleName.toLowerCase() -> it.getChar(params)
-                            Double::class.java.simpleName.toLowerCase() -> it.getDouble(params)
-                            Float::class.java.simpleName.toLowerCase() -> it.getFloat(params)
-                            Byte::class.java.simpleName.toLowerCase() -> it.getByte(params)
-                            Boolean::class.java.simpleName.toLowerCase() -> it.getBoolean(params)
-                            else -> "未知类型"
-                        }
-                    } catch (O_O: Exception) {
-                        "转换出错"
-                    } + ","
-        }
-        return resultStr
-    }
+    fun parse(params:Any): String =GsonUtils.parseToJson(params)
+//    fun parse(params: Any): String {
+//        var resultStr = GsonUtils.parseToJson(params::class.java)
+//        val fields = params.javaClass.declaredFields
+//        fields.forEach {
+//            it.isAccessible = true
+//            resultStr += it.name + ":" +
+//                    try {
+//                        when (it.type.simpleName.toLowerCase()) {
+//                            String::class.java.simpleName.toLowerCase() -> it.get(params)
+//                            Int::class.java.simpleName.toLowerCase() -> it.getInt(params)
+//                            Short::class.java.simpleName.toLowerCase() -> it.getShort(params)
+//                            Long::class.java.simpleName.toLowerCase() -> it.getLong(params)
+//                            Char::class.java.simpleName.toLowerCase() -> it.getChar(params)
+//                            Double::class.java.simpleName.toLowerCase() -> it.getDouble(params)
+//                            Float::class.java.simpleName.toLowerCase() -> it.getFloat(params)
+//                            Byte::class.java.simpleName.toLowerCase() -> it.getByte(params)
+//                            Boolean::class.java.simpleName.toLowerCase() -> it.getBoolean(params)
+//                            else -> "未知类型"
+//                        }
+//                    } catch (O_O: Exception) {
+//                        "转换出错"
+//                    } + ","
+//        }
+//        return resultStr
+//    }
 
     private fun print(type: TYPE, tag: String?, msg: String?, O_O: Exception?) {
         if (isDebug) {

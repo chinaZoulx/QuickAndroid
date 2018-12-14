@@ -349,8 +349,8 @@ object ImageUtils {
             for (i in 0 until size) {
                 val bitmap = bitmaCache.get(i.toString())
                 bigCanvas.drawBitmap(bitmap, 0f, iHeight.toFloat(), paint)
-                iHeight += bitmap.height
-                bitmap.recycle()
+                iHeight += bitmap?.height?:0
+                bitmap?.recycle()
             }
         }
         return bigBitmap

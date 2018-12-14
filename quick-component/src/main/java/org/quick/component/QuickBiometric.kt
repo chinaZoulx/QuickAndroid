@@ -32,10 +32,10 @@ import javax.crypto.SecretKey
 @TargetApi(Build.VERSION_CODES.M)
 @RequiresApi(Build.VERSION_CODES.M)
 object QuickBiometric {
-    val keyguardManager = QuickAndroid.applicationContext.getSystemService<KeyguardManager>(KeyguardManager::class.java)
-    val fingerprintManager = QuickAndroid.applicationContext.getSystemService<FingerprintManager>(FingerprintManager::class.java)
-    val AndroidKeyStore = "AndroidKeyStore"
-    val defaultCipher: Cipher
+    private val keyguardManager = QuickAndroid.applicationContext.getSystemService<KeyguardManager>(KeyguardManager::class.java)
+    private val fingerprintManager = QuickAndroid.applicationContext.getSystemService<FingerprintManager>(FingerprintManager::class.java)
+    private const val AndroidKeyStore = "AndroidKeyStore"
+    private val defaultCipher: Cipher
     var mKeyStore: KeyStore? = null
     var mKeyGenerator: KeyGenerator? = null
     var cancellationSignal: CancellationSignal? = null
@@ -74,23 +74,23 @@ object QuickBiometric {
         try {
             mKeyStore = KeyStore.getInstance(AndroidKeyStore)
         } catch (e: KeyStoreException) {
-            throw RuntimeException("Failed to get an instance of KeyStore", e)
+            throw RuntimeException("Failed to getWithKotlin an instance of KeyStore", e)
         }
 
         try {
             mKeyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, AndroidKeyStore)
         } catch (e: NoSuchAlgorithmException) {
-            throw RuntimeException("Failed to get an instance of KeyGenerator", e)
+            throw RuntimeException("Failed to getWithKotlin an instance of KeyGenerator", e)
         } catch (e: NoSuchProviderException) {
-            throw RuntimeException("Failed to get an instance of KeyGenerator", e)
+            throw RuntimeException("Failed to getWithKotlin an instance of KeyGenerator", e)
         }
 
         try {
             defaultCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7)
         } catch (e: NoSuchAlgorithmException) {
-            throw RuntimeException("Failed to get an instance of Cipher", e)
+            throw RuntimeException("Failed to getWithKotlin an instance of Cipher", e)
         } catch (e: NoSuchPaddingException) {
-            throw RuntimeException("Failed to get an instance of Cipher", e)
+            throw RuntimeException("Failed to getWithKotlin an instance of Cipher", e)
         }
         createKey(QuickAndroid.appBaseName, true)
     }

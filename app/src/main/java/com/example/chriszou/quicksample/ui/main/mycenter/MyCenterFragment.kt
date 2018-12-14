@@ -1,6 +1,7 @@
 package com.example.chriszou.quicksample.ui.main.mycenter
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.BottomSheetDialog
@@ -20,10 +21,12 @@ import org.quick.library.b.activities.ThemeActivity.Companion.TITLE
 import org.chris.zxing.library.QRCodeParse
 import org.quick.component.*
 import org.quick.component.utils.DevicesUtils
+import org.quick.component.utils.FormatUtils
 import org.quick.component.utils.ImageUtils
 import org.quick.library.config.GlideApp
 import org.quick.library.callback.AppBarStateChangeListener
 import java.io.File
+import java.text.DecimalFormat
 
 class MyCenterFragment : BaseFragment() {
     companion object {
@@ -99,13 +102,17 @@ class MyCenterFragment : BaseFragment() {
         }
         quickDialogTv.setOnClickListener {
             QuickDialog.Builder(activity!!, R.layout.dialog_is_ok).show()
-                    .setText(R.id.msgTitleTv, "这是标题").setText(R.id.msgContentTv, "这是内容").setOnClickListener(View.OnClickListener {
-                        when (it.id) {
+                    .setText(R.id.msgTitleTv, "这是标题").setText(R.id.msgContentTv, "这是内容").setOnClickListener({view,viewHolder->
+                        when (view.id) {
                             R.id.msgCancelBtn -> showToast("点击了取消按钮")
                             else -> showToast("点击了确定按钮")
                         }
                         QuickDialog.dismiss()
                     }, R.id.msgCancelBtn, R.id.msgOkBtn)
+        }
+        quickDialogTv2.setOnClickListener {
+            QuickDialog.Builder(activity!!, R.layout.include_qr_code).show()
+                    .setImg(R.id.qrCodeIv,R.mipmap.ic_launcher_round)
         }
         logTv.setOnClickListener {
             val testMode = TestModel()
@@ -173,7 +180,7 @@ class MyCenterFragment : BaseFragment() {
     }
 
     override fun start() {
-
+        FormatUtils.formatNumberWithMarkSplit(1212123.45601245,6)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

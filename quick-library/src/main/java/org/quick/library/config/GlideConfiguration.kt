@@ -28,7 +28,7 @@ class GlideConfiguration : AppGlideModule() {
     companion object {
 
         // 图片缓存最大容量，150M，根据自己的需求进行修改
-        const val GLIDE_CATCH_SIZE = 150 * 1024 * 1024
+        const val GLIDE_CATCH_SIZE = 1024 * 1024 * 1024
 
         // 图片缓存子目录
         const val GLIDE_CARCH_DIR = "CacheQuick"

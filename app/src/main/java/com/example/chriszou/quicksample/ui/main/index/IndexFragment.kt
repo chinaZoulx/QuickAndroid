@@ -1,9 +1,10 @@
 package com.example.chriszou.quicksample.ui.main.index
 
-import android.content.Intent
+import android.content.Context
 import android.net.Uri
+import android.os.Bundle
+import android.support.v4.app.Fragment
 import com.example.chriszou.quicksample.R
-import com.example.chriszou.quicksample.ui.material.CommodityDetailActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_index.*
@@ -63,7 +64,7 @@ class IndexFragment : BaseFragment() {
             } else showToast("正常链接")
         }
         tabTv3.setOnClickListener {
-            startActivity(Intent(activity, CustomPullRefreshActivity::class.java))
+//            startActivity(Intent(activity, CustomPullRefreshActivity::class.java))
         }
         tabTv4.setOnClickListener {
             Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread()).take(10).subscribe {
@@ -88,11 +89,46 @@ class IndexFragment : BaseFragment() {
         fabContainer.setOnItemClickListener { _, _ ->
             //            startActivity(Intent(activity, CutToAnimActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(activity).toBundle())
 //            CutToAnimActivity.startAction(activity!!,"转场动画",tagView)
-            startActivity(Intent(activity, CommodityDetailActivity::class.java))
+//            startActivity(Intent(activity, CommodityDetailActivity::class.java))
         }
     }
 
     override fun start() {
 
+    }
+
+    override fun onAttach(context: Context?) {
+        Log2.e("onAttach")
+        super.onAttach(context)
+    }
+
+    override fun onResume() {
+        Log2.e("onResume")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log2.e("onPause")
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        Log2.e("onDestroy")
+        super.onDestroy()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        Log2.e("onActivityCreated")
+        super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onAttachFragment(childFragment: Fragment?) {
+        Log2.e("onAttachFragment")
+        super.onAttachFragment(childFragment)
+    }
+
+    override fun onDetach() {
+        Log2.e("onDetach")
+        super.onDetach()
     }
 }

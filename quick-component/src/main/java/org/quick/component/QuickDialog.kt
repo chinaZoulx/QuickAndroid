@@ -19,6 +19,7 @@ import org.quick.component.utils.check.CheckUtils
  */
 open class QuickDialog private constructor() {
 
+    private val defaultPadding=100
     lateinit var builder: Builder
     private var dialog: Dialog? = null
     private var holder: QuickViewHolder? = null
@@ -37,7 +38,7 @@ open class QuickDialog private constructor() {
                     holder = QuickViewHolder(builder.layoutView!!)
 
             builder.resId != -1 -> {
-                if (holder?.itemView?.id != builder.resId) {
+                if (holder == null || holder?.itemView?.id != builder.resId || holder!!.itemView.context != builder.context) {
                     val tempView = LayoutInflater.from(builder.context).inflate(builder.resId, null)
                     tempView.id = builder.resId
                     holder = QuickViewHolder(tempView)
@@ -48,13 +49,13 @@ open class QuickDialog private constructor() {
     }
 
     private fun getDialog(): Dialog {
-        if (tryCreateDialog()) {
+        if (checkEqualDialog()) {
             dialog = Dialog(builder.context, builder.style)
             dialog?.setContentView(createViewHolder().itemView)
             dialog?.window?.setGravity(builder.gravity)
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog?.window?.setLayout(builder.width, builder.height)
-            dialog?.window?.decorView?.setPadding(builder.paddingLeft, builder.paddingTop, builder.paddingRight, builder.paddingBottom)
+            dialog?.window?.decorView?.setPadding(if (builder.paddingLeft==builder.defaultPadding)defaultPadding else builder.paddingLeft, builder.paddingTop, if (builder.paddingRight==builder.defaultPadding)defaultPadding else builder.paddingRight, builder.paddingBottom)
             dialog?.setCanceledOnTouchOutside(builder.canceledOnTouchOutside)
             dialog!!.setOnKeyListener { dialog, keyCode, _ ->
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -67,24 +68,20 @@ open class QuickDialog private constructor() {
         return dialog!!
     }
 
+    private fun checkEqualDialog() = builder.isRewrite || dialog == null || (builder.layoutView != null && holder?.itemView != builder.layoutView) || (builder.resId != -1 && holder?.itemView?.id != builder.resId) || contextChange()
+
     /**
-     * 是否需要重新创建dialog
+     * context变化
      */
-    private fun tryCreateDialog() = when {
-        builder.isRewrite -> true/*每次都重构*/
-        dialog == null -> true/*dialog为空*/
-        builder.layoutView != null -> holder?.itemView != builder.layoutView/*有自定义的View并且与上一个不同*/
-        builder.resId != -1 -> holder?.itemView?.id != builder.resId /*layout id不同*/
-        !CheckUtils.checkActivityIsRunning(builder.context as Activity) -> true/*当前dialog依赖的Activity已经被销毁*/
-        else -> false
-    }
+    private fun contextChange() = dialog != null && (if (dialog!!.context is ContextThemeWrapper) (dialog!!.context as ContextThemeWrapper).baseContext else dialog!!.context) != builder.context
 
     fun dismiss() {
-        getDialog().dismiss()
+        dialog?.dismiss()
     }
 
     fun show(): QuickViewHolder {
-        getDialog().show()
+        if (CheckUtils.checkActivityIsRunning(builder.context as Activity))
+            getDialog().show()
         return createViewHolder()
     }
 
@@ -108,20 +105,16 @@ open class QuickDialog private constructor() {
         val INSTANCE = QuickDialog()
     }
 
-    /**
-     * @param resId 资源ID
-     * @param style 弹框主题
-     */
     class Builder constructor(val context: Context, @LayoutRes var resId: Int = -1, var style: Int = 0) {
-
+        internal val defaultPadding = -1
         internal var layoutView: View? = null
         internal var width = WindowManager.LayoutParams.MATCH_PARENT
         internal var height = WindowManager.LayoutParams.WRAP_CONTENT
         internal var gravity = Gravity.CENTER
         internal var canceledOnTouchOutside = false
         internal var isRewrite = false/*是否每次都重新创建dialog*/
-        internal var paddingLeft = 100
-        internal var paddingRight = 100
+        internal var paddingLeft = defaultPadding
+        internal var paddingRight = defaultPadding
         internal var paddingTop = 0
         internal var paddingBottom = 0
         internal var isBlockBackKey = false/*屏蔽返回键*/
@@ -150,8 +143,8 @@ open class QuickDialog private constructor() {
         fun setSize(width: Int, height: Int): Builder {
             this.width = width
             this.height = height
-            if (paddingLeft == 100) paddingLeft = 0
-            if (paddingRight == 100) paddingRight = 0
+            if (paddingLeft == defaultPadding) paddingLeft = 0
+            if (paddingRight == defaultPadding) paddingRight = 0
             return this
         }
 

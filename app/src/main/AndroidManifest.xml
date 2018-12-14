@@ -79,9 +79,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity android:name=".test.TestListViewActivity"/>
-        <activity android:name=".ui.main.mycenter.QSwipeRefreshLayoutActivity"/>
-        <activity android:name=".ui.main.mycenter.CheckAnimActivity"/>
+        <activity android:name=".test.TestListViewActivity" />
+        <activity android:name=".ui.main.mycenter.QSwipeRefreshLayoutActivity" />
+        <activity android:name=".ui.main.mycenter.CheckAnimActivity" />
+        <activity android:name=".ui.AppListActivity" />
 
         <receiver android:name=".ui.setting.SettingActivity$ShortcutBroadcastReceiver" />
         <service android:name=".service.FloatService" />

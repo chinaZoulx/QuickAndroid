@@ -116,9 +116,9 @@ open class WebFragment @JvmOverloads constructor(private var baseUrl: String? = 
     private fun compat(view: WebView, url: String): Boolean {
         Log2.e("加载状态", "页面状态-Url：$url")
         return when {
-            isAuthorizationUrl(url) && ProgressWebView.supportIntentAndScheme(activity!!, url)//支付
+            isAuthorizationUrl(url) && ProgressWebView.supportIntentAndScheme(activity, url)//支付
             -> true
-            ProgressWebView.isScheme(url) -> ProgressWebView.supportIntentAndScheme(activity!!, baseUrl!!)
+            ProgressWebView.isScheme(url) -> ProgressWebView.supportIntentAndScheme(activity, baseUrl!!)
             url.startsWith("http") || url.startsWith("https") || url.startsWith("ftp")//正常链接
             -> if (url.endsWith(".apk")) {//apk下载链接
                 downloadApk(url)

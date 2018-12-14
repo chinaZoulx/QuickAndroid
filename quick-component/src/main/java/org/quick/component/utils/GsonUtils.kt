@@ -15,7 +15,6 @@ import java.util.ArrayList
  */
 object GsonUtils {
 
-
     val gson = Gson()
 
     inline fun <reified T> parseFromJson(json: String?): T? = try {
@@ -86,53 +85,11 @@ object GsonUtils {
      * @param cls
      * @return
      */
-    fun <T> parseToJson(cls: Class<T>) = try {
-        gson.toJson(cls)
+    fun parseToJson(obj:Any) = try {
+        gson.toJson(obj)
     } catch (ex: Exception) {
         ex.printStackTrace()
-        Log2.e("Gson", "class error , from " + cls.simpleName)
-        ""
-    }
-
-    /**
-     * 将java对象解析为json
-     *
-     * @param cls
-     * @return
-     */
-    inline fun <reified T> parseToJson() = try {
-        gson.toJson(T::class.java)
-    } catch (ex: Exception) {
-        ex.printStackTrace()
-        Log2.e("Gson", "class error , from " + T::class.java.simpleName)
-        ""
-    }
-
-    /**
-     * 将java对象列表解析为json
-     *
-     * @param clsList
-     * @return
-     */
-    fun <T> parseToJsons(clsList: List<T>) = try {
-        gson.toJson(clsList)
-    } catch (ex: Exception) {
-        ex.printStackTrace()
-        Log2.e("Gson", "class list error , please check")
-        ""
-    }
-
-    /**
-     * 将java对象列表解析为json
-     *
-     * @param clsList
-     * @return
-     */
-    inline fun <reified T> parseToJsons() = try {
-        gson.toJson(T::class.java)
-    } catch (ex: Exception) {
-        ex.printStackTrace()
-        Log2.e("Gson", "class list error , please check")
+        Log2.e("Gson", "class error , from " + obj::class.java.simpleName)
         ""
     }
 }

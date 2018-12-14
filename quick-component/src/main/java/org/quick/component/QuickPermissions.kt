@@ -67,8 +67,8 @@ object QuickPermissions {
                 hasPermissions() -> onRequestPermissionsResultCallback.onPermissionsGranted(permission)
                 permission.any { return@any ActivityCompat.shouldShowRequestPermissionRationale(context, it) } -> {
                     QuickDialog.Builder(context, R.layout.app_dialog_is_ok).show()
-                            .setOnClickListener(View.OnClickListener { requestPermission(context, *permission) }, R.id.msgOkBtn)
-                            .setOnClickListener(View.OnClickListener { QuickDialog.dismiss() }, R.id.msgCancelBtn)
+                            .setOnClickListener({view, viewHolder ->  requestPermission(context, *permission) }, R.id.msgOkBtn)
+                            .setOnClickListener({_,_-> QuickDialog.dismiss() }, R.id.msgCancelBtn)
                             .setText(R.id.titleTv, context.getString(R.string.permissionTitle))
                             .setText(R.id.contentTv, getPermissionChineseName(*permission))
                 }
@@ -91,10 +91,10 @@ object QuickPermissions {
                     granted.add(perm)
                 else if (context is Activity && ActivityCompat.shouldShowRequestPermissionRationale(context as Activity, permissions[i]))
                     QuickDialog.Builder(context!!, R.layout.app_dialog_is_ok).show()
-                            .setText(R.id.msgOkBtn, "设置", View.OnClickListener {
+                            .setText(R.id.msgOkBtn, "设置",  {view,viewholder->
                                 SystemActionManager.goAppDetailSettingIntent(context as Activity, requestCode)
                             })
-                            .setOnClickListener(View.OnClickListener { QuickDialog.dismiss() }, R.id.msgCancelBtn)
+                            .setOnClickListener({view,viewHolder-> QuickDialog.dismiss() }, R.id.msgCancelBtn)
                             .setText(R.id.titleTv, context!!.getString(R.string.permissionTitle))
                             .setText(R.id.contentTv, getPermissionChineseName(*permissions))
                 else denied.add(perm)

@@ -31,7 +31,9 @@ class QuickToast private constructor() {
 
     fun showToast(msg: String?): QuickViewHolder {
         val toast = configToast(msg)
-        mainHandler.post { toast.show() }
+        mainHandler.post {
+            toast.show()
+        }
         return createViewHolder()
     }
 

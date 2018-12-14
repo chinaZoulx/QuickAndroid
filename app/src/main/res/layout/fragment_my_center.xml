@@ -153,8 +153,17 @@
                     android:gravity="left|center_vertical"
                     android:paddingLeft="@dimen/borderWidth"
                     android:paddingRight="@dimen/borderWidth"
-                    android:text="快速Dialog测试" />
-
+                    android:text="快速Dialog测试1" />
+                <TextView
+                    android:id="@+id/quickDialogTv2"
+                    style="@style/TitleTextStyleAllParams"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/itemHeight"
+                    android:drawableRight="@drawable/ic_keyboard_arrow_right_gray_24dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/borderWidth"
+                    android:paddingRight="@dimen/borderWidth"
+                    android:text="快速Dialog测试2" />
                 <TextView
                     android:id="@+id/logTv"
                     style="@style/TitleTextStyleAllParams"

@@ -12,14 +12,14 @@ public final class R {
     public static final class attr {
         private attr() {}
 
-        public static int hasStickyHeaders = 0x7f0400da;
-        public static int isDrawingListUnderStickyHeader = 0x7f0400ee;
-        public static int stickyListHeadersListViewStyle = 0x7f0401d7;
+        public static int hasStickyHeaders = 0x7f04010e;
+        public static int isDrawingListUnderStickyHeader = 0x7f04012d;
+        public static int stickyListHeadersListViewStyle = 0x7f04022e;
     }
     public static final class styleable {
         private styleable() {}
 
-        public static int[] StickyListHeadersListView = { 0x1010101, 0x101012b, 0x10100eb, 0x1010129, 0x101012a, 0x10100fc, 0x10100e0, 0x1010335, 0x1010226, 0x10100fb, 0x10102c1, 0x10100d5, 0x10100d9, 0x10100d6, 0x10100d8, 0x10100d7, 0x10103a5, 0x101007f, 0x10100de, 0x10100fe, 0x10100fd, 0x1010100, 0x7f0400da, 0x7f0400ee, 0x7f0401d7 };
+        public static int[] StickyListHeadersListView = { 0x1010101, 0x101012b, 0x10100eb, 0x1010129, 0x101012a, 0x10100fc, 0x10100e0, 0x1010335, 0x1010226, 0x10100fb, 0x10102c1, 0x10100d5, 0x10100d9, 0x10100d6, 0x10100d8, 0x10100d7, 0x10103a5, 0x101007f, 0x10100de, 0x10100fe, 0x10100fd, 0x1010100, 0x7f04010e, 0x7f04012d, 0x7f04022e };
         public static int StickyListHeadersListView_android_cacheColorHint = 0;
         public static int StickyListHeadersListView_android_choiceMode = 1;
         public static int StickyListHeadersListView_android_clipToPadding = 2;

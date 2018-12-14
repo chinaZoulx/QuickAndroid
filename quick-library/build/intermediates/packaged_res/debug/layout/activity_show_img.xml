@@ -7,8 +7,35 @@
     android:background="@color/colorBlack"
     tools:context=".function.showImg.ShowImgActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+        app:title="选择图片"
+        app:titleTextColor="@color/colorWhite" />
 
     <TextView
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/borderWidth"
+        android:drawableStart="@drawable/ic_crop_white_24dp"
+        android:gravity="center"
+        android:text="@string/crop"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@id/confirmTv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/confirmTv" />
+
+    <Button
         android:id="@+id/confirmTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -55,52 +55,57 @@ object QuickActivity {
     class Builder(var activity: Activity?, clazz: Class<*>) {
         var intent: Intent = Intent(activity, clazz)
 
-        fun setupIntent(data: Intent): Builder {
-            intent = data
+        fun addParams(data: Intent): Builder {
+            intent.putExtras(data)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: String): Builder {
+        fun addParams(bundle: Bundle): Builder {
+            intent.putExtras(bundle)
+            return this
+        }
+
+        fun addParams(key: String, @Size(min = 1) vararg value: String): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: Float): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: Float): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: Int): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: Int): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: Double): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: Double): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: Byte): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: Byte): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: CharSequence): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: CharSequence): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: Boolean): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: Boolean): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: Long): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: Long): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }
 
-        fun addParams(key: String, @Size(min =1)vararg value: Short): Builder {
+        fun addParams(key: String, @Size(min = 1) vararg value: Short): Builder {
             if (value.size == 1) intent.putExtra(key, value[0]) else intent.putExtra(key, value)
             return this
         }

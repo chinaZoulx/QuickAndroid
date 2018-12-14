@@ -1,12 +1,10 @@
 package com.example.chriszou.quicksample.test
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.widget.Toast
+import org.quick.component.QuickAdapter
 import org.quick.library.b.BaseViewHolder
 import org.quick.component.QuickToast
 
@@ -16,7 +14,7 @@ import org.quick.component.QuickToast
  * @date 2018/7/4-15:02
  * @email chrisSpringSmell@gmail.com
  */
-class TestListActivity : org.quick.library.b.BaseListActivity() {
+class TestListActivity : org.quick.library.b.QuickListActivity<String>() {
     override val isPullRefreshEnable: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
     override val isLoadMoreEnable: Boolean
@@ -28,7 +26,7 @@ class TestListActivity : org.quick.library.b.BaseListActivity() {
 
     override fun start() {
         sendBroadcast(Intent("action"))
-        getAdapter<Adapter>().setOnItemClickListener { view, viewHolder, position, itemData ->
+        getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
 
         }
 //        getAdapter<Adapter>().setOnClickListener(BaseRecyclerViewAdapter.OnClickListener{ view, holder, position ->
@@ -46,7 +44,7 @@ class TestListActivity : org.quick.library.b.BaseListActivity() {
 
 
     /*返回适配器*/
-    override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
+    override fun onResultAdapter(): QuickAdapter<*,*> = Adapter()
 
     override fun onResultLayoutManager(): RecyclerView.LayoutManager {
         return super.onResultLayoutManager()

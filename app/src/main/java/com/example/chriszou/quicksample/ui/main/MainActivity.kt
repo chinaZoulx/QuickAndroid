@@ -38,6 +38,7 @@ class MainActivity : org.quick.library.b.BaseActivity() {
 
     override fun onBindListener() {
         tabFragmentViewPager.setupBottomNavigationView(bottomNavigationView)
+        tabFragmentViewPager.offscreenPageLimit=3
     }
 
     override fun start() {

@@ -73,7 +73,5 @@ object QuickConfigConstant {
      * 未登录
      */
     var APP_ERROR_NO_LOGIN = 4
-
-    var APP_BORDER_MARGIN = 40
-    var APP_TOKEN = "token"
+    var APP_TOKEN = "accessToken"
 }

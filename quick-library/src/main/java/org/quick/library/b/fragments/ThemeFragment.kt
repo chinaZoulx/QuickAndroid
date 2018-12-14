@@ -86,8 +86,10 @@ abstract class ThemeFragment : Fragment() {
             setHasOptionsMenu(true)//允许包含菜单
             setupTitle()
         } else {
-            val parent = appBaseLayoutContainer?.parent as ViewGroup
-            parent.removeView(appBaseLayoutContainer)
+            if (appBaseLayoutContainer!!.parent!=null) {
+                val parent = appBaseLayoutContainer!!.parent as ViewGroup
+                parent.removeView(appBaseLayoutContainer)
+            }
         }
         init()
         return appBaseLayoutContainer

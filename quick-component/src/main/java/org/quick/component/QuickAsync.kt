@@ -2,7 +2,6 @@ package org.quick.component
 
 import android.os.Handler
 import android.os.Looper
-import android.os.Message
 import java.util.concurrent.Executors
 
 /**
@@ -15,37 +14,46 @@ import java.util.concurrent.Executors
  */
 object QuickAsync {
 
-    private val executorService = Executors.newFixedThreadPool(20)
+    private val executorService = Executors.newFixedThreadPool(50)
     val mainHandler: Handler by lazy { return@lazy Handler(Looper.getMainLooper()) }
+
+    fun runOnUiThread(onRunOnUiThreadListener: () -> Unit) {
+        mainHandler.post { onRunOnUiThreadListener.invoke() }
+    }
 
     /**
      * 异常线程处理数据，然后返回值
      */
     fun <T> async(onASyncListener: OnASyncListener<T>) = executorService.submit {
-        val value = onASyncListener.onASync()
-        mainHandler.post { onASyncListener.onAccept(value) }
+        try {
+            val value = onASyncListener.onASync()
+            runOnUiThread { onASyncListener.onAccept(value) }
+        } catch (O_O: Exception) {
+            runOnUiThread { onASyncListener.onError(O_O) }
+        }
     }
 
     /**
      * 秒表计步，for example:60秒（1....60）
      * @param interval 间隔时间，单位：毫秒
      * @param maxSteps 最大步数
+     * @param isReversal 是否反转 （59....0）
      */
     fun <T> asyncTime(onIntervalListener: OnIntervalListener<T>, interval: Long, maxSteps: Long, isReversal: Boolean = false) = executorService.submit {
         var steps = if (isReversal) maxSteps else 0
         if (isReversal)
             while (steps > 0) {
                 steps--
-                mainHandler.post { onIntervalListener.onNext(steps as T) }
+                runOnUiThread { onIntervalListener.onNext(steps as T) }
                 Thread.sleep(interval)
             }
         else
             while (steps < maxSteps) {
                 steps++
-                mainHandler.post { onIntervalListener.onNext(steps as T) }
+                runOnUiThread { onIntervalListener.onNext(steps as T) }
                 Thread.sleep(interval)
             }
-        mainHandler.post { onIntervalListener.onAccept(steps as T) }
+        runOnUiThread { onIntervalListener.onAccept(steps as T) }
     }
 
     /**
@@ -67,7 +75,7 @@ object QuickAsync {
         var steps = 0
         while (true) {
             steps++
-            mainHandler.post { onIntervalListener.invoke(steps) }
+            runOnUiThread { onIntervalListener.invoke(steps) }
             Thread.sleep(interval)
         }
     }
@@ -79,6 +87,7 @@ object QuickAsync {
 
     interface OnASyncListener<T> : Consumer<T> {
         fun onASync(): T
+        fun onError(O_O: Exception) {}
     }
 
     interface Consumer<T> {

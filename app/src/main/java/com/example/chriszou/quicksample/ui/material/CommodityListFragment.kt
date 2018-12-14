@@ -1,8 +1,8 @@
 package com.example.chriszou.quicksample.ui.material
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
 import com.example.chriszou.quicksample.R
+import org.quick.component.QuickAdapter
 import org.quick.library.b.BaseViewHolder
 
 /**
@@ -10,7 +10,7 @@ import org.quick.library.b.BaseViewHolder
  * @Date 2018/6/7-14:58
  * @Email chrisSpringSmell@gmail.com
  */
-class CommodityListFragment : org.quick.library.b.BaseListFragment() {
+class CommodityListFragment : org.quick.library.b.QuickListFragment<Int>() {
 
     override fun start() {
         appContentContainer.setBackgroundColor(Color.TRANSPARENT)
@@ -34,13 +34,13 @@ class CommodityListFragment : org.quick.library.b.BaseListFragment() {
         get() = false
 
 
-    override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
+    override fun onResultAdapter(): QuickAdapter<*, *> = Adapter()
 
     override fun onResultUrl(): String = ""
 
     override fun onResultParams(params: MutableMap<String, String>) = Unit
 
-    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
+    override fun onRequestSuccess(jsonData: Int, isPullRefresh: Boolean) = Unit
 
     class Adapter : org.quick.library.b.BaseAdapter<Int>() {
         override fun onResultLayoutResId(viewType: Int): Int =R.layout.item_commodity_list

@@ -15,18 +15,9 @@ object HttpUtils {
      * @param url
      * @param bundle
      */
-    fun httpEventGetFormat(url: String, bundle: Bundle?): String {
-        var url = url
-        if (null != bundle) {
-            url += "?"
-            val keySet = bundle.keySet()
-            for (key in keySet) {
-                val value = bundle.get(key)!!.toString() + ""
-                url += String.format("%s=%s&", key, value)
-            }
-            url.substring(0, url.length - 1)
-        }
-        return url
+    fun formatGet(url: String, bundle: Bundle?): String {
+        val params = formatParamsGet(bundle)
+        return if (params.isNotEmpty()) String.format("%s?%s", url, params) else url
     }
 
     /**
@@ -35,36 +26,27 @@ object HttpUtils {
      * @param url
      * @param map
      */
-    fun httpEventGetFormat(url: String, map: Map<*, *>?): String {
-        var url = url
-        if (null != map) {
-            url += "?"
-            val keySet = map.keys
-            for (key in keySet) {
-                val value = map[key].toString() + ""
-                url += String.format("%s=%s&", key, value)
-            }
-            url.substring(0, url.length - 1)
+    fun formatGet(url: String, map: Map<*, *>?): String {
+
+        var params = ""
+        map?.keys?.forEach {
+            params += it.toString() + '=' + map[it].toString() + '&'
         }
-        return url
+        if (params.isNotEmpty()) params = params.substring(0, params.length - 1)
+
+        return if (params.isNotEmpty()) String.format("%s?%s", url, params) else url
     }
 
-    /**
-     * 格式化Get网络请求的URL
-     *
-     * @param url
-     * @param t
-     */
-    fun <T> httpEventGetFormat(url: String, t: T): String {
-        if (t is Bundle) {
-            httpEventGetFormat(url, t as Bundle)
-        } else if (t is Map<*, *>) {
-            httpEventGetFormat(url, t as Map<*, *>)
+    fun formatParamsGet(bundle: Bundle?): String {
+        var params = ""
+        bundle?.keySet()?.forEach {
+            params += it + '=' + bundle.get(it).toString() + '&'
         }
 
-        return url
-    }
+        if (params.length > 1) params = params.substring(0, params.length - 1)
 
+        return params
+    }
 
 
     /**
@@ -109,7 +91,7 @@ object HttpUtils {
     }
 
     fun isIP(addr: String?): Boolean {
-        if (TextUtils.isEmpty(addr)||addr!!.length < 7 || addr.length > 15) {
+        if (TextUtils.isEmpty(addr) || addr!!.length < 7 || addr.length > 15) {
             return false
         }
         /**
@@ -146,6 +128,17 @@ object HttpUtils {
         }
 
         return ipAddress
+    }
+
+    fun getFileName(url: String): String {
+        var fileName = System.currentTimeMillis().toString()
+        val endIndex = url.lastIndexOf('/')
+        if (endIndex != -1 && url.length != endIndex + 1) {
+            fileName = url.substring(endIndex + 1, url.length)
+            val endIndex = fileName.lastIndexOf('?')
+            if (endIndex != -1) fileName = fileName.substring(0, endIndex)
+        }
+        return fileName
     }
 
 }

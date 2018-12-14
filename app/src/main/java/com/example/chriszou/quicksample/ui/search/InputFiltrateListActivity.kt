@@ -6,6 +6,7 @@ import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.example.chriszou.quicksample.R
@@ -14,10 +15,11 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.include_filtrate_toolbar.*
+import org.quick.component.QuickAdapter
 import org.quick.library.b.BaseViewHolder
 import org.quick.component.utils.ViewUtils
 
-class InputFiltrateListActivity : org.quick.library.b.BaseListActivity() {
+class InputFiltrateListActivity : org.quick.library.b.QuickListActivity<FiltrateModel>() {
 
     companion object {
         fun startAction(activity: Activity?, requestCode: Int, title: String) {
@@ -32,6 +34,7 @@ class InputFiltrateListActivity : org.quick.library.b.BaseListActivity() {
         headerView = ViewUtils.getView(activity, R.layout.include_filtrate_toolbar)
         return headerView.findViewById(R.id.filtrateToolbar)
     }
+
     override fun start() {
         filtrateEtc.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || event.keyCode == 66) {
@@ -42,14 +45,14 @@ class InputFiltrateListActivity : org.quick.library.b.BaseListActivity() {
         filtrateTv.setOnClickListener {
             setResult()
         }
-        getAdapter<Adapter>().setOnItemClickListener { view, viewHolder, position, itemData ->
+        getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
 
         }
         onRefresh()
     }
 
     private fun setResult() {
-        if (filtrateEtc.text.isEmpty()) {
+        if (TextUtils.isEmpty(filtrateEtc.text)) {
             showToast("请输入内容")
             return
         }
@@ -67,7 +70,7 @@ class InputFiltrateListActivity : org.quick.library.b.BaseListActivity() {
         }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe { actionModels ->
             refreshComplete()
             if (actionModels.size > 0) {
-                getAdapter<Adapter>().setDataList(actionModels)
+                getAdapter<Adapter>()?.setDataList(actionModels)
                 dataHas(true)
                 dataNoMore(false)
             } else
@@ -80,7 +83,7 @@ class InputFiltrateListActivity : org.quick.library.b.BaseListActivity() {
             subscriber.onNext(org.quick.library.m.DBManager.limit(org.quick.library.widgets.XStickyListHeadersListView.PAGE_ITEM_COUNT).offset(pageNumber * org.quick.library.widgets.XStickyListHeadersListView.PAGE_ITEM_COUNT).order("id desc").find(FiltrateModel::class.java))
         }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe { actionModels ->
             if (actionModels.size > 0) {
-                getAdapter<Adapter>().addDataList(actionModels)
+                getAdapter<Adapter>()?.addDataList(actionModels)
                 pageNumber++
             } else dataNoMore(true)
             loadMoreComplete()
@@ -94,19 +97,19 @@ class InputFiltrateListActivity : org.quick.library.b.BaseListActivity() {
         get() = false
 
     override fun onResultLayoutManager(): RecyclerView.LayoutManager = StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL)
-    override fun onResultAdapter(): RecyclerView.Adapter<*> = Adapter()
+    override fun onResultAdapter(): QuickAdapter<*, *> = Adapter()
 
     override fun onResultUrl(): String = ""
 
     override fun onResultParams(params: MutableMap<String, String>) = Unit
 
-    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
+    override fun onRequestSuccess(jsonData: FiltrateModel, isPullRefresh: Boolean) = Unit
 
     class Adapter : org.quick.library.b.BaseAdapter<FiltrateModel>() {
         override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_filtrate
 
         override fun onBindData(holder: BaseViewHolder, position: Int, itemData: FiltrateModel, viewType: Int) {
-            holder.setText(R.id.filtrateBtn, itemData?.filtrateKey)
+            holder.setText(R.id.filtrateBtn, itemData.filtrateKey)
         }
 
         override fun onResultItemMargin(position: Int): Float = 40f

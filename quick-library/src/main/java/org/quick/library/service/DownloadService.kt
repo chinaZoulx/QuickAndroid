@@ -13,23 +13,21 @@ import android.os.Build
 import android.os.Environment
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
+import android.util.SparseArray
 import android.view.View
 import android.widget.RemoteViews
-import android.widget.Toast
-import com.zhy.http.okhttp.OkHttpUtils
-import com.zhy.http.okhttp.callback.FileCallBack
-import com.zhy.http.okhttp.request.RequestCall
-import okhttp3.Call
-import org.quick.library.R
-import org.quick.library.b.activities.ThemeActivity.Companion.DATA
+import org.quick.component.QuickToast
+import org.quick.component.http.HttpService
+import org.quick.component.http.callback.OnDownloadListener
 import org.quick.component.utils.DateUtils
 import org.quick.component.utils.DevicesUtils
 import org.quick.component.utils.FormatUtils
 import org.quick.component.utils.check.CheckUtils
+import org.quick.library.R
+import org.quick.library.b.activities.ThemeActivity.Companion.DATA
 import java.io.File
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.HashMap
 
 /**
  * Created by work on 2017/7/26.
@@ -42,7 +40,6 @@ import kotlin.collections.HashMap
 class DownloadService : Service() {
     lateinit var notificationManager: NotificationManager
     private var taskList: MutableList<DownloadModel> = ArrayList()
-    private var taskRequestCallMap: HashMap<String, RequestCall> = HashMap()
     private var receiver = UpgradeReceiver(this)
 
     override fun onBind(intent: Intent): IBinder? {
@@ -53,7 +50,7 @@ class DownloadService : Service() {
         val model = intent.getSerializableExtra(DATA) as DownloadModel
         if (!CheckUtils.isEmpty(model.apkUrl)) {
             if ((0 until taskList.size).map { taskList[it] }.any { it.apkUrl == model.apkUrl }) {
-                showToast("该任务已建立，请等待")
+                QuickToast.showToastDefault("该任务已建立，请等待")
                 return super.onStartCommand(intent, flags, startId)
             }
             registerReceiver(receiver, IntentFilter(ACTION))
@@ -109,22 +106,21 @@ class DownloadService : Service() {
 
     @SuppressLint("DefaultLocale", "RestrictedApi")
     private fun download(model: DownloadModel) {
-        showToast("已建立下载任务，请查看通知栏")
+        QuickToast.showToastDefault("已建立下载任务，请查看通知栏")
         var lastMillisecond = 0L
-        var lastProgress = 0f
-        val fileName = model.apkUrl!!.substring(model.apkUrl!!.lastIndexOf(File.separator) + 1, model.apkUrl!!.length)
+        var lastProgress = 0.0
+        val fileName = model.apkUrl.substring(model.apkUrl.lastIndexOf(File.separator) + 1, model.apkUrl.length)
 
-        taskRequestCallMap[model.notificationId.toString()] = OkHttpUtils.get().tag(TAG).url(model.apkUrl).build()
-        taskRequestCallMap[model.notificationId.toString()]!!.execute(object : FileCallBack(DOWNLOAD_DIR, fileName) {
-            override fun onError(call: Call, e: Exception, id: Int) {
+        HttpService.Builder(model.apkUrl).tag(model.notificationId.toString()).download(object : OnDownloadListener {
+            override fun onFailure(e: Exception, isNetworkError: Boolean) {
                 e.printStackTrace()
-                showToast("下载失败")
+                QuickToast.showToastDefault("下载失败")
                 cancel(model)
             }
 
-            override fun onResponse(response: File, id: Int) {
-                model.tempFile = response
-                lastProgress = 0f
+            override fun onResponse(file: File) {
+                model.tempFile = file
+                lastProgress = 0.0
                 val builder = getNotiBuilder(model)
                 val intentClick = Intent(ACTION)
                 intentClick.putExtra(ACTION, ACTION_CLICK)
@@ -140,23 +136,63 @@ class DownloadService : Service() {
                 DevicesUtils.installAPK(model.tempFile!!)
             }
 
-            override fun inProgress(progress: Float, total: Long, id: Int) {
+            override fun onLoading(key: String, bytesRead: Long, totalCount: Long, isDone: Boolean) {
+                val progress = bytesRead * 1.0 / totalCount
                 if (DateUtils.getCurrentTimeInMillis() - lastMillisecond > 1000) {
                     lastMillisecond = DateUtils.getCurrentTimeInMillis()
-                    val speed = (progress - lastProgress) * total
+                    val speed = (progress - lastProgress) * totalCount
 //                    val tempProgress = (progress * 100).toInt()
                     //                    builder.getContentView().setProgressBar(R.id.progressBar, 100, tempProgress, false);
                     val builder = getNotiBuilder(model)
-                    builder.contentView.setTextViewText(R.id.hintTv, getHint(total, progress * total, speed))
+                    builder.contentView.setTextViewText(R.id.hintTv, getHint(totalCount, progress * totalCount, speed))
                     notificationManager.notify(model.notificationId, builder.build())
                     lastProgress = progress
                 }
             }
         })
+//        taskRequestCallMap[model.notificationId.toString()] = OkHttpUtils.get().tag(TAG).url(model.apkUrl).build()
+//        taskRequestCallMap[model.notificationId.toString()]!!.execute(object : FileCallBack(DOWNLOAD_DIR, fileName) {
+//            override fun onError(call: Call, e: Exception, id: Int) {
+//                e.printStackTrace()
+//                QuickToast.showToastDefault("下载失败")
+//                cancel(model)
+//            }
+//
+//            override fun onResponse(response: File, id: Int) {
+//                model.tempFile = response
+//                lastProgress = 0f
+//                val builder = getNotiBuilder(model)
+//                val intentClick = Intent(ACTION)
+//                intentClick.putExtra(ACTION, ACTION_CLICK)
+//                intentClick.putExtra(DATA, model)
+//                val pendingIntentClick = PendingIntent.getBroadcast(this@DownloadService, model.notificationId, intentClick, PendingIntent.FLAG_UPDATE_CURRENT)//PendingIntent.FLAG_ONE_SHOT点一次消失  FLAG_UPDATE_CURRENT不消失
+//                builder.setContentIntent(pendingIntentClick)
+//
+//                builder.contentView.setViewVisibility(R.id.downloadStatusContainer, View.GONE)
+//                builder.contentView.setViewVisibility(R.id.confirmTimeTv, View.VISIBLE)
+//                builder.contentView.setTextViewText(R.id.confirmTimeTv, String.format("%d:%d", DateUtils.getCurrentHour(), DateUtils.getCurrentSecond()))
+//                builder.contentView.setTextViewText(R.id.hintTv, String.format("应用下载完成，点击安装"))
+//                notificationManager.notify(model.notificationId, builder.build())
+//                DevicesUtils.installAPK(model.tempFile!!)
+//            }
+//
+//            override fun inProgress(progress: Float, total: Long, id: Int) {
+//                if (DateUtils.getCurrentTimeInMillis() - lastMillisecond > 1000) {
+//                    lastMillisecond = DateUtils.getCurrentTimeInMillis()
+//                    val speed = (progress - lastProgress) * total
+////                    val tempProgress = (progress * 100).toInt()
+//                    //                    builder.getContentView().setProgressBar(R.id.progressBar, 100, tempProgress, false);
+//                    val builder = getNotiBuilder(model)
+//                    builder.contentView.setTextViewText(R.id.hintTv, getHint(total, progress * total, speed))
+//                    notificationManager.notify(model.notificationId, builder.build())
+//                    lastProgress = progress
+//                }
+//            }
+//        })
     }
 
-    private fun getHint(total: Long, progress: Float, speed: Float): String {
-        return String.format("%s/%s  %s/s", FormatUtils.formatFlow(progress * 8), FormatUtils.formatFlow((total * 8).toFloat()), FormatUtils.formatFlow(speed * 8))
+    private fun getHint(total: Long, progress: Double, speed: Double): String {
+        return String.format("%s/%s  %s/s", FormatUtils.formatFlow(progress * 8), FormatUtils.formatFlow(((total * 8).toDouble())), FormatUtils.formatFlow(speed * 8))
     }
 
     fun installAPK(model: DownloadModel) {
@@ -166,7 +202,7 @@ class DownloadService : Service() {
     }
 
     fun cancel(model: DownloadModel) {
-        taskRequestCallMap[model.notificationId.toString()]!!.cancel()
+        HttpService.cancelTask(model.notificationId.toString())
         (0 until taskList.size).map { taskList[it] }.filter { it.notificationId == model.notificationId }.forEach { taskList.remove(it) }
         notificationManager.cancel(model.notificationId)
     }
@@ -176,22 +212,18 @@ class DownloadService : Service() {
         super.onDestroy()
     }
 
-    fun showToast(content: String) {
-        Toast.makeText(this, content, Toast.LENGTH_LONG).show()
-    }
-
     class UpgradeReceiver(private var downloadService: DownloadService) : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.getStringExtra(ACTION)) {
-            //点击
+                //点击
                 ACTION_CLICK -> downloadService.installAPK(intent.getSerializableExtra(DATA) as DownloadModel)
-            //取消
+                //取消
                 ACTION_CANCEL -> downloadService.cancel(intent.getSerializableExtra(DATA) as DownloadModel)
             }
         }
     }
 
-    class DownloadModel(var title: String?, var apkUrl: String?, var notificationId: Int, var cover: Int) : Serializable {
+    class DownloadModel(var title: String?, var apkUrl: String, var notificationId: Int, var cover: Int) : Serializable {
         var tempFile: File? = null
     }
 

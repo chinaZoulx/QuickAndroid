@@ -15,7 +15,6 @@ abstract class BaseFragment : ThemeFragment() {
 
     lateinit var isOkDialog: org.quick.library.function.IsOkDialog
     lateinit var loadingDialog: org.quick.library.function.LoadingDialog
-    //    private var onInitListener: ((isFirst:Boolean) -> Unit)? = null
     private var onInitListener: (() -> Unit)? = null
 
     override fun init() {

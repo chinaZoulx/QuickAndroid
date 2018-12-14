@@ -96,7 +96,7 @@ object DevicesUtils {
     }
 
     /**
-     * get window manager
+     * getWithKotlin window manager
      *
      * @param context
      * @return 返回窗口管理信息类，通过其可获得设备信息，example:屏幕高宽
@@ -258,7 +258,7 @@ object DevicesUtils {
         }
 
         if (applicationInfo == null) {
-            throw IllegalArgumentException(" get application info = null, has no meta data! ")
+            throw IllegalArgumentException(" getWithKotlin application info = null, has no meta data! ")
         }
         applicationInfo.metaData.putString("android.max_aspect", "2.1")
     }

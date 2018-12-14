@@ -1,18 +1,18 @@
 package com.example.chriszou.quicksample.ui.main
 
-import android.support.v7.widget.RecyclerView
 import com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment
+import org.quick.component.QuickAdapter
 import org.quick.component.QuickAsync
 import org.quick.component.QuickToast
-import org.quick.library.b.BaseListFragment
+import org.quick.library.b.QuickListFragment
 
-class RecyclerListFragment : BaseListFragment() {
+class RecyclerListFragment : QuickListFragment<String>() {
     override val isPullRefreshEnable: Boolean
         get() = true
     override val isLoadMoreEnable: Boolean
         get() = true
 
-    override fun onResultAdapter(): RecyclerView.Adapter<*> = DiscoverListFragment.Adapter()
+    override fun onResultAdapter(): QuickAdapter<*,*> = DiscoverListFragment.Adapter()
 
     override fun onResultUrl(): String = ""
 

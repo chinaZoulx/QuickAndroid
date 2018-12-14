@@ -12,6 +12,7 @@ import android.text.TextUtils
 import android.util.SparseArray
 import android.view.View
 import android.widget.*
+import org.quick.component.callback.OnClickListener2
 import org.quick.component.utils.ImageUtils
 
 open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,15 +29,15 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         return view as T?
     }
 
-    fun setText(@IdRes id: Int, content: CharSequence?): QuickViewHolder {
-        return setText(id, content, null)
-    }
-
-    fun setText(@IdRes id: Int, content: CharSequence?, onClickListener: View.OnClickListener?): QuickViewHolder {
+    fun setText(@IdRes id: Int, content: CharSequence?, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)? = null): QuickViewHolder {
         val textView = getView<TextView>(id)
         textView?.text = content
         if (onClickListener != null) {
-            textView?.setOnClickListener(onClickListener)
+            textView?.setOnClickListener (object : OnClickListener2() {
+                override fun onClick2(view: View) {
+                    onClickListener.invoke(view, this@QuickViewHolder)
+                }
+            })
         }
         return this
     }
@@ -48,8 +49,8 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      * @param iconId
      * @return
      */
-    fun setImg(@IdRes id: Int, @DrawableRes iconId: Int): QuickViewHolder {
-        return setImg(id, false, 0f, "", iconId, null)
+    fun setImg(@IdRes id: Int, @DrawableRes iconId: Int, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)? = null): QuickViewHolder {
+        return setImg(id, false, 0f, "", iconId, onClickListener)
     }
 
     /**
@@ -59,9 +60,10 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      * @param url
      * @return
      */
-    fun setImg(@IdRes id: Int, url: CharSequence): QuickViewHolder {
-        return setImg(id, false, 0f, url, 0, null)
+    fun setImg(@IdRes id: Int, url: CharSequence, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)? = null): QuickViewHolder {
+        return setImg(id, false, 0f, url, 0, onClickListener)
     }
+
 
     /**
      * 圆角-本地图片
@@ -71,19 +73,7 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      * @param iconId
      * @return
      */
-    fun setImgRoundRect(@IdRes id: Int, radius: Float, @DrawableRes iconId: Int): QuickViewHolder {
-        return setImg(id, false, radius, "", iconId, null)
-    }
-
-    /**
-     * 圆角-本地图片
-     *
-     * @param id
-     * @param radius
-     * @param iconId
-     * @return
-     */
-    fun setImgRoundRect(@IdRes id: Int, radius: Float, @DrawableRes iconId: Int, onClickListener: View.OnClickListener): QuickViewHolder {
+    fun setImgRoundRect(@IdRes id: Int, radius: Float, @DrawableRes iconId: Int, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)? = null): QuickViewHolder {
         return setImg(id, false, radius, "", iconId, onClickListener)
     }
 
@@ -95,19 +85,7 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      * @param url
      * @return
      */
-    fun setImgRoundRect(@IdRes id: Int, radius: Float, url: CharSequence): QuickViewHolder {
-        return setImg(id, false, radius, url, 0, null)
-    }
-
-    /**
-     * 圆角-网络图片
-     *
-     * @param id
-     * @param radius
-     * @param url
-     * @return
-     */
-    fun setImgRoundRect(@IdRes id: Int, radius: Float, url: CharSequence, onClickListener: View.OnClickListener): QuickViewHolder {
+    fun setImgRoundRect(@IdRes id: Int, radius: Float, url: CharSequence, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)? = null): QuickViewHolder {
         return setImg(id, false, radius, url, 0, onClickListener)
     }
 
@@ -117,36 +95,18 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      *
      * @param id
      * @param url
-     * @return
-     */
-    fun setImgCircle(@IdRes id: Int, url: CharSequence): QuickViewHolder {
-        return setImg(id, true, 0f, url, 0, null)
-    }
-
-    /**
-     * 圆形-网络图片
-     *
-     * @param id
-     * @param url
      * @param onClickListener
      * @return
      */
-    fun setImgCircle(@IdRes id: Int, url: CharSequence, onClickListener: View.OnClickListener): QuickViewHolder {
+    fun setImgCircle(@IdRes id: Int, url: CharSequence, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)? = null): QuickViewHolder {
         return setImg(id, true, 0f, url, 0, onClickListener)
     }
 
     /**
      * 圆形-本地图片
-     */
-    fun setImgCircle(@IdRes id: Int, @DrawableRes imgRes: Int): QuickViewHolder {
-        return setImg(id, true, 0f, "", imgRes, null)
-    }
-
-    /**
-     * 圆形-本地图片
      *
      */
-    fun setImgCircle(@IdRes id: Int, @DrawableRes imgRes: Int, onClickListener: View.OnClickListener): QuickViewHolder {
+    fun setImgCircle(@IdRes id: Int, @DrawableRes imgRes: Int, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)? = null): QuickViewHolder {
         return setImg(id, true, 0f, "", imgRes, onClickListener)
     }
 
@@ -160,7 +120,7 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      * @return
      */
     @Synchronized
-    private fun setImg(id: Int, isCir: Boolean, radius: Float, url: CharSequence, @DrawableRes imgRes: Int, onClickListener: View.OnClickListener?): QuickViewHolder {
+    private fun setImg(id: Int, isCir: Boolean, radius: Float, url: CharSequence, @DrawableRes imgRes: Int, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)?): QuickViewHolder {
 
         val img = getView<ImageView>(id)
         if (TextUtils.isEmpty(url)) {
@@ -176,7 +136,11 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 else -> bindImg(itemView.context, url.toString(), img)
             }
         }
-        if (onClickListener != null) img?.setOnClickListener(onClickListener)
+        if (onClickListener != null) img?.setOnClickListener (object : OnClickListener2() {
+            override fun onClick2(view: View) {
+                onClickListener.invoke(view, this@QuickViewHolder)
+            }
+        })
         return this
     }
 
@@ -192,13 +156,17 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         return this
     }
 
-    fun setOnClickListener(onClickListener: View.OnClickListener, @IdRes vararg ids: Int): QuickViewHolder {
-        for (id in ids) getView<View>(id)?.setOnClickListener(onClickListener)
+    fun setOnClickListener(onClickListener: (view: View, viewHolder: QuickViewHolder) -> Unit, @IdRes vararg ids: Int): QuickViewHolder {
+        for (id in ids) setOnClickListener(onClickListener, id)
         return this
     }
 
-    fun setOnClickListener(onClickListener: View.OnClickListener, @IdRes id: Int): QuickViewHolder {
-        getView<View>(id)?.setOnClickListener(onClickListener)
+    fun setOnClickListener(onClickListener: (view: View, viewHolder: QuickViewHolder) -> Unit, @IdRes id: Int): QuickViewHolder {
+        getView<View>(id)?.setOnClickListener(object : OnClickListener2() {
+            override fun onClick2(view: View) {
+                onClickListener.invoke(view, this@QuickViewHolder)
+            }
+        })
         return this
     }
 
@@ -228,7 +196,7 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         return this
     }
 
-    fun setVisibility(visibility: Int, @NonNull@IdRes vararg resIds: Int): QuickViewHolder {
+    fun setVisibility(visibility: Int, @NonNull @IdRes vararg resIds: Int): QuickViewHolder {
         for (resId in resIds) getView<View>(resId)?.visibility = visibility
         return this
     }

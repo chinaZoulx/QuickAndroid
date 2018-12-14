@@ -161,7 +161,7 @@ object CommonUtils {
         }
 
         /**
-         * get current animation time
+         * getWithKotlin current animation time
          *
          * @return
          */

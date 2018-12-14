@@ -35,6 +35,7 @@ public class ExitApplication extends Application {
 
         if (activity != null) {
             this.activityList.add(activity);
+
         }
     }
 

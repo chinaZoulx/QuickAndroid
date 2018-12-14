@@ -84,4 +84,14 @@
         android:paddingLeft="@dimen/borderWidth"
         android:paddingRight="@dimen/borderWidth"
         android:layout_height="@dimen/itemHeight" />
+
+    <TextView
+        android:id="@+id/appListTv"
+        android:layout_width="match_parent"
+        android:text="已安装的App"
+        style="@style/TitleTextStyleAllParams"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/borderWidth"
+        android:paddingRight="@dimen/borderWidth"
+        android:layout_height="@dimen/itemHeight" />
 </android.support.design.internal.ForegroundLinearLayout>
