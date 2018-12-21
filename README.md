@@ -301,29 +301,6 @@ class CustomToast:QuickToast() {
 
 ## QuickBroadcast
 方便的使用动态广播，告别繁琐的注册与注销广播。<br>
-正常写法<br>
-先写一个广播
-~~~java
-val broadcastRecevier=object :BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            
-        }
-    }
-~~~
-再根据action注册一个
-~~~java 
-registerReceiver(broadcastRecevier, IntentFilter("action"))
-~~~
-再onDestroy中注销
-~~~java
-unregisterReceiver(broadcastRecevier)
-~~~
-再发送广播
-~~~java
-sendBroadcast(Intent("test"))
-~~~
-每个页面都需这样去写，你到底累不累？<br><br>
-现在来看看新的写法，只需两步即可实现<br>
 1、注册
 ~~~java
 QuickBroadcast.addBroadcastListener(绑定者, { action, intent ->
