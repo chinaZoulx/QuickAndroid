@@ -1,5 +1,6 @@
 package com.example.chriszou.quicksample.ui.main.mycenter
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -43,6 +44,7 @@ class MyCenterFragment : BaseFragment() {
     override fun onInitLayout() {
         QuickBroadcast.addBroadcastListener(this, { action, _ ->
             Log2.e("test", String.format("收到广播，action:%s", action))
+            true
         }, "MyCenterFragment")
         setTitle("个人中心")
         GlideApp.with(context!!).load(File(QuickSPHelper.getValue(COVER_PATH, ""))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).transform(CircleCrop()).into(coverIv)
@@ -77,7 +79,7 @@ class MyCenterFragment : BaseFragment() {
         })
         qrCodeIv.setOnClickListener {
             qrCodeView.findViewById<ImageView>(R.id.qrCodeIv).setImageBitmap(QRCodeParse.createQRCode("这是一个二维码", ImageUtils.decodeSampledBitmapFromResource(resources, R.mipmap.bg_aboutus, 341, 341)))//, ImageUtils.decodeSampledBitmapFromResource(resources, R.mipmap.bg_aboutus, 341, 341)
-            isOkDialog.alertIsOkDialog("二维码", qrCodeView, "取消", "确定", null)
+            isOkDialog.setCustomView(qrCodeView).defaultQuestions("二维码").show()
         }
         settingIv.setOnClickListener {
             //            ThemeActivity.startAction(activity, SettingActivity::class.java, "设置")
@@ -133,7 +135,7 @@ class MyCenterFragment : BaseFragment() {
         screenShotTv.setOnClickListener {
             QuickAsync.asyncDelay({
                 val tempBitmap = ImageUtils.screenshot(activity)
-                QuickDialog.Builder(activity!!, R.layout.include_qr_code).setWindowPadding(0, 0, 0, 0).setSize(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT).show().getImageView(R.id.qrCodeIv)?.setImageBitmap(tempBitmap)
+                QuickDialog.Builder(activity!!, R.layout.include_qr_code).setPadding(0, 0, 0, 0).setSize(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT).show().getImageView(R.id.qrCodeIv)?.setImageBitmap(tempBitmap)
             }, 1000)
         }
 
@@ -180,11 +182,11 @@ class MyCenterFragment : BaseFragment() {
     }
 
     override fun start() {
-        FormatUtils.formatNumberWithMarkSplit(1212123.45601245,6)
+        FormatUtils.numberSplit(1212123.45601245,6)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_SELECTOR_COVER && resultCode == org.quick.library.function.SelectorImgActivity.RESULT_CODE) {
+        if (requestCode == REQUEST_SELECTOR_COVER && resultCode == Activity.RESULT_OK) {
             if (data != null && data.hasExtra(org.quick.library.function.SelectorImgActivity.ALREADY_PATHS)) {
                 val imgList = data.getStringArrayListExtra(org.quick.library.function.SelectorImgActivity.ALREADY_PATHS)
                 if (imgList != null && imgList.size > 0) {

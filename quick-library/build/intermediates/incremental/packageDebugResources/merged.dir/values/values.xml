@@ -405,7 +405,6 @@
         <attr format="boolean" name="isLoop"/>
     </declare-styleable>
     <declare-styleable name="RoundProgressBar">
-
         <attr format="color|string" name="roundColor"/>
         <attr format="color|string" name="roundInsideColor"/>
         <attr format="dimension" name="roundInsideSize"/>
@@ -461,21 +460,6 @@
         <attr format="enum" name="srb_gravity">
             <enum name="left" value="0"/>
             <enum name="right" value="1"/>
-        </attr>
-    </declare-styleable>
-    <declare-styleable name="XRecyclerViewUsingLine">
-        <attr format="dimension|reference" name="xDividerSize"/>
-        <attr format="dimension|reference" name="xDividerPadding"/>
-        <attr format="color|reference" name="xDivider"/>
-        <attr name="xShowDividers">
-            <flag name="top" value="0x01"/>
-            <flag name="bottom" value="0x02"/>
-            <flag name="middle" value="0x04"/>
-            <flag name="none" value="0x08"/>
-        </attr>
-        <attr format="enum" name="xDividerOrientation">
-            <enum name="horizontal" value="0"/>
-            <enum name="vertical" value="1"/>
         </attr>
     </declare-styleable>
     <declare-styleable name="ucrop_AspectRatioTextView">

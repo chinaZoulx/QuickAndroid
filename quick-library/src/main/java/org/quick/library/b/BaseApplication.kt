@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.Toast
 import androidx.multidex.MultiDex
 import com.tencent.bugly.crashreport.CrashReport
-import com.zzhoujay.richtext.RichText
 import org.litepal.LitePal
 import org.quick.component.*
 import org.quick.component.http.HttpService
@@ -94,7 +93,7 @@ abstract class BaseApplication : ExitApplication() {
     }
 
     fun initRichText() {
-        RichText.initCacheDir(this)
+//        RichText.initCacheDir(this)
     }
 
     fun initDB() {

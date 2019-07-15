@@ -16,10 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:collapsedTitleGravity="left"
-            app:collapsedTitleTextAppearance="@color/colorWhite"
+            app:collapsedTitleTextAppearance="@color/white"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleGravity="center"
-            app:expandedTitleTextAppearance="@color/colorWhite"
+            app:expandedTitleTextAppearance="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="This is a title">
 
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
                 app:title="Toolbar"
-                app:titleTextColor="@color/colorWhite" />
+                app:titleTextColor="@color/white" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -94,5 +94,5 @@
         app:layout_anchor="@id/appBarLayout"
         app:layout_anchorGravity="right|bottom"
         app:pressedTranslationZ="10dp"
-        app:rippleColor="@color/colorBlack" />
+        app:rippleColor="@color/black" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

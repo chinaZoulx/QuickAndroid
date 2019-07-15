@@ -8,7 +8,7 @@
         android:id="@+id/filtrateBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_rec_cir_bg_tr_prim"
+        android:background="@drawable/selector_rec_r5_prim_bg_prim_dark"
         android:gravity="center"
         android:maxLines="2"
         android:minHeight="30dp"

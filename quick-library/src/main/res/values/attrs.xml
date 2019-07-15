@@ -5,7 +5,6 @@
         <attr name="isLoop" format="boolean" />
     </declare-styleable>
     <declare-styleable name="RoundProgressBar">
-
         <attr name="roundColor" format="color|string"/>
         <attr name="roundInsideColor" format="color|string"/>
         <attr name="roundInsideSize" format="dimension"/>
@@ -132,21 +131,6 @@
         <attr name="pwContourSize" format="dimension"/>
     </declare-styleable>
 
-    <declare-styleable name="XRecyclerViewUsingLine">
-        <attr name="xDividerSize" format="dimension|reference" />
-        <attr name="xDividerPadding" format="dimension|reference" />
-        <attr name="xDivider" format="color|reference" />
-        <attr name="xShowDividers">
-            <flag name="top" value="0x01" />
-            <flag name="bottom" value="0x02" />
-            <flag name="middle" value="0x04" />
-            <flag name="none" value="0x08" />
-        </attr>
-        <attr name="xDividerOrientation" format="enum">
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-        </attr>
-    </declare-styleable>
     <declare-styleable name="CompatTabLayout">
         <attr name="isDefaultStyle" format="boolean" />
     </declare-styleable>

@@ -11,7 +11,7 @@
         <!--android:background="@color/colorPrimary"-->
         <!--app:layout_constraintTop_toTopOf="parent"-->
         <!--app:title="首页"-->
-        <!--app:titleTextColor="@color/colorWhite" />-->
+        <!--app:titleTextColor="@color/white" />-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                             android:layout_height="0dp"
                             android:drawableRight="@drawable/ic_done_white_24dp"
                             android:text="附近"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@id/tabTv2"
@@ -58,7 +58,7 @@
                             android:layout_height="0dp"
                             android:drawableRight="@drawable/ic_done_white_24dp"
                             android:text="附近"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@+id/tabTv1"
                             app:layout_constraintRight_toLeftOf="@id/tabTv3"
@@ -71,7 +71,7 @@
                             android:layout_height="0dp"
                             android:drawableRight="@drawable/ic_done_white_24dp"
                             android:text="自定义列表"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@+id/tabTv2"
                             app:layout_constraintRight_toLeftOf="@id/tabTv4"
@@ -84,7 +84,7 @@
                             android:layout_height="0dp"
                             android:drawableRight="@drawable/ic_done_white_24dp"
                             android:text="附近"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@+id/tabTv3"
                             app:layout_constraintRight_toLeftOf="@id/tabTv5"
@@ -97,7 +97,7 @@
                             android:layout_height="0dp"
                             android:drawableRight="@drawable/ic_done_white_24dp"
                             android:text="附近"
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@+id/tabTv4"
                             app:layout_constraintRight_toRightOf="parent"

@@ -32,70 +32,70 @@
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv1"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv2"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv3"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv4"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv5"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv6"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv7"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv8"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/searchKeyTv9"
                     style="@style/BodyTextStyleAllParams"
                     android:padding="10dp"
                     android:text="AI"
-                    android:textColor="@color/colorWhite" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
@@ -128,7 +128,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/shape_cir_white_border_prim"
                         android:text="请输入搜索内容"
-                        android:textColor="@color/colorGray" />
+                        android:textColor="@color/gray" />
 
                     <ImageView
                         android:id="@+id/filtrateIv"

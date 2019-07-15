@@ -1,5 +1,6 @@
 package com.example.chriszou.quicksample.ui.mycenter
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Handler
@@ -46,6 +47,7 @@ class DiscoverFragment : BaseFragment() {
     override fun onBindListener() {
         QuickBroadcast.addBroadcastListener(this, { action, intent ->
             Log2.e("test", String.format("收到广播，action:%s", action))
+            true
         }, "MyCenterFragment")
         customCompatSwipeRefreshLayout.setOnRefreshListener {
             customCompatSwipeRefreshLayout.isRefreshing = true
@@ -131,7 +133,7 @@ class DiscoverFragment : BaseFragment() {
                 if (resultCode == CaptureActivity.RESULT_OK) parseQrCodeContent(data?.getStringExtra(Intents.Scan.RESULT))
             }
             REQUEST_CODE_SELECTOR_IMG -> {
-                if (resultCode == org.quick.library.function.SelectorImgActivity.RESULT_CODE) parseQrCodeContent(QRCodeParse.parseQRCode(BitmapFactory.decodeFile(data!!.getStringArrayListExtra(org.quick.library.function.SelectorImgActivity.ALREADY_PATHS)[0])))
+                if (resultCode == Activity.RESULT_OK) parseQrCodeContent(QRCodeParse.parseQRCode(BitmapFactory.decodeFile(data!!.getStringArrayListExtra(org.quick.library.function.SelectorImgActivity.ALREADY_PATHS)[0])))
             }
         }
     }

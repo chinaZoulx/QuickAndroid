@@ -3,16 +3,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
-
+apply from: '../constants.gradle'
 android {
-    compileSdkVersion 28
+    compileSdkVersion project.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.example.chriszou.quicksample"
-        minSdkVersion 22
-        targetSdkVersion 28
-        versionCode 18060511
-        versionName "1.0.2"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionName project.ext.releaseVersion
+        versionCode project.ext.releaseVersionCode
+        multiDexEnabled true
     }
     signingConfigs {
         debug {
@@ -46,9 +45,6 @@ android {
         main {
             jniLibs.srcDirs = ['libs']
         }
-    }
-    dataBinding {
-        enabled = true
     }
 }
 

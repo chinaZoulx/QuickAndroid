@@ -36,7 +36,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@color/colorGray" />
+            android:textColor="@color/gray" />
 
         <TextView
             android:id="@+id/filtrateTv"
@@ -44,6 +44,6 @@
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:text="搜索"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/white" />
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

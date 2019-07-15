@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">QuickSample</string>
-    <string name="cut_to_anim_name">cutToAnimNameShare</string>
+    <string name="app_name" translatable="false">QuickSample</string>
+    <string name="cut_to_anim_name" translatable="false">cutToAnimNameShare</string>
 </resources>

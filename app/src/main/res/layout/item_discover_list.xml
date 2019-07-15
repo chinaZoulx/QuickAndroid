@@ -19,7 +19,7 @@
 
         <Button
             android:id="@+id/delBtn"
-            style="@style/BtnPrimStyle"
+            style="@style/BtnPrimStyleRec"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:text="关注"

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.quick.library.widgets.CustomCompatSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.quick.library.widgets.CompatSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/customCompatSwipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite">
+    android:background="@color/white">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
+        android:background="@color/white">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -31,7 +31,7 @@
                         android:id="@+id/semicircleView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/colorWhite"
+                        android:background="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:svIsShadow="true"
@@ -77,7 +77,7 @@
                             android:layout_height="?attr/actionBarSize"
                             android:paddingBottom="10dp"
                             android:text=" "
-                            android:textColor="@color/colorWhite"
+                            android:textColor="@color/white"
                             app:layout_constraintLeft_toRightOf="@id/qrCodeIv"
                             app:layout_constraintRight_toLeftOf="@id/settingIv" />
 
@@ -244,4 +244,4 @@
             </android.support.design.internal.ForegroundLinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</org.quick.library.widgets.CustomCompatSwipeRefreshLayout>
+</org.quick.library.widgets.CompatSwipeRefreshLayout>
