@@ -10,7 +10,7 @@ import org.quick.library.R
 import org.quick.library.b.BaseActivity
 import org.quick.library.function.SelectorImgActivity
 import org.quick.library.function.selectorimg.UCropActivity
-import org.quick.library.function.selectorimg.photoandselectorshow.PhotoShowAndSelectorActivity
+import org.quick.library.function.selectorimg.photoandselectorshow.SelectorAndShowActivity
 import java.io.File
 
 class ShowImgActivity : BaseActivity() {
@@ -55,7 +55,7 @@ class ShowImgActivity : BaseActivity() {
     private fun setResult() {
         val intent = Intent()
         intent.putExtra(SelectorImgActivity.ALREADY_PATHS, selectorList)
-        intent.putExtra("from", PhotoShowAndSelectorActivity::class.java.simpleName)
+        intent.putExtra("from", SelectorAndShowActivity::class.java.simpleName)
         super.setResult(Activity.RESULT_OK, intent)
     }
 

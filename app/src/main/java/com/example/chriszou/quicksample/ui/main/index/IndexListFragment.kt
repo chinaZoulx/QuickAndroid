@@ -1,15 +1,19 @@
 package com.example.chriszou.quicksample.ui.main.index
 
 import android.os.Handler
+import android.os.Parcel
+import android.os.Parcelable
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.index.detail.IndexListDetailActivity
 import org.quick.component.QuickAdapter
+import org.quick.component.QuickViewHolder
 import org.quick.library.b.BaseViewHolder
 
-class IndexListFragment : org.quick.library.b.QuickListFragment<String>() {
+class IndexListFragment() : org.quick.library.b.QuickListFragment<String,String>(), Parcelable {
+
     override fun start() {
-        getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
-            IndexListDetailActivity.startAction(activity!!, "详细", getAdapter<Adapter>()!!.getItem(position))
+        setOnItemClickListener { view, viewHolder, position, itemData ->
+            IndexListDetailActivity.startAction(activity!!, "详细", getItem(position))
         }
         onRefresh()
     }
@@ -27,7 +31,7 @@ class IndexListFragment : org.quick.library.b.QuickListFragment<String>() {
             dataList.add("http://up.enterdesk.com/edpic_source/3d/09/c4/3d09c4f52338fbaa1ea3f6ff6fceeea0.jpg")
             dataList.add("http://pic41.nipic.com/20140602/14680244_170645522110_2.jpg")
             dataList.add("http://pic34.nipic.com/20131028/1175293_134103150121_2.jpg")
-            getAdapter<Adapter>()?.setDataList(dataList)
+            setDataList(dataList)
             refreshComplete()
         }, 1000)
     }
@@ -46,7 +50,7 @@ class IndexListFragment : org.quick.library.b.QuickListFragment<String>() {
             dataList.add("http://up.enterdesk.com/edpic/36/e6/bc/36e6bc8653381fe8f43ac1bd720d3f72.jpg")
             dataList.add("http://p2.so.qhmsg.com/t01ba41296165d80487.jpg")
             dataList.add("http://up.enterdesk.com/edpic_source/28/b0/8e/28b08ee6d59ed9693e0b180ffdcf5e9c.jpg")
-            getAdapter<Adapter>()?.addDataList(dataList)
+            addDataList(dataList)
             loadMoreComplete()
         }, 5000)
     }
@@ -57,7 +61,8 @@ class IndexListFragment : org.quick.library.b.QuickListFragment<String>() {
     override val isLoadMoreEnable: Boolean
         get() = true
 
-    override fun onResultAdapter(): QuickAdapter<*, *> = Adapter()
+    constructor(parcel: Parcel) : this() {
+    }
 
     override fun onResultUrl(): String = ""
 
@@ -65,17 +70,35 @@ class IndexListFragment : org.quick.library.b.QuickListFragment<String>() {
 
     }
 
-    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) {
+    override fun onLoadMoreSuccess(model: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onPullRefreshSuccess(model: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onResultItemResId(viewType: Int): Int =R.layout.item_index_list
+
+    override fun onBindData(holder: QuickViewHolder, position: Int, itemData: String, viewType: Int) {
+        holder.setImg(R.id.coverIv, itemData)
+    }
+    override fun onResultItemMargin(position: Int): Float = 40f
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
 
     }
 
-    class Adapter : org.quick.library.b.BaseAdapter<String>() {
-        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_index_list
+    override fun describeContents(): Int {
+        return 0
+    }
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String, viewType: Int) {
-            holder.setImg(R.id.coverIv, itemData)
+    companion object CREATOR : Parcelable.Creator<IndexListFragment> {
+        override fun createFromParcel(parcel: Parcel): IndexListFragment {
+            return IndexListFragment(parcel)
         }
 
-        override fun onResultItemMargin(position: Int): Float = 40f
+        override fun newArray(size: Int): Array<IndexListFragment?> {
+            return arrayOfNulls(size)
+        }
     }
 }

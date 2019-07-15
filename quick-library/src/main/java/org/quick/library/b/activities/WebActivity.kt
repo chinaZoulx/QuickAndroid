@@ -27,7 +27,7 @@ class WebActivity : org.quick.library.b.BaseActivity() {
     }
 
     override fun onInitLayout() {
-        setBackValid(R.drawable.ic_close_white_24dp, View.OnClickListener { finish() })
+        setBackValid(R.drawable.ic_close_black_24dp, View.OnClickListener { finish() })
     }
 
     override fun onBindListener() {

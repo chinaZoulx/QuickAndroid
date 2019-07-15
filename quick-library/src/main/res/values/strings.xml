@@ -34,10 +34,11 @@
 
     <string name="cutToAlbum">相册转场动画</string>
 
-    <string name="refresh">刷新</string>
     <string name="errorNoMsgHint">暂无相关记录</string>
     <string name="errorNetWorkHint">请检查，网络无法连接</string>
-    <string name="errorParseDataHint">数据解析错误，请联系管理员</string>
+    <string name="errorDataHint">数据解析错误，请联系管理员</string>
     <string name="errorServiceHint">出了点意外，服务器升级中</string>
     <string name="errorOtherHint">出了点意外，暂时无法访问</string>
+    <string name="errorNoLoginHint">未登录，请您登录后重试</string>
+    <string name="refresh">刷新</string>
 </resources>

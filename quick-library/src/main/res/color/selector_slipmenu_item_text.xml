@@ -9,6 +9,6 @@
     <!-- 获得焦点时的图片背景 -->
     <item android:color="@color/colorAccent" android:state_focused="true" />
     <!-- 是否响应所有事件-->
-    <item android:color="@color/colorBlack" android:state_enabled="true" />
+    <item android:color="@color/black" android:state_enabled="true" />
 
 </selector>

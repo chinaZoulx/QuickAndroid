@@ -3,17 +3,17 @@ package com.example.chriszou.quicksample.ui.main.index
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.example.chriszou.quicksample.R
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_index.*
 import kotlinx.android.synthetic.main.include_btn_index.*
-import org.quick.library.b.BaseFragment
-import org.quick.library.b.activities.WebActivity
 import org.quick.component.Log2
 import org.quick.component.QuickBroadcast
 import org.quick.component.QuickToast
+import org.quick.library.b.BaseFragment
+import org.quick.library.b.activities.WebActivity
 import java.util.concurrent.TimeUnit
 
 class IndexFragment : BaseFragment() {
@@ -29,6 +29,7 @@ class IndexFragment : BaseFragment() {
 //                "test2" -> Log.e("test", "test2")
 //                "MyCenterFragment" -> Log.e("test", "MyCenterFragment")
 //            }
+            false
         }, "test", "test2", "MyCenterFragment")
         setParentMenu(R.menu.navigation) { menu ->
             when (menu?.itemId) {
@@ -97,7 +98,7 @@ class IndexFragment : BaseFragment() {
 
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         Log2.e("onAttach")
         super.onAttach(context)
     }
@@ -122,7 +123,7 @@ class IndexFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onAttachFragment(childFragment: Fragment?) {
+    override fun onAttachFragment(childFragment: Fragment) {
         Log2.e("onAttachFragment")
         super.onAttachFragment(childFragment)
     }

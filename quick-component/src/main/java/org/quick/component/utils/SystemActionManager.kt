@@ -115,4 +115,10 @@ object SystemActionManager {
         activity.startActivityForResult(localIntent, requestCode)
     }
 
+    fun actionVideo(): Intent {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "video/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        return intent
+    }
 }

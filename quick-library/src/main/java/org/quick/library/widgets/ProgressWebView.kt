@@ -8,7 +8,7 @@ import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
 import android.os.Message
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
@@ -32,7 +32,7 @@ class ProgressWebView(context: Context, attrs: AttributeSet) : WebView(context, 
     private val progressbar: ProgressBar = ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal)
 
     init {
-        progressbar.layoutParams = AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.MATCH_PARENT, FormatUtils.formatDip2Px(2f).toInt(), 0, 0)
+        progressbar.layoutParams = AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.MATCH_PARENT, FormatUtils.dip2px(2f).toInt(), 0, 0)
         progressbar.progressDrawable = ContextCompat.getDrawable(context, R.drawable.layer_list_progress_bar)
         addView(progressbar)
         webViewClient = MyWebViewClient()

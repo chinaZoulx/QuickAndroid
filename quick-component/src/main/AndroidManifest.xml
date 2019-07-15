@@ -1,16 +1,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.quick.component">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="org.quick.component">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <application>
-        <receiver android:name=".QuickNotify$NotificationReceiver" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+
+    <application
+            android:networkSecurityConfig="@xml/network_security_config">
+        <receiver android:name=".QuickNotify$NotificationReceiver"/>
+
+        <!--Start glide配置 -->
+        <meta-data
+                android:name="org.quick.component.img.GlideConfiguration"
+                android:value="GlideModule"/>
+        <!--End glide配置 -->
+
     </application>
 </manifest>

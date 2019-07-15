@@ -1,17 +1,23 @@
 package com.example.chriszou.quicksample.ui.material
 
-import android.support.v4.view.ViewPager
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import org.quick.library.m.ImageManager
+import com.example.chriszou.quicksample.R
+import org.quick.component.QuickViewHolder
 
 /**
  * @Author ChrisZou
  * @Date 2018/6/7-14:58
  * @Email chrisSpringSmell@gmail.com
  */
-class CommodityBannerFragment : org.quick.library.b.BaseViewPagerFragment<String>() {
+class CommodityBannerFragment : org.quick.library.b.BannerFragment<String>() {
+    override val isAutoScroll: Boolean
+        get() = true
+
+    override fun onResultItemLayout(viewType: Int): Int = R.layout.item_banner
+
+    override fun onBindData(position: Int, holder: QuickViewHolder, itemData: String) {
+        holder.setImg(R.id.img, itemData)
+    }
+
     override fun onInit() {
 
     }
@@ -29,15 +35,5 @@ class CommodityBannerFragment : org.quick.library.b.BaseViewPagerFragment<String
         dataList.add("http://pic41.nipic.com/20140602/14680244_170645522110_2.jpg")
         dataList.add("http://pic34.nipic.com/20131028/1175293_134103150121_2.jpg")
         setDataList(dataList)
-    }
-
-    override fun isAutoScroll(): Boolean = false
-
-    override fun onResultItemView(container: ViewGroup?, position: Int, itemData: String?): View {
-        val img = ImageView(activity)
-        img.layoutParams = ViewGroup.LayoutParams(ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.MATCH_PARENT)
-        img.scaleType = ImageView.ScaleType.CENTER_CROP
-        ImageManager.loadImage(activity!!, itemData!!, img)
-        return img
     }
 }

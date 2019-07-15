@@ -6,23 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.CollapsingToolbarLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:contentScrim="@color/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     app:layout_collapseMode="parallax">
@@ -48,16 +48,16 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.ConstraintLayout>
 
-                <android.support.v7.widget.Toolbar
+                <androidx.appcompat.widget.Toolbar
                     style="@style/AppTheme.CustomToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
                     app:layout_collapseMode="pin">
 
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -90,12 +90,12 @@
                             android:scaleType="centerInside"
                             android:src="@drawable/ic_settings_white_24dp"
                             app:layout_constraintRight_toRightOf="parent" />
-                    </android.support.constraint.ConstraintLayout>
-                </android.support.v7.widget.Toolbar>
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
+                    </androidx.constraintlayout.ConstraintLayout>
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
@@ -242,6 +242,6 @@
                     android:text="bottomSheetDialog" />
 
             </android.support.design.internal.ForegroundLinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-    </android.support.design.widget.CoordinatorLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </org.quick.library.widgets.CustomCompatSwipeRefreshLayout>

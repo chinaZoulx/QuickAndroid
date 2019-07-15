@@ -8,7 +8,7 @@
         android:id="@+id/contentEt"
         android:layout_width="match_parent"
         android:layout_height="200px"
-        android:background="@color/colorTransparent"
+        android:background="@color/transparent"
         android:gravity="left"
         android:hint="请输入语料"
         android:padding="20px" />

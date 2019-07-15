@@ -3,29 +3,28 @@ package org.quick.library.b.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.MenuRes
-import android.support.annotation.Size
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.os.Parcelable
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
-import org.quick.library.R
-import android.support.v7.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.MenuRes
+import androidx.annotation.Size
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate.setCompatVectorFromResourcesEnabled
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import org.quick.component.Log2
 import org.quick.component.QuickActivity
 import org.quick.component.QuickToast
 import org.quick.component.callback.OnClickListener2
+import org.quick.component.http.HttpService
 import org.quick.component.utils.DevicesUtils
 import org.quick.component.utils.ViewUtils
+import org.quick.library.R
+import java.io.Serializable
 
 
 /**
@@ -76,10 +75,10 @@ abstract class ThemeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (org.quick.library.b.application.ExitApplication.getInstance() == null)
+        if (org.quick.library.b.application.ExitApplication.instance == null)
             throw NullPointerException(String.format("未初始化BaseApplication"))
 
-        org.quick.library.b.application.ExitApplication.getInstance().addActivity(this)
+        org.quick.library.b.application.ExitApplication.instance.addActivity(this)
         initView()
         init()
         isInit = true
@@ -126,7 +125,9 @@ abstract class ThemeActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (onMenuItemClickListener != null) onMenuItemClickListener!!.invoke(item) else super.onOptionsItemSelected(item)
+        return if (onMenuItemClickListener != null) onMenuItemClickListener!!.invoke(item) else super.onOptionsItemSelected(
+            item
+        )
     }
 
     fun setMenu(@MenuRes resMenu: Int, onMenuItemClickListener: ((menu: MenuItem?) -> Boolean)) {
@@ -146,18 +147,22 @@ abstract class ThemeActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    protected fun setRightView(@LayoutRes resId: Int) {
-        setRightView(LayoutInflater.from(this).inflate(resId, null), null)
+    protected fun setRightView(@LayoutRes resId: Int): View {
+        return setRightView(resId, null)
     }
 
     @JvmOverloads
-    protected fun setRightView(view: View, onClickListener: View.OnClickListener? = null) {
+    protected fun setRightView(@LayoutRes resId: Int, onClickListener: View.OnClickListener?, vararg ids: Int): View {
         checkNotNullToolbar()
-        val layoutParams = Toolbar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        val view = LayoutInflater.from(this).inflate(resId, null)
+        val layoutParams =
+            Toolbar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
         layoutParams.gravity = Gravity.RIGHT or Gravity.CENTER_VERTICAL
-        if (onClickListener != null)
-            view.setOnClickListener(onClickListener)
+        for (id in ids) {
+            getView<View>(id, view).setOnClickListener(onClickListener)
+        }
         appBaseToolbar!!.addView(view, layoutParams)
+        return view
     }
 
     protected fun setBackInvalid() {
@@ -178,12 +183,16 @@ abstract class ThemeActivity : AppCompatActivity() {
      * @param onClickListener
      */
     @JvmOverloads
-    protected fun setBackValid(backIcon: Int = -1, isValid: Boolean = true, onClickListener: View.OnClickListener? = null) {
+    protected fun setBackValid(
+        backIcon: Int = -1,
+        isValid: Boolean = true,
+        onClickListener: View.OnClickListener? = null
+    ) {
         var tempListener = onClickListener
         if (appBaseToolbar == null) return
         if (isValid) {
             if (backIcon == -1)
-                appBaseToolbar!!.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+                appBaseToolbar!!.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             else
                 appBaseToolbar!!.setNavigationIcon(backIcon)
 
@@ -257,6 +266,16 @@ abstract class ThemeActivity : AppCompatActivity() {
         return ViewUtils.getIntentValue(intent, key, defaultValue)!!
     }
 
+    fun <T : Serializable> getSerializable(key: String): T {
+        return intent.getSerializableExtra(key) as T
+    }
+
+    fun <T : Parcelable> getParcelable(key: String): T {
+        return intent.getParcelableExtra(key)
+    }
+
+    open fun getId() = getTransmitValue(ID, "")
+
     protected fun showToast(content: CharSequence) {
         showToast(content, Toast.LENGTH_SHORT)
     }
@@ -265,8 +284,15 @@ abstract class ThemeActivity : AppCompatActivity() {
         showToast(content, 0, 0, 150, duration)
     }
 
-    protected fun showToast(content: CharSequence, gravity: Int = 0, xOffset: Int, yOffset: Int, duration: Int = Toast.LENGTH_SHORT) {
-        QuickToast.Builder().setGravity(gravity, xOffset, yOffset).setDuration(duration).build().showToast(content.toString())
+    protected fun showToast(
+        content: CharSequence,
+        gravity: Int = 0,
+        xOffset: Int,
+        yOffset: Int,
+        duration: Int = Toast.LENGTH_SHORT
+    ) {
+        QuickToast.Builder().setGravity(gravity, xOffset, yOffset).setDuration(duration).build()
+            .showToast(content.toString())
         DevicesUtils.closeSoftInput(this)
     }
 
@@ -281,19 +307,32 @@ abstract class ThemeActivity : AppCompatActivity() {
     }
 
     @JvmOverloads
-    protected fun showSnackbar(content: CharSequence, actionTxt: CharSequence? = null, onClickListener: View.OnClickListener? = null) {
+    protected fun showSnackbar(
+        content: CharSequence,
+        actionTxt: CharSequence? = null,
+        onClickListener: View.OnClickListener? = null
+    ) {
         showSnackbar(null, content, actionTxt, onClickListener)
     }
 
     @JvmOverloads
-    protected fun showSnackbar(view: View?, content: CharSequence, actionTxt: CharSequence? = null, onClickListener: View.OnClickListener? = null) {
+    protected fun showSnackbar(
+        view: View?,
+        content: CharSequence,
+        actionTxt: CharSequence? = null,
+        onClickListener: View.OnClickListener? = null
+    ) {
         DevicesUtils.closeSoftInput(this)
         var tempView = view ?: window.decorView
-        Snackbar.make(tempView, content, Snackbar.LENGTH_SHORT).setAction(actionTxt, onClickListener).setActionTextColor(ContextCompat.getColor(activity, R.color.colorBlueShallow)).show()
+        Snackbar.make(tempView, content, Snackbar.LENGTH_SHORT).setAction(actionTxt, onClickListener)
+            .setActionTextColor(ContextCompat.getColor(activity, R.color.blueShallow)).show()
     }
 
 
-    protected fun startActivity(builder: QuickActivity.Builder, onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)) {
+    protected fun startActivity(
+        builder: QuickActivity.Builder,
+        onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)
+    ) {
         builder.startActivity(onActivityResultListener)
     }
 
@@ -302,9 +341,16 @@ abstract class ThemeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log2.e(String.format("----------onResume--------------%s", javaClass.simpleName))
+    }
+
     override fun onDestroy() {
-        org.quick.library.b.application.ExitApplication.getInstance().removeActivity(this)
+        org.quick.library.b.application.ExitApplication.instance.removeActivity(this)
+        HttpService.cancelTask(this)
         super.onDestroy()
+        Log2.e(String.format("----------onDestroy--------------%s", javaClass.simpleName))
     }
 
     companion object {

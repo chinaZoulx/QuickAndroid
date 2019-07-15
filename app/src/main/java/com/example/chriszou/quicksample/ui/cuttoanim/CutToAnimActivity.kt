@@ -3,9 +3,9 @@ package com.example.chriszou.quicksample.ui.cuttoanim
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.util.Pair
-import android.support.v4.view.animation.FastOutSlowInInterpolator
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import android.transition.TransitionSet
 import android.view.View
 import com.example.chriszou.quicksample.R

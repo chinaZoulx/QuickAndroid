@@ -12,7 +12,7 @@ import java.util.*
  * @modifyContent
  */
 object Log2 {
-    val defaultTag: String by lazy { javaClass.`package`!!.name + "-" + javaClass.simpleName }
+    val defaultTag: String by lazy { javaClass.`package`.name + "-" + javaClass.simpleName }
     var isDebug = true
 
     enum class TYPE(var value: Int) {

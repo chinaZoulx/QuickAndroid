@@ -4,7 +4,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import org.quick.component.Log2
 import org.quick.component.http.HttpService
-import org.quick.component.http.callback.OnProgressCallBack
+import org.quick.component.http.callback.OnProgressCallback
 import org.quick.component.http.ProgressResponseBody
 import org.quick.component.utils.DateUtils
 
@@ -12,7 +12,7 @@ import org.quick.component.utils.DateUtils
 /**
  * 下载进度监听-拦截器
  */
-class DownloadInterceptor(var builder: HttpService.Builder, var onProgressCallBack: OnProgressCallBack) : Interceptor {
+class DownloadInterceptor(var builder: HttpService.Builder, var onProgressCallback: OnProgressCallback) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val startTime = DateUtils.getCurrentTimeInMillis()
@@ -29,7 +29,7 @@ class DownloadInterceptor(var builder: HttpService.Builder, var onProgressCallBa
         Log2.d(String.format("----Response---- %d ms", DateUtils.getCurrentTimeInMillis() - startTime))
         Log2.d(" ")
         return originalResponse.newBuilder()
-                .body(ProgressResponseBody(builder, originalResponse.body()!!, onProgressCallBack))
+                .body(ProgressResponseBody(builder, originalResponse.body()!!, onProgressCallback))
                 .build()
     }
 }

@@ -1,5 +1,8 @@
 package org.quick.component.utils
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Environment
 import org.quick.component.QuickAndroid
 import org.quick.component.QuickAsync
@@ -44,7 +47,13 @@ object FileUtils {
      * @param fileName      文件名
      * @param isAppend 是否追加文件
      */
-    fun writeFile(inputStream: InputStream?, filePathDir: String, fileName: String, isAppend: Boolean, onWriteListener: OnWriteListener) {
+    fun writeFile(
+        inputStream: InputStream?,
+        filePathDir: String,
+        fileName: String,
+        isAppend: Boolean,
+        onWriteListener: OnWriteListener
+    ) {
         if (inputStream != null) {
             QuickAsync.async(object : QuickAsync.OnASyncListener<File> {
                 override fun onASync(): File {
@@ -74,12 +83,26 @@ object FileUtils {
                         if (tempTime > 100L) {/*间隔80毫秒触发一次，否则队列阻塞*/
                             if (!isDone) {/*完成后只触发一次*/
                                 isDone = redBytesCount == -1
-                                QuickAsync.runOnUiThread { onWriteListener.onLoading(fileName, redCount, totalCount, isDone) }
+                                QuickAsync.runOnUiThread {
+                                    onWriteListener.onLoading(
+                                        fileName,
+                                        redCount,
+                                        totalCount,
+                                        isDone
+                                    )
+                                }
                             }
                             lastTime = System.currentTimeMillis()
                         }
                     }
-                    if (!isDone) QuickAsync.runOnUiThread { onWriteListener.onLoading(fileName, redCount, totalCount, true) }/*之前有延迟100毫秒，或许会造成最后一次未返回*/
+                    if (!isDone) QuickAsync.runOnUiThread {
+                        onWriteListener.onLoading(
+                            fileName,
+                            redCount,
+                            totalCount,
+                            true
+                        )
+                    }/*之前有延迟100毫秒，或许会造成最后一次未返回*/
                     fileOutputStream.close()
                     inputStream.close()
                     return file
@@ -120,5 +143,30 @@ object FileUtils {
         os.close()
         ins.close()
         return file
+    }
+
+    val clipboardManager =
+        (QuickAndroid.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
+
+    fun copyTxt(content: String) {
+        copyTxt("CopyName", content)
+    }
+
+    fun copyTxt(key: String, content: String) {
+        val clipData = ClipData.newPlainText(key, content)
+        clipboardManager.primaryClip = clipData
+    }
+
+    fun parseTxt(): String {
+        if (!clipboardManager.hasPrimaryClip()) {
+            return ""
+        }
+        val clipData = clipboardManager.primaryClip
+        //获取 ClipDescription
+        val clipDescription = clipboardManager.primaryClipDescription
+        //获取 lable
+        val lable = clipDescription!!.label.toString()
+        //获取 text
+        return clipData!!.getItemAt(0).text.toString()
     }
 }

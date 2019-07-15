@@ -80,7 +80,6 @@ object QuickAsync {
         }
     }
 
-
     interface OnIntervalListener<T> : Consumer<T> {
         fun onNext(value: T)
     }

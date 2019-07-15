@@ -9,6 +9,6 @@
     <!-- 获得焦点时的图片背景 -->
     <item android:drawable="@color/colorPrimary" android:state_focused="true" />
     <!-- 是否响应所有事件-->
-    <item android:drawable="@color/colorWhite" android:state_enabled="true" />
+    <item android:drawable="@color/white" android:state_enabled="true" />
 
 </selector>

@@ -13,7 +13,7 @@
         android:background="#090000FF"
         android:gravity="center"
         android:text="蓝牙列表"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
     <org.quick.component.widget.QRecyclerView
@@ -30,6 +30,6 @@
         android:layout_marginBottom="@dimen/borderWidth"
         android:background="@drawable/shape_rec_r10_blue_bg"
         android:text="关闭"
-        android:textColor="@color/colorWhite" />
+        android:textColor="@color/white" />
 
 </LinearLayout>

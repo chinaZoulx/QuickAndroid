@@ -8,8 +8,9 @@ import android.content.res.TypedArray
 import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.annotation.AttrRes
-import android.support.annotation.LayoutRes
+import android.os.Parcelable
+import androidx.annotation.AttrRes
+import androidx.annotation.LayoutRes
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
@@ -35,7 +36,11 @@ object ViewUtils {
      * @throws Resources.NotFoundException
      */
     @Throws(Resources.NotFoundException::class)
-    fun getMipmapResId(prefix: String, postfix: String): Int = QuickAndroid.applicationContext.resources.getIdentifier(prefix + postfix, "mipmap", QuickAndroid.applicationContext.packageName)
+    fun getMipmapResId(prefix: String, postfix: String): Int = QuickAndroid.applicationContext.resources.getIdentifier(
+        prefix + postfix,
+        "mipmap",
+        QuickAndroid.applicationContext.packageName
+    )
 
     /**
      * @param context
@@ -44,7 +49,12 @@ object ViewUtils {
      * @throws Resources.NotFoundException
      */
     @Throws(Resources.NotFoundException::class)
-    fun getDrawableResId(prefix: String, postfix: String): Int = QuickAndroid.applicationContext.resources.getIdentifier(prefix + postfix, "drawable", QuickAndroid.applicationContext.packageName)
+    fun getDrawableResId(prefix: String, postfix: String): Int =
+        QuickAndroid.applicationContext.resources.getIdentifier(
+            prefix + postfix,
+            "drawable",
+            QuickAndroid.applicationContext.packageName
+        )
 
     /**
      * @param context
@@ -53,7 +63,11 @@ object ViewUtils {
      * @throws Resources.NotFoundException
      */
     @Throws(Resources.NotFoundException::class)
-    fun getViewId(prefix: String, postfix: String): Int = QuickAndroid.applicationContext.resources.getIdentifier(prefix + postfix, "id", QuickAndroid.applicationContext.packageName)
+    fun getViewId(prefix: String, postfix: String): Int = QuickAndroid.applicationContext.resources.getIdentifier(
+        prefix + postfix,
+        "id",
+        QuickAndroid.applicationContext.packageName
+    )
 
     /**
      * @param context
@@ -115,6 +129,7 @@ object ViewUtils {
                 is Int -> value = intent.getIntExtra(key, 0)
                 is Boolean -> value = intent.getBooleanExtra(key, false)
                 is Serializable -> value = intent.getSerializableExtra(key)
+                is Parcelable -> value = intent.getParcelableExtra(key)
                 is Long -> value = intent.getLongExtra(key, 0)
                 is Float -> value = intent.getFloatExtra(key, 0f)
                 is Double -> value = intent.getDoubleExtra(key, 0.0)
@@ -166,11 +181,24 @@ object ViewUtils {
     }
 
     fun setupFitsSystemWindows(activity: Activity, view: View) {
-        view.setPadding(view.paddingLeft, DevicesUtils.getStatusHeight(activity) + view.paddingTop, view.paddingRight, view.paddingBottom)
+        view.setPadding(
+            view.paddingLeft,
+            DevicesUtils.getStatusHeight(activity) + view.paddingTop,
+            view.paddingRight,
+            view.paddingBottom
+        )
     }
 
     fun setupFitsSystemWindowsFromToolbar(activity: Activity, view: View) {
-        view.layoutParams.height = (getSystemAttrValue(activity, android.R.attr.actionBarSize) + DevicesUtils.getStatusHeight(activity)).toInt()
-        view.setPadding(view.paddingLeft, DevicesUtils.getStatusHeight(activity) + view.paddingTop, view.paddingRight, view.paddingBottom)
+        view.layoutParams.height = (getSystemAttrValue(
+            activity,
+            android.R.attr.actionBarSize
+        ) + DevicesUtils.getStatusHeight(activity)).toInt()
+        view.setPadding(
+            view.paddingLeft,
+            DevicesUtils.getStatusHeight(activity) + view.paddingTop,
+            view.paddingRight,
+            view.paddingBottom
+        )
     }
 }

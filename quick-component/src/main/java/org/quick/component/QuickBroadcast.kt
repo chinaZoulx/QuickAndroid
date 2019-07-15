@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.util.SparseArray
+import androidx.annotation.NonNull
 import org.quick.component.utils.check.CheckUtils
 import java.io.Serializable
 
@@ -20,23 +20,28 @@ import java.io.Serializable
 object QuickBroadcast {
 
     private const val ACTION = "org.quick.library.function#QuickBroadcastReceiverAction"
-    private val onBroadcastListeners = SparseArray<(action: String, intent: Intent) -> Unit>()
+    private val onBroadcastListeners = SparseArray<(action: String, intent: Intent) -> Boolean>()
     private val onBroadcastListenerActions = SparseArray<Array<String>>()
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             val actions = intent.getStringArrayExtra(ACTION)
             var action = ""
-            for (index in 0 until onBroadcastListenerActions.size())
+            for (index in 0 until onBroadcastListenerActions.size()) {
                 if (onBroadcastListenerActions.valueAt(index).any { tempAction ->
-                            actions.any {
-                                if (it == tempAction) {
-                                    action = tempAction
-                                    true
-                                } else false
-                            }
-                        })
-                    onBroadcastListeners[onBroadcastListenerActions.keyAt(index)]?.invoke(action, intent)
+                        actions.any {
+                            if (it == tempAction) {
+                                action = tempAction
+                                true
+                            } else false
+                        }
+                    })
+                    /*true:继续执行  false 中断*/
+                    if (!onBroadcastListeners[onBroadcastListenerActions.keyAt(index)]!!.invoke(action, intent)) {
+                        break
+                    }
+            }
+
         }
     }
 
@@ -49,6 +54,7 @@ object QuickBroadcast {
     }
 
     /**
+     * 下个版本：增加传递任意目标，实现自动序列化
      * @param intent 协带参数
      * @param action 发送目标
      */
@@ -61,10 +67,14 @@ object QuickBroadcast {
 
     /**
      * @param binder 绑定者，消息回调依赖此目标。若此目标重复将最后一个注册的有效
-     * @param onMsgListener 消息回调
+     * @param onMsgListener 消息回调 true:继续执行  false 中断
      * @param action 接收目标
      */
-    fun addBroadcastListener(binder: Any, onMsgListener: (action: String, intent: Intent) -> Unit, vararg action: String) {
+    fun addBroadcastListener(
+        binder: Any,
+        onMsgListener: (action: String, intent: Intent) -> Boolean,
+        vararg action: String
+    ) {
         onBroadcastListeners.put(binder.hashCode(), onMsgListener)
         onBroadcastListenerActions.put(binder.hashCode(), action as Array<String>?)
     }

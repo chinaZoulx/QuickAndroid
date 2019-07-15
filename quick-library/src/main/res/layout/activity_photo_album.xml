@@ -9,7 +9,7 @@
         android:id="@+id/select_img_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/colorWhite"
+        android:divider="@color/white"
         android:dividerHeight="1dp"
         android:fadingEdge="none"
         android:listSelector="@android:color/transparent"

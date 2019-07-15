@@ -2,14 +2,13 @@ package org.quick.library.b.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.MenuRes
-import android.support.annotation.Size
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.Toolbar
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.MenuRes
+import androidx.annotation.Size
+import com.google.android.material.snackbar.Snackbar
+import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.Toolbar
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
@@ -36,7 +35,7 @@ import org.quick.component.utils.ViewUtils
  * @modifyInfo1 chriszou-16/10/11
  * @modifyContent
  */
-abstract class ThemeFragment : Fragment() {
+abstract class ThemeFragment : androidx.fragment.app.Fragment() {
 
     var appBaseLayoutContainer: View? = null/*根布局，内容*/
     var isInit: Boolean = false//是否初始化
@@ -119,13 +118,13 @@ abstract class ThemeFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (resMenu != -1)
-            inflater?.inflate(resMenu, menu)
+            inflater.inflate(resMenu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (onMenuItemClickListener != null) onMenuItemClickListener!!.invoke(item) else super.onOptionsItemSelected(item)
     }
 
@@ -171,7 +170,7 @@ abstract class ThemeFragment : Fragment() {
         if (appBaseToolbar == null) return
         if (isValid) {
             if (backIcon == -1)
-                appBaseToolbar?.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+                appBaseToolbar?.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             else
                 appBaseToolbar?.setNavigationIcon(backIcon)
             if (tempListener == null)
@@ -285,7 +284,7 @@ abstract class ThemeFragment : Fragment() {
         if (tempView == null) {
             tempView = appBaseLayoutContainer
         }
-        Snackbar.make(tempView!!, content, Snackbar.LENGTH_SHORT).setAction(actionTxt, onClickListener).setActionTextColor(ContextCompat.getColor(activity!!, R.color.colorBlueShallow)).show()
+        Snackbar.make(tempView!!, content, Snackbar.LENGTH_SHORT).setAction(actionTxt, onClickListener).setActionTextColor(ContextCompat.getColor(activity!!, R.color.blueShallow)).show()
     }
 
     protected fun startActivity(builder:QuickActivity.Builder, onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)) {

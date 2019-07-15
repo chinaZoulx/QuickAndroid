@@ -32,7 +32,7 @@
             android:id="@+id/titleTv"
             style="@style/TitleTextStyle"
             android:text="标题"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/white"
             android:textSize="17sp" />
 
         <TextView
@@ -50,7 +50,7 @@
         android:id="@+id/confirmTimeTv"
         style="@style/BodyTextStyle"
         android:text="10:41"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/white"
         android:visibility="gone" />
 
     <RelativeLayout
@@ -68,7 +68,7 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:indeterminateOnly="true"
-            android:indeterminateTint="@color/colorWhite"
+            android:indeterminateTint="@color/white"
             android:indeterminateTintMode="src_in"
             tools:ignore="UnusedAttribute" />
 

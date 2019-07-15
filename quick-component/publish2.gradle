@@ -1,0 +1,10 @@
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = 'orgair' //bintray账户下某个组织id
+    groupId = 'org.quick.android' //maven仓库下库的包名，一般为模块包名，自定义
+    artifactId = 'quick-component' //项目名称-自定义
+    publishVersion = '1.0.2' //版本号
+    desc = 'This is activity quick development component , convenient tools' //项目介绍，可以不写
+    website = 'https://github.com/SpringSmell/quick-component' //项目主页，可以不写
+}

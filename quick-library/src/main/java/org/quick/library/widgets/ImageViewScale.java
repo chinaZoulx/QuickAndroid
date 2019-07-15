@@ -27,7 +27,7 @@ import org.quick.library.widgets.scaleimg._ScaleViewAttacher;
 /**
  *缩放图片控件
  */
-public class ImageViewScale extends android.support.v7.widget.AppCompatImageView implements _IScaleView {
+public class ImageViewScale extends androidx.appcompat.widget.AppCompatImageView implements _IScaleView {
 
 	private final _ScaleViewAttacher mAttacher;
 

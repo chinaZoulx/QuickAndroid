@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import org.quick.component.img.ImageManager;
 import org.quick.library.R;
-import org.quick.library.m.ImageManager;
 
 import java.io.File;
 import java.util.ArrayList;

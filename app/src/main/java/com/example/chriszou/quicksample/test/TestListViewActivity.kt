@@ -4,6 +4,7 @@ import com.example.chriszou.quicksample.R
 import kotlinx.android.synthetic.main.activity_list_view.*
 import org.quick.library.b.BaseViewHolder
 import org.quick.component.QuickAsync
+import org.quick.component.QuickViewHolder
 
 class TestListViewActivity : org.quick.library.b.BaseActivity() {
     override fun onResultLayoutResId(): Int = R.layout.activity_list_view
@@ -54,9 +55,9 @@ class TestListViewActivity : org.quick.library.b.BaseActivity() {
     }
 
     class Adapter : TestAdapter<String>() {
-        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_discover_list
+        override fun onResultItemResId(viewType: Int): Int = R.layout.item_discover_list
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String, viewType: Int) {
+        override fun onBindData(holder: QuickViewHolder, position: Int, itemData: String, viewType: Int) {
             holder.setImg(R.id.contentIv, itemData)
         }
     }

@@ -2,6 +2,7 @@ package com.example.chriszou.quicksample.ui.bluetooth
 
 import com.example.chriszou.quicksample.R
 import org.quick.component.QuickAdapter
+import org.quick.component.QuickViewHolder
 import org.quick.library.b.BaseViewHolder
 
 /**
@@ -9,7 +10,12 @@ import org.quick.library.b.BaseViewHolder
  * @Date 2018/6/1-11:32
  * @Email chrisSpringSmell@gmail.com
  */
-class BluetoothCommandListFragment : org.quick.library.b.QuickListFragment<String>() {
+class BluetoothCommandListFragment : org.quick.library.b.QuickListFragment<String,String>() {
+    override fun onResultItemResId(viewType: Int): Int = R.layout.item_bluetooth
+
+    override fun onBindData(holder: QuickViewHolder, position: Int, itemData: String, viewType: Int) {
+        holder.setText(R.id.contentTv, itemData)
+    }
 
     lateinit var parent: BluetoothActivity
 
@@ -22,18 +28,15 @@ class BluetoothCommandListFragment : org.quick.library.b.QuickListFragment<Strin
 
     override val isLoadMoreEnable: Boolean
         get() = false
-    override fun onResultAdapter(): QuickAdapter<*, *> = Adapter()
 
     override fun onResultUrl(): String = ""
     override fun onResultParams(params: MutableMap<String, String>) = Unit
 
-    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) = Unit
+    override fun onLoadMoreSuccess(model: String) {
 
-    class Adapter : org.quick.library.b.BaseAdapter<String>() {
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String, viewType: Int) {
-            holder.setText(R.id.contentTv, itemData)
-        }
+    }
 
-        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_bluetooth
+    override fun onPullRefreshSuccess(model: String) {
+
     }
 }

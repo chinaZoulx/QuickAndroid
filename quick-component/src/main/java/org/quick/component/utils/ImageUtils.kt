@@ -12,11 +12,11 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.support.annotation.ColorInt
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v4.util.LruCache
-import android.support.v4.widget.NestedScrollView
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.ColorInt
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.collection.LruCache
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.PixelCopy
 import android.view.View
 import org.quick.component.QuickAsync
@@ -307,7 +307,7 @@ object ImageUtils {
     /**
      * https://gist.github.com/PrashamTrivedi/809d2541776c8c141d9a
      */
-    fun shotRecyclerView(view: RecyclerView): Bitmap? {
+    fun shotRecyclerView(view: androidx.recyclerview.widget.RecyclerView): Bitmap? {
         val adapter = view.adapter
         var bigBitmap: Bitmap? = null
         if (adapter != null) {
@@ -319,7 +319,7 @@ object ImageUtils {
 
             // Use 1/8th of the available memory for this memory cache.
             val cacheSize = maxMemory / 8
-            val bitmaCache = LruCache<String, Bitmap>(cacheSize)
+            val bitmaCache = androidx.collection.LruCache<String, Bitmap>(cacheSize)
             for (i in 0 until size) {
                 val holder = adapter.createViewHolder(view, adapter.getItemViewType(i))
                 adapter.onBindViewHolder(holder, i)

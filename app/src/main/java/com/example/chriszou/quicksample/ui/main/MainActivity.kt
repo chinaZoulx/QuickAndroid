@@ -9,8 +9,8 @@ import com.example.chriszou.quicksample.ui.main.mycenter.MyCenterFragment
 import com.example.chriszou.quicksample.ui.mycenter.DiscoverFragment
 import com.tencent.bugly.beta.Beta
 import kotlinx.android.synthetic.main.activity_main.*
+import org.quick.component.Constant
 import org.quick.component.QuickBroadcast
-import org.quick.library.config.QuickConfigConstant
 import org.quick.library.service.DownloadService
 
 class MainActivity : org.quick.library.b.BaseActivity() {
@@ -21,13 +21,16 @@ class MainActivity : org.quick.library.b.BaseActivity() {
         QuickBroadcast.addBroadcastListener(this,{action, intent ->
             when (Beta.getUpgradeInfo().upgradeType) {
             //强制
-                2 -> isOkDialog.alertIsOkDialog(String.format("发现新版本%s", Beta.getUpgradeInfo().versionName), Beta.getUpgradeInfo().newFeature, "", "马上更新", { _, isRight -> if (isRight) DownloadService.startAction(this@MainActivity, DownloadService.DownloadModel(getString(R.string.app_name) + "新版下载", Beta.getUpgradeInfo().apkUrl, 11, R.mipmap.ic_launcher)) })
+                2 -> isOkDialog.setTitle(String.format("发现新版本%s", Beta.getUpgradeInfo().versionName)).setContent(Beta.getUpgradeInfo().newFeature).setBtnRight("马上更新").show { _, isRight -> if (isRight) DownloadService.startAction(this@MainActivity, DownloadService.DownloadModel(getString(R.string.app_name) + "新版下载", Beta.getUpgradeInfo().apkUrl, 11, R.mipmap.ic_launcher)) }
+
             //建议
-                else -> isOkDialog.alertIsOkDialog(String.format("发现新版本%s", Beta.getUpgradeInfo().versionName), Beta.getUpgradeInfo().newFeature, "暂不更新", "马上更新", { _, isRight -> if (isRight) DownloadService.startAction(this@MainActivity, DownloadService.DownloadModel(getString(R.string.app_name) + "新版下载", Beta.getUpgradeInfo().apkUrl, 11, R.mipmap.ic_launcher)) })
+                else -> isOkDialog.setTitle(String.format("发现新版本%s", Beta.getUpgradeInfo().versionName)).setContent(Beta.getUpgradeInfo().newFeature).setBtnLeft("暂不更新").setBtnRight("马上更新").show { _, isRight -> if (isRight) DownloadService.startAction(this@MainActivity, DownloadService.DownloadModel(getString(R.string.app_name) + "新版下载", Beta.getUpgradeInfo().apkUrl, 11, R.mipmap.ic_launcher)) }
+
 //            //手工
 //                3 -> isOkDialog.alertIsOkDialog(String.format("发现新版本%s", Beta.getUpgradeInfo().versionName), Beta.getUpgradeInfo().newFeature, "暂不更新", "马上更新", { view, isRight -> Beta.startDownload()})
             }
-        },QuickConfigConstant.APP_UPGRADE)
+            true
+        }, Constant.APP_UPGRADE)
 
         setBackInvalid()
     }
@@ -59,7 +62,7 @@ class MainActivity : org.quick.library.b.BaseActivity() {
     override fun onBackPressed() {
         if (isExit) {
             super.onBackPressed()
-            org.quick.library.b.application.ExitApplication.getInstance().exit()
+            org.quick.library.b.application.ExitApplication.Companion.instance.exit()
         } else {
             showToast("再按一次退出程序")
             isExit = true

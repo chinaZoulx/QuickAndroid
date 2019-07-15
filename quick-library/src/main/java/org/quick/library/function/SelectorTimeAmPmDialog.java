@@ -170,8 +170,8 @@ public class SelectorTimeAmPmDialog {
             }
             PMMinutes.add(PMMinuteStr);
         }
-//        PMMinutes.add("00");
-//        PMMinutes.add("30");
+//        PMMinutes.addData("00");
+//        PMMinutes.addData("30");
         if (TextUtils.isEmpty(PMMinuteStr))
             PMMinuteStr = PMMinutes.get(0);
     }

@@ -2,8 +2,6 @@ package org.quick.library.widgets;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -13,13 +11,17 @@ import android.view.View.OnFocusChangeListener;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
-
-import org.quick.library.R;
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
 import org.quick.component.utils.FormatUtils;
+import org.quick.library.R;
+
+import java.util.Objects;
 
 
-public class EditTextClear extends android.support.v7.widget.AppCompatEditText implements
+public class EditTextClear extends androidx.appcompat.widget.AppCompatEditText implements
         OnFocusChangeListener, TextWatcher {
+    private boolean isVisible = true;
     private Drawable mClearDrawable;
 
     public EditTextClear(Context context) {
@@ -36,7 +38,7 @@ public class EditTextClear extends android.support.v7.widget.AppCompatEditText i
     }
 
     private void init() {
-        setPadding(getPaddingLeft(), getPaddingTop(), (int) FormatUtils.INSTANCE.formatDip2Px(15), getPaddingBottom());
+        setPadding(getPaddingLeft(), getPaddingTop(), (int) FormatUtils.INSTANCE.dip2px(15), getPaddingBottom());
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
             mClearDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_close_gray_24dp);
@@ -69,24 +71,29 @@ public class EditTextClear extends android.support.v7.widget.AppCompatEditText i
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (hasFocus) {
-            setClearIconVisible(getText().length() > 0);
+            setClearIconVisible(this.isVisible && getText().length() > 0);
         } else {
             setClearIconVisible(false);
         }
     }
 
-    public String getTextStr(){
-        return super.getText().toString();
+    public String getTextStr() {
+        return Objects.requireNonNull(super.getText()).toString().replaceAll(" ", "").replaceAll(",", "");
     }
-    protected void setClearIconVisible(boolean visible) {
+
+    public void setVisibleRightIcon(boolean isVisible) {
+        this.isVisible = isVisible;
+        setClearIconVisible(isVisible);
+    }
+
+    public void setClearIconVisible(boolean visible) {
         Drawable right = visible ? mClearDrawable : null;
         setCompoundDrawables(getCompoundDrawables()[0], getCompoundDrawables()[1], right, getCompoundDrawables()[3]);
     }
 
-
     @Override
     public void onTextChanged(CharSequence s, int start, int count, int after) {
-        setClearIconVisible(s.length() > 0);
+        setClearIconVisible(this.isVisible && s.length() > 0);
     }
 
     @Override

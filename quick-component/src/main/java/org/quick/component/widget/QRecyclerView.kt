@@ -7,22 +7,19 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.annotation.Size
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v4.widget.TextViewCompat
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
+import androidx.annotation.Size
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import org.quick.component.QuickAdapter
 import org.quick.component.QuickAsync
 import org.quick.component.R
@@ -31,7 +28,7 @@ import org.quick.component.utils.FormatUtils
 /**
  * RecyclerView与SwipeRefreshLayout结合的刷新控件
  */
-open class QRecyclerView : SwipeRefreshLayout {
+open class QRecyclerView : androidx.swiperefreshlayout.widget.SwipeRefreshLayout {
 
     enum class TYPE(var value: Int) {
         TYPE_REFRESH("TYPE_REFRESH".hashCode())
@@ -46,11 +43,16 @@ open class QRecyclerView : SwipeRefreshLayout {
     private var isLoading = false/*是否正在加载*/
     private var mOnRefreshListener: OnRefreshListener? = null
 
-    var isRefreshEnabled = false/*是否上拉刷新*/
+    /*是否上拉刷新*/
+    var isRefreshEnabled = false
+        set(value) {
+            field = value
+            isEnabled = value
+        }
     var isLoadMoreEnabled = false/*是否上拉加载*/
     var isNoMore = false/*是否没有更多*/
 
-    var mAdapter: QuickAdapter<*, *>? = null
+    var mAdapter: QuickAdapter<*>? = null
         set(adapter) {
             field = adapter
             mRecyclerView.adapter = adapter
@@ -66,7 +68,7 @@ open class QRecyclerView : SwipeRefreshLayout {
     }
 
     private fun init() {
-        mRecyclerView = RecyclerView(context)
+        mRecyclerView = androidx.recyclerview.widget.RecyclerView(context)
         mRecyclerView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         addView(mRecyclerView)
         mLoadMoreView = LayoutInflater.from(context).inflate(R.layout.app_loading_more_view, null)
@@ -76,8 +78,8 @@ open class QRecyclerView : SwipeRefreshLayout {
     }
 
     private fun setupListener() {
-        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, state: Int) {
+        mRecyclerView.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: androidx.recyclerview.widget.RecyclerView, state: Int) {
                 checkIsLoading()
             }
         })
@@ -99,12 +101,16 @@ open class QRecyclerView : SwipeRefreshLayout {
 
     private fun setupAttr(ta: TypedArray) {
         loadMoreAnimator.duration = ta.getInteger(R.styleable.QRecyclerView_loadDuration, 700).toLong()
-        mLoadMoreView.findViewById<TextView>(R.id.loadTv).text = if (TextUtils.isEmpty(ta.getString(R.styleable.QRecyclerView_loadTxt))) context.getString(R.string.loading) else ta.getString(R.styleable.QRecyclerView_loadTxt)
+        mLoadMoreView.findViewById<TextView>(R.id.loadTv).text =
+                if (TextUtils.isEmpty(ta.getString(R.styleable.QRecyclerView_loadTxt))) context.getString(R.string.loading) else ta.getString(
+                    R.styleable.QRecyclerView_loadTxt
+                )
 
         if (ta.getDrawable(R.styleable.QRecyclerView_divider) != null) {
             val drawable = ta.getDrawable(R.styleable.QRecyclerView_divider)
-            val padding = ta.getDimension(R.styleable.QRecyclerView_dividerPadding, FormatUtils.formatPx2Dip(40f))
-            val defaultSize = ta.getDimension(R.styleable.QRecyclerView_dividerSizeDefault, FormatUtils.formatPx2Dip(1f))
+            val padding = ta.getDimension(R.styleable.QRecyclerView_dividerPadding, FormatUtils.px2dip(40f))
+            val defaultSize =
+                ta.getDimension(R.styleable.QRecyclerView_dividerSizeDefault, FormatUtils.px2dip(1f))
             mRecyclerView.addItemDecoration(DividerItemDecoration(drawable, padding, defaultSize.toInt()))
         }
     }
@@ -116,7 +122,7 @@ open class QRecyclerView : SwipeRefreshLayout {
         mOnRefreshListener == null -> false/*没有监听*/
         isLoading -> false/*正在加载*/
         isRefreshing -> false/*正在刷新*/
-        mRecyclerView.layoutManager != null && mRecyclerView.layoutManager!!.childCount < 0 -> false/*没有数据*/
+        mRecyclerView.layoutManager!!.childCount < 0 -> false/*没有数据*/
         else -> true
     }
 
@@ -135,7 +141,7 @@ open class QRecyclerView : SwipeRefreshLayout {
                     else -> 0
                 }
 
-                if (lastVisibleItemPosition >= layoutManager.itemCount - 1 && layoutManager.itemCount >= layoutManager.childCount)
+                if (layoutManager.itemCount > 3 && lastVisibleItemPosition >= layoutManager.itemCount - 1 && layoutManager.itemCount >= layoutManager.childCount)
                     startLoadMore()
             }
         }
@@ -160,7 +166,11 @@ open class QRecyclerView : SwipeRefreshLayout {
         return super.dispatchTouchEvent(ev)
     }
 
-    fun setRefreshListener(isRefreshEnabled: Boolean, isLoadMoreEnabled: Boolean, onRefreshListener: OnRefreshListener) {
+    fun setRefreshListener(
+        isRefreshEnabled: Boolean,
+        isLoadMoreEnabled: Boolean,
+        onRefreshListener: OnRefreshListener
+    ) {
         this.isRefreshEnabled = isRefreshEnabled
         isEnabled = isRefreshEnabled
         this.isLoadMoreEnabled = isLoadMoreEnabled
@@ -182,6 +192,7 @@ open class QRecyclerView : SwipeRefreshLayout {
 
     fun refreshComplete() {
         isRefreshing = false
+        loadMoreComplete()
     }
 
     fun startLoadMore() {
@@ -199,13 +210,16 @@ open class QRecyclerView : SwipeRefreshLayout {
      * 上拉加载完成
      */
     fun loadMoreComplete() {
-        loadMoreAnimator.cancel()
-        mAdapter?.mFooterViews?.remove(Int.MAX_VALUE)
-        mAdapter?.notifyDataSetChanged()
-        QuickAsync.asyncDelay({ isLoading = false }, 1500)
+        if (mAdapter != null && mAdapter!!.mFooterViews.get(Int.MAX_VALUE) != null) {
+            loadMoreAnimator.cancel()
+            val endPosition = mAdapter!!.itemCount
+            mAdapter?.mFooterViews?.remove(Int.MAX_VALUE)
+            mAdapter?.notifyItemRangeChanged(endPosition-1,mAdapter!!.itemCount)
+        }
+        QuickAsync.asyncDelay({ isLoading = false }, 1500)/*延迟生效，期间不会触发刷新与加载*/
     }
 
-    fun setAdapter(adapter: QuickAdapter<*, *>) {
+    fun setAdapter(adapter: QuickAdapter<*>) {
         mAdapter = adapter
     }
 
@@ -213,7 +227,8 @@ open class QRecyclerView : SwipeRefreshLayout {
         mRecyclerView.layoutManager = layout
     }
 
-    fun <T : RecyclerView.LayoutManager> getLayoutManager() = mRecyclerView.layoutManager as T?
+    fun <T : RecyclerView.LayoutManager> getLayoutManager() =
+        mRecyclerView.layoutManager as T?
 
     fun <T> getAdapter(): T? = mAdapter as T?
 
@@ -226,19 +241,21 @@ open class QRecyclerView : SwipeRefreshLayout {
     fun notifyItemRangeChanged(positionStart: Int, positionEnd: Int) {
         if (mAdapter != null) {
             mAdapter?.notifyItemRangeChanged(
-                    if (mAdapter!!.isHeaderView(positionStart)) mAdapter!!.mHeaderViews.size() else positionStart,
-                    if (mAdapter!!.isFooterView(positionEnd)) mAdapter!!.itemCount - 1 else positionEnd
+                if (mAdapter!!.isHeaderView(positionStart)) mAdapter!!.mHeaderViews.size() else positionStart,
+                if (mAdapter!!.isFooterView(positionEnd)) mAdapter!!.itemCount - 1 else positionEnd
             )
         }
     }
 
     fun notifyItemChanged(position: Int) {
         if (mAdapter != null)
-            mAdapter?.notifyItemChanged(when {
-                mAdapter!!.isHeaderView(position) -> mAdapter!!.mHeaderViews.size()
-                mAdapter!!.isFooterView(position) -> mAdapter!!.itemCount - 1
-                else -> position
-            })
+            mAdapter?.notifyItemChanged(
+                when {
+                    mAdapter!!.isHeaderView(position) -> mAdapter!!.mHeaderViews.size()
+                    mAdapter!!.isFooterView(position) -> mAdapter!!.itemCount - 1
+                    else -> position
+                }
+            )
     }
 
 
@@ -373,43 +390,51 @@ open class QRecyclerView : SwipeRefreshLayout {
      * @param drawable 分割线样式
      * @param padding 左右或者上下边距，默认分割线与item同等宽度或者高度
      */
-    class DividerItemDecoration(var drawable: Drawable, var padding: Float = -1f, var defaultSize: Int = 1) : RecyclerView.ItemDecoration() {
+    class DividerItemDecoration(var drawable: Drawable, var padding: Float = -1f, var defaultSize: Int = 1) :
+        androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
 
         /**
          * 获取分割线的尺寸，也就是每个Item偏移多少
          */
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-            if (parent.layoutManager != null) {
-
-                if (parent.layoutManager!!.canScrollVertically()) {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: androidx.recyclerview.widget.RecyclerView,
+            state: androidx.recyclerview.widget.RecyclerView.State
+        ) {
+            if (parent.layoutManager!!.canScrollVertically()) {
 //                    when{
 //                        parent.layoutManager is GridLayoutManager->(parent.layoutManager as StaggeredGridLayoutManager).spanCount
 //                    }
-                    outRect.set(0, 0, 0, if (drawable.intrinsicHeight != -1) drawable.intrinsicHeight else defaultSize)
-                } else outRect.set(0, 0, if (drawable.intrinsicWidth != -1) drawable.intrinsicWidth else defaultSize, 0)
-            } else super.getItemOffsets(outRect, view, parent, state)
+                outRect.set(0, 0, 0, if (drawable.intrinsicHeight != -1) drawable.intrinsicHeight else defaultSize)
+            } else outRect.set(0, 0, if (drawable.intrinsicWidth != -1) drawable.intrinsicWidth else defaultSize, 0)
         }
 
-        override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-            if (parent.layoutManager != null) {
-                if (parent.layoutManager!!.canScrollVertically()) drawableVertically(c, parent)
-                else drawableHorizontally(c, parent)
-            }
+        override fun onDraw(
+            c: Canvas,
+            parent: androidx.recyclerview.widget.RecyclerView,
+            state: androidx.recyclerview.widget.RecyclerView.State
+        ) {
+            if (parent.layoutManager!!.canScrollVertically()) drawableVertically(c, parent)
+            else drawableHorizontally(c, parent)
         }
 
         /**
          * 绘制垂直的
          */
-        private fun drawableVertically(c: Canvas, parent: RecyclerView) {
+        private fun drawableVertically(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView) {
             c.save()
             for (index in 0 until parent.childCount) {
                 val realIndex = parent.getChildAdapterPosition(parent.getChildAt(index))
-                if (realIndex in if (isReverseLayout(parent.layoutManager)) 1 until parent.adapter!!.itemCount else 0 until parent.adapter!!.itemCount - 1) {
+                if (realIndex in if (isReverseLayout(parent.layoutManager!!)) 1 until parent.adapter!!.itemCount else 0 until parent.adapter!!.itemCount - 1) {
                     val bound = Rect()
                     parent.getDecoratedBoundsWithMargins(parent.getChildAt(index), bound)
-                    val left: Int = if (padding == -1f) parent.getChildAt(index).left else Math.round(parent.left + padding)
-                    val right: Int = if (padding == -1f) parent.getChildAt(index).right else Math.round(parent.right - padding)
-                    val top = bound.bottom - if (drawable.intrinsicHeight != -1) drawable.intrinsicHeight else defaultSize
+                    val left: Int =
+                        if (padding == -1f) parent.getChildAt(index).left else Math.round(parent.left + padding)
+                    val right: Int =
+                        if (padding == -1f) parent.getChildAt(index).right else Math.round(parent.right - padding)
+                    val top =
+                        bound.bottom - if (drawable.intrinsicHeight != -1) drawable.intrinsicHeight else defaultSize
                     val bottom = bound.bottom
                     drawable.setBounds(left, top, right, bottom)
                     drawable.draw(c)
@@ -421,17 +446,20 @@ open class QRecyclerView : SwipeRefreshLayout {
         /**
          * 绘制水平的
          */
-        private fun drawableHorizontally(c: Canvas, parent: RecyclerView) {
+        private fun drawableHorizontally(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView) {
             c.save()
             for (index in 0 until parent.childCount) {
                 val realIndex = parent.getChildAdapterPosition(parent.getChildAt(index))
-                if (realIndex in if (isReverseLayout(parent.layoutManager)) 1 until parent.adapter!!.itemCount else 0 until parent.adapter!!.itemCount - 1) {
+                if (realIndex in if (isReverseLayout(parent.layoutManager!!)) 1 until parent.adapter!!.itemCount else 0 until parent.adapter!!.itemCount - 1) {
                     val bound = Rect()
                     parent.getDecoratedBoundsWithMargins(parent.getChildAt(index), bound)
-                    val left: Int = bound.right - if (drawable.intrinsicWidth != -1) drawable.intrinsicWidth else defaultSize
+                    val left: Int =
+                        bound.right - if (drawable.intrinsicWidth != -1) drawable.intrinsicWidth else defaultSize
                     val right: Int = bound.right
-                    val top: Int = if (padding == -1f) parent.getChildAt(index).top else Math.round(parent.top + padding)
-                    val bottom: Int = if (padding == -1f) parent.getChildAt(index).bottom else Math.round(parent.bottom - padding)
+                    val top: Int =
+                        if (padding == -1f) parent.getChildAt(index).top else Math.round(parent.top + padding)
+                    val bottom: Int =
+                        if (padding == -1f) parent.getChildAt(index).bottom else Math.round(parent.bottom - padding)
                     drawable.setBounds(left, top, right, bottom)
                     drawable.draw(c)
                 }
@@ -444,8 +472,9 @@ open class QRecyclerView : SwipeRefreshLayout {
         /**
          * 是否翻转布局
          */
-        fun isReverseLayout(layoutManager: RecyclerView.LayoutManager?): Boolean = (layoutManager as? StaggeredGridLayoutManager)?.reverseLayout
-                ?: (layoutManager as LinearLayoutManager).reverseLayout
+        fun isReverseLayout(layoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager): Boolean =
+            (layoutManager as? androidx.recyclerview.widget.StaggeredGridLayoutManager)?.reverseLayout
+                ?: (layoutManager as androidx.recyclerview.widget.LinearLayoutManager).reverseLayout
     }
 
     interface OnRefreshListener {

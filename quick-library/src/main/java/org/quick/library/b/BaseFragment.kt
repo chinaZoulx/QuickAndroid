@@ -1,8 +1,9 @@
 package org.quick.library.b
 
 import android.os.Bundle
-import android.support.annotation.LayoutRes
+import androidx.annotation.LayoutRes
 import android.view.View
+import org.quick.component.Constant
 import org.quick.library.b.fragments.ThemeFragment
 
 /**
@@ -12,6 +13,10 @@ import org.quick.library.b.fragments.ThemeFragment
  * @date 2016/6/12
  */
 abstract class BaseFragment : ThemeFragment() {
+
+    companion object {
+        val SUCCESS = Constant.APP_SUCCESS_TAG
+    }
 
     lateinit var isOkDialog: org.quick.library.function.IsOkDialog
     lateinit var loadingDialog: org.quick.library.function.LoadingDialog

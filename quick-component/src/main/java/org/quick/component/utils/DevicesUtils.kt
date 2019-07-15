@@ -13,12 +13,14 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import android.support.v4.content.FileProvider
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.Display
+import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.core.content.FileProvider
 import org.quick.component.QuickAndroid
 import java.io.BufferedReader
 import java.io.File
@@ -234,6 +236,12 @@ object DevicesUtils {
         if (activity.currentFocus != null) {
             inputMethodManager.hideSoftInputFromWindow(activity.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
+    }
+
+    fun openSoftInput(view: EditText, activity: Activity) {
+        view.requestFocus()
+        val inputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED)
     }
 
     /**

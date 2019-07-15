@@ -161,7 +161,7 @@ public class _ScaleViewAttacher implements _IScaleView, View.OnTouchListener, _V
 
 			mGestureDetector = new GestureDetector(imageView.getContext(), new GestureDetector.SimpleOnGestureListener() {
 
-				// forward long click listener
+				// forward long click onAfterListener
 				@Override
 				public void onLongPress(MotionEvent e) {
 					if (null != mLongClickListener) {

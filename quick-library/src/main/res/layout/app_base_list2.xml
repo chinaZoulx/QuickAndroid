@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.quick.library.widgets.CustomCompatSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipeRefreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<org.quick.library.widgets.CompatSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                    android:id="@+id/swipeRefreshLayout"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorTransparent"
+        android:background="@color/transparent"
         android:orientation="vertical">
 
         <FrameLayout
@@ -36,4 +36,4 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></FrameLayout>
     </LinearLayout>
-</org.quick.library.widgets.CustomCompatSwipeRefreshLayout>
+</org.quick.library.widgets.CompatSwipeRefreshLayout>

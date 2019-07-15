@@ -4,18 +4,15 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
-import android.support.annotation.NonNull
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.util.SparseArray
 import android.view.View
 import android.widget.*
+import androidx.annotation.*
 import org.quick.component.callback.OnClickListener2
-import org.quick.component.utils.ImageUtils
+import org.quick.component.img.ImageManager
 
-open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+open class QuickViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
     private val mViews: SparseArray<View> by lazy { return@lazy SparseArray<View>() }
 
@@ -33,12 +30,18 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView = getView<TextView>(id)
         textView?.text = content
         if (onClickListener != null) {
-            textView?.setOnClickListener (object : OnClickListener2() {
+            textView?.setOnClickListener(object : OnClickListener2() {
                 override fun onClick2(view: View) {
                     onClickListener.invoke(view, this@QuickViewHolder)
                 }
             })
         }
+        return this
+    }
+
+    fun setTextColor(@IdRes id: Int, @ColorInt color: Int): QuickViewHolder {
+        val textView = getView<TextView>(id)
+        textView?.setTextColor(color)
         return this
     }
 
@@ -123,40 +126,45 @@ open class QuickViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private fun setImg(id: Int, isCir: Boolean, radius: Float, url: CharSequence, @DrawableRes imgRes: Int, onClickListener: ((view: View, viewHolder: QuickViewHolder) -> Unit)?): QuickViewHolder {
 
         val img = getView<ImageView>(id)
-        if (TextUtils.isEmpty(url)) {
-            when {
-                isCir -> img?.setImageBitmap(ImageUtils.cropCircle(ImageUtils.decodeSampledBitmapFromResource(itemView.context.resources, imgRes, img.measuredWidth, img.measuredHeight)))
-                radius > 0 -> img?.setImageBitmap(ImageUtils.cropRoundRect(ImageUtils.decodeSampledBitmapFromResource(itemView.context.resources, imgRes, img.measuredWidth, img.measuredHeight), radius))
-                else -> img?.setImageResource(imgRes)
+        if (img != null) {
+            if (TextUtils.isEmpty(url)) {
+                when {
+                    isCir -> ImageManager.loadCircleImage(itemView.context,imgRes,img)//img.setImageBitmap(ImageUtils.cropCircle(ImageUtils.decodeSampledBitmapFromResource(itemView.context.resources, imgRes, img.measuredWidth, img.measuredHeight)))
+                    radius > 0 -> ImageManager.loadRoundImage(itemView.context, imgRes, radius.toInt(), img)//img?.setImageBitmap(ImageUtils.cropRoundRect(ImageUtils.decodeSampledBitmapFromResource(itemView.context.resources, imgRes, img.measuredWidth, img.measuredHeight), radius))
+                    else -> ImageManager.loadImage(itemView.context,imgRes,img)//img.setImageResource(imgRes)
+                }
+            } else {
+                when {
+                    isCir -> bindImgCircle(itemView.context, url.toString(), img)
+                    radius > 0 -> bindImgRoundRect(itemView.context, url.toString(), radius, img)
+                    else -> bindImg(itemView.context, url.toString(), img)
+                }
             }
-        } else {
-            when {
-                isCir -> bindImgCircle(itemView.context, url.toString(), img)
-                radius > 0 -> bindImgRoundRect(itemView.context, url.toString(), radius, img)
-                else -> bindImg(itemView.context, url.toString(), img)
-            }
+            if (onClickListener != null) img?.setOnClickListener(object : OnClickListener2() {
+                override fun onClick2(view: View) {
+                    onClickListener.invoke(view, this@QuickViewHolder)
+                }
+            })
         }
-        if (onClickListener != null) img?.setOnClickListener (object : OnClickListener2() {
-            override fun onClick2(view: View) {
-                onClickListener.invoke(view, this@QuickViewHolder)
-            }
-        })
         return this
     }
 
     open fun bindImgCircle(context: Context, url: String, imageView: ImageView?): QuickViewHolder {
+        if (imageView != null) ImageManager.loadCircleImage(context, url, imageView)
         return this
     }
 
     open fun bindImg(context: Context, url: String, imageView: ImageView?): QuickViewHolder {
+        if (imageView != null) ImageManager.loadImage(context, url, imageView)
         return this
     }
 
     open fun bindImgRoundRect(context: Context, url: String, radius: Float, imageView: ImageView?): QuickViewHolder {
+        if (imageView != null) ImageManager.loadRoundImage(context, url, radius.toInt(), imageView)
         return this
     }
 
-    fun setOnClickListener(onClickListener: (view: View, viewHolder: QuickViewHolder) -> Unit, @IdRes vararg ids: Int): QuickViewHolder {
+    fun setOnClickListener(onClickListener: (view: View, viewHolder: QuickViewHolder) -> Unit, @Size(min=1)@IdRes vararg ids: Int): QuickViewHolder {
         for (id in ids) setOnClickListener(onClickListener, id)
         return this
     }

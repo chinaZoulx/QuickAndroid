@@ -66,9 +66,9 @@ public class SideBarView extends View {
         sideTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
         sideTextPaint.setAntiAlias(true);
         sideTextPaint.setTextSize(sideTextSize);
-        sideTextSpac = (int) FormatUtils.INSTANCE.formatDip2Px(10);
+        sideTextSpac = (int) FormatUtils.INSTANCE.dip2px(10);
 
-        sideTextSize = (int) FormatUtils.INSTANCE.formatDip2Px(10);
+        sideTextSize = (int) FormatUtils.INSTANCE.dip2px(10);
         sideTextColorNormal = Color.GRAY;
         sideTextColorFocus = Color.WHITE;
         sideTextBackGroundRes = R.drawable.shape_sidebar_background;

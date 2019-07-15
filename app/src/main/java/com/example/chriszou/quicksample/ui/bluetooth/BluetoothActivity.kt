@@ -86,13 +86,13 @@ class BluetoothActivity : org.quick.library.b.BaseActivity() {
                             -> {
                                 val writeBuf = msg.obj as ByteArray
                                 val temp = CommonUtils.bytesToHexString(writeBuf)
-                                bluetoothCommandListFragment.getAdapter<BluetoothCommandListFragment.Adapter>()?.add(String.format("发 time:%s content:%s", DateUtils.formatToStr(DateUtils.getCurrentTimeInMillis()), temp))
+                                bluetoothCommandListFragment.getAdapter().addData(String.format("发 time:%s content:%s", DateUtils.toStr(DateUtils.getCurrentTimeInMillis()), temp))
                             }
                             BluetoothChatService.MESSAGE_READ//收到消息
                             -> {
                                 val readBuf = msg.obj as ByteArray
                                 val temp = CommonUtils.bytesToHexString(readBuf)
-                                bluetoothCommandListFragment.getAdapter<BluetoothCommandListFragment.Adapter>()?.add(String.format("收 time:%s content:%s", DateUtils.formatToStr(DateUtils.getCurrentTimeInMillis()), temp))
+                                bluetoothCommandListFragment.getAdapter().addData(String.format("收 time:%s content:%s", DateUtils.toStr(DateUtils.getCurrentTimeInMillis()), temp))
                             }
                             BluetoothChatService.MESSAGE_DEVICE_NAME//连接成功后的名字
                             -> {
@@ -110,14 +110,16 @@ class BluetoothActivity : org.quick.library.b.BaseActivity() {
         }
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_ENABLE_BT//打开蓝牙返回
             -> {
                 if (resultCode == Activity.RESULT_OK) {
                     openBluetooth()
                     showToast("蓝牙已成功打开")
-                } else isOkDialog.alertIsOkDialog("打开蓝牙App才能正常工作", "退出", "马上开启") { _, isRight ->
+                } else isOkDialog.setContent("打开蓝牙App才能正常工作").setBtnLeft("退出").setBtnRight("马上开启").show { _, isRight ->
                     if (isRight) {
                         openBluetooth()
                     } else finish()

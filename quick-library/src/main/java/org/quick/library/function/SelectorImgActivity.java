@@ -9,47 +9,38 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import com.kevin.crop.UCrop;
-
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import org.quick.component.img.GlideConfiguration;
+import org.quick.component.utils.check.CheckUtils;
 import org.quick.library.R;
-import org.quick.library.b.BasePermissionActivity;
-import org.quick.library.config.GlideConfiguration;
+import org.quick.library.b.activities.ThemeActivity;
 import org.quick.library.function.selectorimg.PhotoAlbumActivity;
-import org.quick.library.function.selectorimg.photoandselectorshow.PhotoShowAndSelectorActivity;
 import org.quick.library.function.selectorimg.PhotoWallAdapter;
 import org.quick.library.function.selectorimg.UCropActivity;
+import org.quick.library.function.selectorimg.photoandselectorshow.SelectorAndShowActivity;
 import org.quick.library.m.SystemActionManager;
-import org.quick.component.utils.check.CheckUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.AppSettingsDialog;
-import pub.devrel.easypermissions.EasyPermissions;
-
 
 /**
  * 选择照片页面
  * Created by Chris Zou on 14-10-15.
  */
-public class SelectorImgActivity extends BasePermissionActivity implements PhotoWallAdapter.OnItemClickListener {
+public class SelectorImgActivity extends ThemeActivity implements PhotoWallAdapter.OnItemClickListener {
     public static final String IS_CROP = "isCrop";
     public static final String ALREADY_PATHS = "alreadyPaths";
     public static final String MAX_COUNT = "maxCount";
     public static final String TITLE = "title";
-
-    public static final int RESULT_CODE = 0x1238;
-    public static final int requestPermissionCode = 0x456;
 
     private static final String SAMPLE_CROPPED_IMAGE_NAME = "SampleCropImage.png";
 
@@ -91,6 +82,7 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
     }
 
     /**
+     *
      * @param context
      * @param requestCode
      * @param title
@@ -143,11 +135,10 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
     public void init() {
         isCrop = getIntent().getBooleanExtra(IS_CROP, false);
         imgPathList = new ArrayList<>();
-        mDestinationUri = Uri.fromFile(new File(getCacheDir() + File.separator + GlideConfiguration.GLIDE_CARCH_DIR, SAMPLE_CROPPED_IMAGE_NAME));
+        mDestinationUri = Uri.fromFile(new File(getCacheDir() + File.separator + GlideConfiguration.GLIDE_CATCH_SIZE, SAMPLE_CROPPED_IMAGE_NAME));
         maxCount = getIntent().getIntExtra(MAX_COUNT, 0);
 
-        View function = LayoutInflater.from(this).inflate(R.layout.select_photo_title_right, null);
-        setRightView(function);
+        View function = setRightView(R.layout.select_photo_title_right);
 
         mSelectTv = (TextView) function.findViewById(R.id.selectImgAlbum);
         mSelectTv.setOnClickListener(new View.OnClickListener() {
@@ -306,20 +297,26 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
         code = intent.getIntExtra("code", -1);
         //某个相册
         folderPath = intent.getStringExtra("folderPath");
+
         requestPermission();
     }
 
-    /**
-     * 请求权限
-     */
-    @AfterPermissionGranted(requestPermissionCode)
-    public void requestPermission() {
+    private void requestPermission(){
         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-        if (EasyPermissions.hasPermissions(this, permissions)) {
-            updateView(code, folderPath);
-        } else {
-            EasyPermissions.requestPermissions(SelectorImgActivity.this, "我们需要读写文件与拍照权限才能继续", requestPermissionCode, permissions);
-        }
+        AndPermission.with(this)
+                .runtime()
+                .permission(permissions)
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+                        updateView(code, folderPath);
+                    }
+                }).onDenied(new Action<List<String>>() {
+            @Override
+            public void onAction(List<String> data) {
+                requestPermission();
+            }
+        }).start();
     }
 
     /**
@@ -390,31 +387,9 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("code", paths != null ? 100 : 101);
         intent.putStringArrayListExtra(ALREADY_PATHS, paths);
-        setResult(RESULT_CODE, intent);
+        setResult(RESULT_OK, intent);
         sendBroadcast(new Intent(PhotoAlbumActivity.EXIT));
         finish();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {
-        requestPermission();
-    }
-
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
-
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display activity dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
-        }
     }
 
     @Override
@@ -424,10 +399,9 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
         } else {
             List<String> tempList = (List<String>) imgPathList.clone();
             tempList.remove(0);//去除空的
-            PhotoShowAndSelectorActivity.startAction(this, getIntent().getStringExtra(TITLE), view, tempList, alreadySelectorPaths, maxCount, position - 1, isCrop);
+            SelectorAndShowActivity.startAction(this, getIntent().getStringExtra(TITLE), view, tempList, alreadySelectorPaths, maxCount, position - 1, isCrop);
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -450,7 +424,7 @@ public class SelectorImgActivity extends BasePermissionActivity implements Photo
                 case UCrop.REQUEST_CROP:
                     crop(data);
                     break;
-                case PhotoShowAndSelectorActivity.REQUEST_CODE:
+                case SelectorAndShowActivity.REQUEST_CODE:
                     if (UCropActivity.class.getSimpleName().equalsIgnoreCase(data.getStringExtra("from"))) {
                         crop(data);
                     } else {

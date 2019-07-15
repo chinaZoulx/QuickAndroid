@@ -1,9 +1,8 @@
 package org.quick.library.b
 
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.design.widget.TabLayout
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import com.google.android.material.tabs.TabLayout
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -15,22 +14,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.app_base_list.*
 import org.quick.component.http.HttpService
+import org.quick.component.http.callback.Callback
 import org.quick.component.http.callback.ClassCallback
 
 import org.quick.library.R
-import org.quick.library.config.QuickConfigConstant
+import org.quick.component.Constant
 
-import org.quick.library.mvp.BaseModel
-import org.quick.library.widgets.CustomCompatSwipeRefreshLayout
+import org.quick.library.widgets.CompatSwipeRefreshLayout
 import org.quick.library.widgets.XStickyListHeadersListView
 import org.quick.component.utils.GsonUtils
 import org.quick.component.utils.check.CheckUtils
+import org.quick.library.model.BaseModel
 
 import java.util.ArrayList
 import java.util.HashMap
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter
-import java.io.IOException
 
 /**
  * Created by work on 2017/8/10.
@@ -39,7 +38,7 @@ import java.io.IOException
  * @mail chrisSpringSmell@gmail.com
  */
 
-abstract class QuickListActivity2<M> : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, XStickyListHeadersListView.OnRefreshListener {
+abstract class QuickListActivity2<M> : BaseActivity(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, XStickyListHeadersListView.OnRefreshListener {
 
     private var onRequestListener: QuickListActivity.OnRequestListener? = null
     private var onTabSelectedListener: TabLayout.OnTabSelectedListener? = null
@@ -49,7 +48,7 @@ abstract class QuickListActivity2<M> : BaseActivity(), SwipeRefreshLayout.OnRefr
     var hintErrorTv: TextView? = null
     var refreshBtn: Button? = null
 
-    private lateinit var swipeRefreshLayout: CustomCompatSwipeRefreshLayout
+    private lateinit var swipeRefreshLayout: CompatSwipeRefreshLayout
     private lateinit var headerContainer: FrameLayout
     private lateinit var footerContainer: FrameLayout
     private lateinit var listContainer: FrameLayout
@@ -160,7 +159,7 @@ abstract class QuickListActivity2<M> : BaseActivity(), SwipeRefreshLayout.OnRefr
         footerContainer.addView(view)
     }
 
-    fun onRefreshClick(errorType: QuickListActivity.ErrorType) {
+    open fun onRefreshClick(errorType: QuickListActivity.ErrorType) {
         onRefresh()
     }
 
@@ -185,9 +184,8 @@ abstract class QuickListActivity2<M> : BaseActivity(), SwipeRefreshLayout.OnRefr
         checkNotNull()
         if (!params.containsKey(QuickListActivity.PAGER_NUMBER_KEY))
             params[QuickListActivity.PAGER_NUMBER_KEY] = pageNumber.toString() + ""
-        HttpService.Builder(onResultUrl()).addParams(params).post(object : org.quick.component.http.callback.OnRequestListener<String>() {
-
-            override fun onFailure(e: IOException, isNetworkError: Boolean) {
+        HttpService.Builder(onResultUrl()).addParams(params).post().enqueue(object :Callback<String>(){
+            override fun onFailure(e: Throwable, isNetworkError: Boolean) {
                 dataHas(false, QuickListActivity.ErrorType.SERVICE)
                 onRequestListener?.onError("", isPullRefresh, errorType)
             }
@@ -196,7 +194,7 @@ abstract class QuickListActivity2<M> : BaseActivity(), SwipeRefreshLayout.OnRefr
                 val model = GsonUtils.parseFromJson(value, BaseModel::class.java)
                 val realModel = GsonUtils.parseFromJson(value, ClassCallback.getTClass(this@QuickListActivity2::class.java))
                 if (model != null && realModel != null) {
-                    if (model.code == QuickConfigConstant.APP_SUCCESS_TAG) {//成功了返回
+                    if (model.status == Constant.APP_SUCCESS_TAG) {//成功了返回
                         recyclerView.isNoMore = false
                         dataHas(true)
                         onRequestDataSuccess(realModel as M, isPullRefresh)
@@ -225,6 +223,7 @@ abstract class QuickListActivity2<M> : BaseActivity(), SwipeRefreshLayout.OnRefr
                 onRequestEnd()
             }
         })
+
     }
 
     /**

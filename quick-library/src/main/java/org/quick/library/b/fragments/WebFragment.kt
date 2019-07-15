@@ -133,7 +133,7 @@ open class WebFragment @JvmOverloads constructor(private var baseUrl: String? = 
 
     private fun setError() {
         if (errorView == null) {
-            errorView = layoutInflater.inflate(R.layout.include_no_msg, appContentContainer,false)
+            errorView = layoutInflater.inflate(R.layout.app_include_no_msg, appContentContainer,false)
             appContentContainer.addView(errorView)
             errorView!!.setBackgroundResource(R.color.colorBg)
             getView<View>(R.id.refreshBtn, errorView!!).visibility = View.VISIBLE
@@ -160,11 +160,11 @@ open class WebFragment @JvmOverloads constructor(private var baseUrl: String? = 
 
     private fun downloadApk(apkUrl: String) {
         if (CheckUtils.isWifi()) {
-            isOkDialog.alertIsOkDialog("是否下载应用?", "取消", "下载") { _, isRight ->
+            isOkDialog.setContent("是否下载应用?").setBtnLeft("取消").setBtnRight("下载").show{ _, isRight ->
                 if (isRight) goDownload(apkUrl)
             }
         } else {
-            isOkDialog.alertIsOkDialog("当前并非WIFI网络，下载会消耗您的流量，确定下载？", "取消", "任性下载") { _, isRight ->
+            isOkDialog.setContent("当前并非WIFI网络，下载会消耗您的流量，确定下载？").setBtnLeft("取消").setBtnRight("任性下载").show { _, isRight ->
                 if (isRight) goDownload(apkUrl)
             }
         }

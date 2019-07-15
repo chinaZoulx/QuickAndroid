@@ -12,8 +12,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Environment
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
-import android.util.SparseArray
+import androidx.core.app.NotificationCompat
 import android.view.View
 import android.widget.RemoteViews
 import org.quick.component.QuickToast
@@ -94,12 +93,12 @@ class DownloadService : Service() {
     private fun compat(customLayout: RemoteViews) {
         when (Build.BRAND.toLowerCase()) {
             "meizu", "huawei", "nubia", "oppo" -> {//黑色通知栏
-                customLayout.setTextColor(R.id.titleTv, R.color.colorWhite)
+                customLayout.setTextColor(R.id.titleTv, R.color.white)
                 customLayout.setTextColor(R.id.hintTv, R.color.colorLineDark)
             }
             "xiaomi", "oneplus" -> {//白色通知栏
-                customLayout.setTextColor(R.id.titleTv, R.color.colorBlack)
-                customLayout.setTextColor(R.id.hintTv, R.color.colorGrayDarkDark)
+                customLayout.setTextColor(R.id.titleTv, R.color.black)
+                customLayout.setTextColor(R.id.hintTv, R.color.grayDarkDark)
             }
         }
     }
@@ -111,14 +110,14 @@ class DownloadService : Service() {
         var lastProgress = 0.0
         val fileName = model.apkUrl.substring(model.apkUrl.lastIndexOf(File.separator) + 1, model.apkUrl.length)
 
-        HttpService.Builder(model.apkUrl).tag(model.notificationId.toString()).download(object : OnDownloadListener {
-            override fun onFailure(e: Exception, isNetworkError: Boolean) {
+        HttpService.Builder(model.apkUrl).tag(model.notificationId.toString()).enqueue(object : OnDownloadListener() {
+            override fun onFailure(e: Throwable, isNetworkError: Boolean) {
                 e.printStackTrace()
                 QuickToast.showToastDefault("下载失败")
                 cancel(model)
             }
 
-            override fun onResponse(file: File) {
+            override fun onResponse(file: File?) {
                 model.tempFile = file
                 lastProgress = 0.0
                 val builder = getNotiBuilder(model)
@@ -192,7 +191,7 @@ class DownloadService : Service() {
     }
 
     private fun getHint(total: Long, progress: Double, speed: Double): String {
-        return String.format("%s/%s  %s/s", FormatUtils.formatFlow(progress * 8), FormatUtils.formatFlow(((total * 8).toDouble())), FormatUtils.formatFlow(speed * 8))
+        return String.format("%s/%s  %s/s", FormatUtils.flowUnit(progress * 8), FormatUtils.flowUnit(((total * 8).toDouble())), FormatUtils.flowUnit(speed * 8))
     }
 
     fun installAPK(model: DownloadModel) {

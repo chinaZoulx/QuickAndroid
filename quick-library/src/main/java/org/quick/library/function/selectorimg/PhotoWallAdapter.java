@@ -1,7 +1,3 @@
-/*
- * yidingliu.com Inc. * Copyright (c) 2016 All Rights Reserved.
- */
-
 package org.quick.library.function.selectorimg;
 
 import android.content.Context;
@@ -17,8 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 
+import org.quick.component.img.ImageManager;
 import org.quick.library.R;
-import org.quick.library.m.ImageManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -100,7 +96,7 @@ public class PhotoWallAdapter extends BaseAdapter {
                     selectionMap.put(position, isChecked);
                     if (mOnCheckChangeListener != null) {
                         if (mOnCheckChangeListener.onCheckChange(position, isChecked, imagePathList.get(position)) && isChecked) {
-                            image.setColorFilter(context.getResources().getColor(R.color.colorBlack90));
+                            image.setColorFilter(context.getResources().getColor(R.color.black90));
                             buttonView.setChecked(true);
                             lastPosition = position;
                             lastCheckBox = holder.checkBox;
@@ -110,7 +106,7 @@ public class PhotoWallAdapter extends BaseAdapter {
                         }
                     } else {
                         if (isChecked) {
-                            image.setColorFilter(context.getResources().getColor(R.color.colorBlack90));
+                            image.setColorFilter(context.getResources().getColor(R.color.black90));
                             buttonView.setChecked(true);
                             lastPosition = position;
                             lastCheckBox = holder.checkBox;

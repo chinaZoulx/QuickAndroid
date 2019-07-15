@@ -2,10 +2,10 @@ package com.example.chriszou.quicksample.ui.search
 
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.widget.OrientationHelper
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.appcompat.widget.Toolbar
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -16,10 +16,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.include_filtrate_toolbar.*
 import org.quick.component.QuickAdapter
+import org.quick.component.QuickViewHolder
 import org.quick.library.b.BaseViewHolder
 import org.quick.component.utils.ViewUtils
 
-class InputFiltrateListActivity : org.quick.library.b.QuickListActivity<FiltrateModel>() {
+class InputFiltrateListActivity : org.quick.library.b.QuickListActivity<FiltrateModel,FiltrateModel>() {
+
 
     companion object {
         fun startAction(activity: Activity?, requestCode: Int, title: String) {
@@ -45,7 +47,7 @@ class InputFiltrateListActivity : org.quick.library.b.QuickListActivity<Filtrate
         filtrateTv.setOnClickListener {
             setResult()
         }
-        getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
+        setOnItemClickListener { view, viewHolder, position, itemData ->
 
         }
         onRefresh()
@@ -70,7 +72,7 @@ class InputFiltrateListActivity : org.quick.library.b.QuickListActivity<Filtrate
         }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe { actionModels ->
             refreshComplete()
             if (actionModels.size > 0) {
-                getAdapter<Adapter>()?.setDataList(actionModels)
+                setDataList(actionModels)
                 dataHas(true)
                 dataNoMore(false)
             } else
@@ -83,7 +85,7 @@ class InputFiltrateListActivity : org.quick.library.b.QuickListActivity<Filtrate
             subscriber.onNext(org.quick.library.m.DBManager.limit(org.quick.library.widgets.XStickyListHeadersListView.PAGE_ITEM_COUNT).offset(pageNumber * org.quick.library.widgets.XStickyListHeadersListView.PAGE_ITEM_COUNT).order("id desc").find(FiltrateModel::class.java))
         }.subscribeOn(Schedulers.computation()).observeOn(AndroidSchedulers.mainThread()).subscribe { actionModels ->
             if (actionModels.size > 0) {
-                getAdapter<Adapter>()?.addDataList(actionModels)
+                addDataList(actionModels)
                 pageNumber++
             } else dataNoMore(true)
             loadMoreComplete()
@@ -97,30 +99,32 @@ class InputFiltrateListActivity : org.quick.library.b.QuickListActivity<Filtrate
         get() = false
 
     override fun onResultLayoutManager(): RecyclerView.LayoutManager = StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL)
-    override fun onResultAdapter(): QuickAdapter<*, *> = Adapter()
 
     override fun onResultUrl(): String = ""
 
     override fun onResultParams(params: MutableMap<String, String>) = Unit
 
-    override fun onRequestSuccess(jsonData: FiltrateModel, isPullRefresh: Boolean) = Unit
+    override fun onPullRefreshSuccess(model: FiltrateModel) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
-    class Adapter : org.quick.library.b.BaseAdapter<FiltrateModel>() {
-        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_filtrate
+    override fun onLoadMoreSuccess(model: FiltrateModel) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    override fun onResultItemResId(viewType: Int): Int = R.layout.item_filtrate
 
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: FiltrateModel, viewType: Int) {
-            holder.setText(R.id.filtrateBtn, itemData.filtrateKey)
-        }
+    override fun onBindData(holder: QuickViewHolder, position: Int, itemData: FiltrateModel, viewType: Int) {
+        holder.setText(R.id.filtrateBtn, itemData.filtrateKey)
+    }
 
-        override fun onResultItemMargin(position: Int): Float = 40f
-        override fun onResultItemMarginLeft(position: Int): Float = when {
-            position % 4 == 0 -> 40f
-            else -> 20f
-        }
+    override fun onResultItemMargin(position: Int): Float = 40f
+    override fun onResultItemMarginLeft(position: Int): Float = when {
+        position % 4 == 0 -> 40f
+        else -> 20f
+    }
 
-        override fun onResultItemMarginRight(position: Int): Float = when {
-            (position + 1) % 4 == 0 -> 40f
-            else -> 20f
-        }
+    override fun onResultItemMarginRight(position: Int): Float = when {
+        (position + 1) % 4 == 0 -> 40f
+        else -> 20f
     }
 }

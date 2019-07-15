@@ -8,12 +8,12 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationCompat.VISIBILITY_PRIVATE
-import android.support.v4.content.pm.ShortcutInfoCompat
-import android.support.v4.content.pm.ShortcutManagerCompat
-import android.support.v4.graphics.drawable.IconCompat
+import androidx.annotation.DrawableRes
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.VISIBILITY_PRIVATE
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import android.util.SparseArray
 import org.quick.component.utils.DateUtils
 

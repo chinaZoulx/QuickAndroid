@@ -2,7 +2,6 @@ package org.quick.library.b;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.os.StrictMode;
 import android.widget.Toast;
 
@@ -14,7 +13,7 @@ import com.tencent.bugly.beta.upgrade.UpgradeListener;
 import com.tencent.bugly.beta.upgrade.UpgradeStateListener;
 
 import org.quick.component.QuickBroadcast;
-import org.quick.library.config.QuickConfigConstant;
+import org.quick.component.Constant;
 import org.quick.component.Log2;
 import org.quick.component.QuickToast;
 import org.quick.component.utils.DateUtils;
@@ -51,7 +50,7 @@ public class BaseTinkerApplication extends BaseApplication {
             @Override
             public void onUpgrade(int i, UpgradeInfo upgradeInfo, boolean b, boolean b1) {
                 if (upgradeInfo != null) {
-                    QuickBroadcast.INSTANCE.sendBroadcast(QuickConfigConstant.APP_UPGRADE);
+                    QuickBroadcast.INSTANCE.sendBroadcast(Constant.APP_UPGRADE);
                 }
             }
         };

@@ -147,7 +147,7 @@
             <enum name="vertical" value="1" />
         </attr>
     </declare-styleable>
-    <declare-styleable name="CustomCompatTabLayout">
+    <declare-styleable name="CompatTabLayout">
         <attr name="isDefaultStyle" format="boolean" />
     </declare-styleable>
 
@@ -162,29 +162,29 @@
         <attr name="pbcProgress" format="float" />
     </declare-styleable>
 
-    <declare-styleable name="ProgressBarHorizontal">
-        <attr name="pbhBgSrc" format="reference" />
-        <attr name="pbhBgColorStart" format="color" />
-        <attr name="pbhBgColorEnd" format="color" />
-        <attr name="pbhBgRadius" format="dimension" />
-        <attr name="pbhBgLtRadius" format="dimension" />
-        <attr name="pbhBgLbRadius" format="dimension" />
-        <attr name="pbhBgRbRadius" format="dimension" />
-        <attr name="pbhBgRtRadius" format="dimension" />
+    <!--<declare-styleable name="ProgressBarHorizontal">-->
+        <!--<attr name="pbhBgSrc" format="reference" />-->
+        <!--<attr name="pbhBgColorStart" format="color" />-->
+        <!--<attr name="pbhBgColorEnd" format="color" />-->
+        <!--<attr name="pbhBgRadius" format="dimension" />-->
+        <!--<attr name="pbhBgLtRadius" format="dimension" />-->
+        <!--<attr name="pbhBgLbRadius" format="dimension" />-->
+        <!--<attr name="pbhBgRbRadius" format="dimension" />-->
+        <!--<attr name="pbhBgRtRadius" format="dimension" />-->
 
-        <attr name="pbhCoverSrc" format="reference" />
-        <attr name="pbhCoverColorStart" format="color" />
-        <attr name="pbhCoverColorEnd" format="color" />
-        <attr name="pbhCoverRadius" format="dimension" />
-        <attr name="pbhCoverLtRadius" format="dimension" />
-        <attr name="pbhCoverLbRadius" format="dimension" />
-        <attr name="pbhCoverRbRadius" format="dimension" />
-        <attr name="pbhCoverRtRadius" format="dimension" />
+        <!--<attr name="pbhCoverSrc" format="reference" />-->
+        <!--<attr name="pbhCoverColorStart" format="color" />-->
+        <!--<attr name="pbhCoverColorEnd" format="color" />-->
+        <!--<attr name="pbhCoverRadius" format="dimension" />-->
+        <!--<attr name="pbhCoverLtRadius" format="dimension" />-->
+        <!--<attr name="pbhCoverLbRadius" format="dimension" />-->
+        <!--<attr name="pbhCoverRbRadius" format="dimension" />-->
+        <!--<attr name="pbhCoverRtRadius" format="dimension" />-->
 
-        <attr name="pbhProgress" format="integer" />
-        <attr name="pbhScaleType">
-            <enum name="match_parent" value="0" />
-            <enum name="wrap_content" value="1" />
-        </attr>
-    </declare-styleable>
+        <!--<attr name="pbhProgress" format="integer" />-->
+        <!--<attr name="pbhScaleType">-->
+            <!--<enum name="match_parent" value="0" />-->
+            <!--<enum name="wrap_content" value="1" />-->
+        <!--</attr>-->
+    <!--</declare-styleable>-->
 </resources>

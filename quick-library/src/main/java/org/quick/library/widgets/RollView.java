@@ -9,7 +9,7 @@ import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Paint.Style;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -200,7 +200,7 @@ public class RollView extends View {
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
         // 按照View的高度计算字体大小
-        mMaxTextSize = mViewHeight / 10f;
+        mMaxTextSize = mViewHeight / 8f;
         mMinTextSize = mMaxTextSize / 2.2f;
         isInit = true;
         invalidate();

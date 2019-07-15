@@ -2,7 +2,7 @@ package org.quick.library.function;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -58,15 +58,15 @@ public class LoadingDialog {
         });
     }
 
-    public AlertDialog getDialog() {
+    private AlertDialog getDialog() {
         return mLoadingDialog;
     }
 
     /**
      * 弹出框，不屏蔽返回键，默认：返回键关闭、点击diglog之外不关闭
      */
-    public void alertLoadingDialog() {
-        alertLoadingDialog("加载中");
+    public void show() {
+        show("加载中");
     }
 
     /**
@@ -74,8 +74,8 @@ public class LoadingDialog {
      *
      * @param hint
      */
-    public void alertLoadingDialog(CharSequence hint) {
-        alertLoadingDialog(true, hint);
+    public void show(CharSequence hint) {
+        show(true, hint);
     }
 
     /**
@@ -83,8 +83,8 @@ public class LoadingDialog {
      *
      * @param isHandle
      */
-    public void alertLoadingDialog(boolean isHandle) {
-        alertLoadingDialog(isHandle, "加载中");
+    public void show(boolean isHandle) {
+        show(isHandle, "加载中");
     }
 
     /**
@@ -93,19 +93,19 @@ public class LoadingDialog {
      * @param isHandle 是否屏蔽返回键
      * @param hint     文字信息
      */
-    public void alertLoadingDialog(boolean isHandle, CharSequence hint) {
+    public void show(boolean isHandle, CharSequence hint) {
         this.isHandle = isHandle;
         if (getDialog() == null) {
             initDialog(context);
         }
         loadingHintTv.setText(hint);
-        if (mLoadingDialog != null && !mLoadingDialog.isShowing() && mLoadingDialog.getContext() != null && !context.isFinishing()) {
+        if (mLoadingDialog != null && !mLoadingDialog.isShowing() && !context.isFinishing()) {
             mLoadingDialog.show();
         }
     }
 
     public void dismiss() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing() && mLoadingDialog.getContext() != null) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
     }

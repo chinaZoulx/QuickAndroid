@@ -3,8 +3,8 @@ package com.example.chriszou.quicksample.ui.main.mycenter
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.BottomSheetDialog
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -20,10 +20,10 @@ import org.quick.library.b.BaseFragment
 import org.quick.library.b.activities.ThemeActivity.Companion.TITLE
 import org.chris.zxing.library.QRCodeParse
 import org.quick.component.*
+import org.quick.component.img.GlideApp
 import org.quick.component.utils.DevicesUtils
 import org.quick.component.utils.FormatUtils
 import org.quick.component.utils.ImageUtils
-import org.quick.library.config.GlideApp
 import org.quick.library.callback.AppBarStateChangeListener
 import java.io.File
 import java.text.DecimalFormat

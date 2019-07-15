@@ -7,11 +7,8 @@ import android.os.Build
 import android.provider.Settings
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.main.MainActivity
-import org.quick.component.QuickPermissions
-
+import com.yanzhenjie.permission.AndPermission
 import org.quick.component.utils.PermissionUtils
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 
 class LauncherActivity : org.quick.library.b.BaseActivity() {
     companion object {
@@ -33,7 +30,6 @@ class LauncherActivity : org.quick.library.b.BaseActivity() {
 
     }
 
-    @AfterPermissionGranted(REQUEST_PERMISSIONS_CODE)
     override fun start() {
         val perms = if (Build.VERSION.SDK_INT >=0)
             arrayOf(Manifest.permission.CAMERA,
@@ -50,7 +46,26 @@ class LauncherActivity : org.quick.library.b.BaseActivity() {
                 Manifest.permission.BLUETOOTH_ADMIN,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION)
-        if (EasyPermissions.hasPermissions(this, *perms)) launcher() else EasyPermissions.requestPermissions(this, "App需要请求一些权限后，才能正常工作", REQUEST_PERMISSIONS_CODE, *perms)
+        AndPermission.with(this).runtime().permission(perms).onDenied {
+            var permissions = ""
+            for (index in 0 until it.size) {
+                permissions += PermissionUtils.getPermissionChineseName(it[index]) + ";"
+            }
+            isOkDialog.setBlockBack(true)
+                    .setTitle("请开启权限")
+                    .setContent(String.format("%s", permissions.substring(0, permissions.length - 1)))
+                    .setBtnLeft("退出APP")
+                    .setBtnRight("马上设置")
+                    .show { _, isRight ->
+                        if (isRight)
+                            startActivityForResult(
+                                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                            .setData(Uri.fromParts("package", packageName, null)), APP_SETTINGS_RC)
+                        else
+                            finish()
+                    }
+        }.onGranted { launcher() }
+                .start()
     }
 
     private fun launcher() {
@@ -61,21 +76,5 @@ class LauncherActivity : org.quick.library.b.BaseActivity() {
             else -> startAction(this, MainActivity::class.java, getString(R.string.app_name))
         }
         finish()
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            var permissions = ""
-            for (index in 0 until perms.size) {
-                permissions += PermissionUtils.getPermissionChineseName(perms[index]) + ";"
-            }
-            isOkDialog.alertIsOkDialog(false, "请开启权限", String.format("%s", permissions.substring(0, permissions.length - 1)), "退出APP", "马上设置", { _, isRight -> if (isRight) startActivityForResult(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.fromParts("package", packageName, null)), APP_SETTINGS_RC) else finish() })
-        } else super.onPermissionsDenied(requestCode, perms)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == APP_SETTINGS_RC) {
-            start()
-        }
     }
 }

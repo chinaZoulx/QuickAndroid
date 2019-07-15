@@ -40,8 +40,8 @@ class SemicircleBottomView @JvmOverloads constructor(context: Context, attrs: At
         endColor = ta.getColor(R.styleable.SemicircleBottomView_svEndColor, Color.BLACK)
         paddingHeight = ta.getDimension(R.styleable.SemicircleBottomView_svPaddingHeight, 0.0f)
         isShadow = ta.getBoolean(R.styleable.SemicircleBottomView_svIsShadow, true)
-        shadowDistance = ta.getDimension(R.styleable.SemicircleBottomView_svShadowDistance, FormatUtils.formatDip2Px(10f))
-        shadowRadious = ta.getDimension(R.styleable.SemicircleBottomView_svShadowRadius, FormatUtils.formatDip2Px(2f))
+        shadowDistance = ta.getDimension(R.styleable.SemicircleBottomView_svShadowDistance, FormatUtils.dip2px(10f))
+        shadowRadious = ta.getDimension(R.styleable.SemicircleBottomView_svShadowRadius, FormatUtils.dip2px(2f))
         ta.recycle()
     }
 

@@ -1,11 +1,13 @@
 package org.quick.component
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.Size
 import android.util.Log
 import android.util.SparseArray
+import androidx.annotation.Size
+import org.quick.component.utils.SystemActionManager
 import java.io.Serializable
 
 /**
@@ -19,18 +21,24 @@ object QuickActivity {
 
     private val requestParamsList = SparseArray<((resultCode: Int, data: Intent?) -> Unit)>()
 
-    private fun startActivity(builder: Builder, onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)? = null) {
+    private fun startActivity(
+        builder: Builder,
+        onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)? = null
+    ) {
         if (onActivityResultListener == null)
             builder.activity?.startActivity(builder.build())
-        else {
+        else if (builder.build().component != null) {
             val requestCode = createRequestCode(builder.build().component.className)
             requestParamsList.put(requestCode, onActivityResultListener)/*这里是以目的地存储的*/
-            builder.activity?.startActivityForResult(builder.build(), requestCode)
+            if (builder.activity is Activity)
+                (builder.activity as Activity).startActivityForResult(builder.build(), requestCode)
+            else
+                builder.activity?.startActivity(builder.build())
         }
     }
 
-    fun createRequestCode(className: String): Int {
-        val hasCodeStr = className.hashCode().toString()
+    fun createRequestCode(classPath: String): Int {
+        val hasCodeStr = classPath.hashCode().toString()
         var tempCode = ""
         for (index in hasCodeStr.length - 1 downTo 0)
             if (index % 2 != 0)
@@ -43,16 +51,57 @@ object QuickActivity {
         requestParamsList.get(requestCode)?.invoke(resultCode, data)
     }
 
+    fun bind(classPath: String, onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)): Int {
+        val requestCode = createRequestCode(classPath)
+        requestParamsList.put(requestCode, onActivityResultListener)/*这里是以目的地存储的*/
+        return requestCode
+    }
+
     fun remove(activity: Activity?) {
         if (activity == null) return
-        requestParamsList.remove(createRequestCode(String.format("%s.%s", activity.packageName, activity.localClassName)))
+        requestParamsList.remove(
+            createRequestCode(
+                String.format(
+                    "%s.%s",
+                    activity.packageName,
+                    activity.localClassName
+                )
+            )
+        )
     }
 
     fun resetInternal() {
         requestParamsList.clear()
     }
 
-    class Builder(var activity: Activity?, clazz: Class<*>) {
+    /**
+     * 本地图库选择图片
+     */
+    fun selectImgWithLocalhost(
+        activity: Activity?,
+        onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)
+    ) {
+        if (activity != null) {
+            val requestCode = createRequestCode(activity.javaClass.canonicalName)
+            requestParamsList.put(requestCode, onActivityResultListener)/*这里是以目的地存储的*/
+            val intent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+            activity.startActivityForResult(intent, requestCode)
+        }
+    }
+
+    fun selectVideoWithLocalhost(
+        activity: Activity?,
+        onActivityResultListener: ((resultCode: Int, data: Intent?) -> Unit)
+    ) {
+        if (activity != null) {
+            val requestCode = createRequestCode(activity.javaClass.canonicalName)
+            requestParamsList.put(requestCode, onActivityResultListener)/*这里是以目的地存储的*/
+            activity.startActivityForResult(SystemActionManager.actionVideo(), requestCode)
+        }
+    }
+
+    class Builder(var activity: Context?, clazz: Class<*>) {
+
         var intent: Intent = Intent(activity, clazz)
 
         fun addParams(data: Intent): Builder {
@@ -120,7 +169,7 @@ object QuickActivity {
             return this
         }
 
-        fun addParams(key: String, value: Serializable): Builder {
+        fun addParams(key: String, value: Serializable?): Builder {
             intent.putExtra(key, value)
             return this
         }

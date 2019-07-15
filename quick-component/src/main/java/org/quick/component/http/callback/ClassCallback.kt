@@ -61,5 +61,4 @@ abstract class ClassCallback<T> {
             return clzArray
         }
     }
-
 }

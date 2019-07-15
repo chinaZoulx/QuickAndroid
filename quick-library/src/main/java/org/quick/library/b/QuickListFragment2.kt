@@ -1,36 +1,27 @@
 package org.quick.library.b
 
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.design.widget.TabLayout
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import com.google.android.material.tabs.TabLayout
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
 import kotlinx.android.synthetic.main.app_base_list.*
-
-import org.quick.library.R
-import org.quick.library.config.QuickConfigConstant
-import org.quick.library.mvp.BaseModel
-import org.quick.library.widgets.CustomCompatSwipeRefreshLayout
-import org.quick.library.widgets.XStickyListHeadersListView
+import org.quick.component.http.HttpService
+import org.quick.component.http.callback.Callback
+import org.quick.component.http.callback.ClassCallback
 import org.quick.component.utils.GsonUtils
 import org.quick.component.utils.check.CheckUtils
-import java.util.HashMap
-import org.quick.component.http.HttpService
-import org.quick.component.http.callback.ClassCallback
-import org.quick.component.http.callback.OnRequestListener
-import org.quick.library.function.IsOkDialog
-import org.quick.library.function.LoadingDialog
+import org.quick.library.R
+import org.quick.component.Constant
+import org.quick.library.model.BaseModel
+import org.quick.library.widgets.CompatSwipeRefreshLayout
+import org.quick.library.widgets.XStickyListHeadersListView
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter
-import java.io.IOException
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by work on 2017/8/2.
@@ -40,7 +31,7 @@ import java.util.ArrayList
  * @mail chrisSpringSmell@gmail.com
  */
 
-abstract class QuickListFragment2<M> : BaseFragment(), SwipeRefreshLayout.OnRefreshListener, XStickyListHeadersListView.OnRefreshListener {
+abstract class QuickListFragment2<M> : BaseFragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, XStickyListHeadersListView.OnRefreshListener {
 
     private var onRequestListener: QuickListActivity.OnRequestListener? = null
     private var onTabSelectedListener: TabLayout.OnTabSelectedListener? = null
@@ -50,7 +41,7 @@ abstract class QuickListFragment2<M> : BaseFragment(), SwipeRefreshLayout.OnRefr
     var hintErrorTv: TextView? = null
     var refreshBtn: Button? = null
 
-    private lateinit var swipeRefreshLayout: CustomCompatSwipeRefreshLayout
+    private lateinit var swipeRefreshLayout: CompatSwipeRefreshLayout
     private lateinit var headerContainer: FrameLayout
     private lateinit var footerContainer: FrameLayout
     private lateinit var listContainer: FrameLayout
@@ -186,9 +177,9 @@ abstract class QuickListFragment2<M> : BaseFragment(), SwipeRefreshLayout.OnRefr
         checkNotNull()
         if (!params.containsKey(QuickListActivity.PAGER_NUMBER_KEY))
             params[QuickListActivity.PAGER_NUMBER_KEY] = pageNumber.toString() + ""
-        HttpService.Builder(onResultUrl()).addParams(params).post(object : org.quick.component.http.callback.OnRequestListener<String>() {
+        HttpService.Builder(onResultUrl()).addParams(params).post().enqueue(object : Callback<String>(){
 
-            override fun onFailure(e: IOException, isNetworkError: Boolean) {
+            override fun onFailure(e: Throwable, isNetworkError: Boolean) {
                 dataHas(false, QuickListActivity.ErrorType.SERVICE)
                 onRequestListener?.onError("", isPullRefresh, errorType)
             }
@@ -197,7 +188,7 @@ abstract class QuickListFragment2<M> : BaseFragment(), SwipeRefreshLayout.OnRefr
                 val model = GsonUtils.parseFromJson(value, BaseModel::class.java)
                 val realModel = GsonUtils.parseFromJson(value, ClassCallback.getTClass(this@QuickListFragment2::class.java))
                 if (model != null && realModel != null) {
-                    if (model.code == QuickConfigConstant.APP_SUCCESS_TAG) {//成功了返回
+                    if (model.status == Constant.APP_SUCCESS_TAG) {//成功了返回
                         recyclerView.isNoMore = false
                         dataHas(true)
                         onRequestDataSuccess(realModel as M, isPullRefresh)

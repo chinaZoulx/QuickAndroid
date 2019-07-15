@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         app:tagText="开启任务">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/colorPrimary"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         app:tagText="暂停任务">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_pause_white_24dp"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         app:tagText="重新登陆">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_swap_horiz_white_24dp"
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         app:tagText="重新加载">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_refresh_white_24dp"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         app:tagText="操作日志">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_call_to_action_white_24dp"
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         app:tagText="消费计算">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_edit_white_24dp"

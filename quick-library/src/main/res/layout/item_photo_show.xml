@@ -17,13 +17,13 @@
         android:layout_width="130px"
         android:layout_height="130px"
         android:layout_gravity="center"
-        app:pwBarColor="@color/colorBlueShallow"
+        app:pwBarColor="@color/blueShallow"
         app:pwBarWidth="5dp"
         app:pwCircleColor="@color/colorPrimary"
-        app:pwContourColor="@color/colorBlueShallow"
-        app:pwRimColor="@color/colorTransparent"
+        app:pwContourColor="@color/blueShallow"
+        app:pwRimColor="@color/transparent"
         app:pwRimWidth="5dp"
         app:pwText="0"
-        app:pwTextColor="@color/colorBlueShallow"
+        app:pwTextColor="@color/blueShallow"
         app:pwTextSize="18dp" />
 </FrameLayout>

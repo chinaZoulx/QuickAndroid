@@ -22,7 +22,7 @@ import org.quick.library.R;
  * 圆形ImageView
  * Created by Administrator on 2016/7/28.
  */
-public class ImageViewCircle extends android.support.v7.widget.AppCompatImageView {
+public class ImageViewCircle extends androidx.appcompat.widget.AppCompatImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 

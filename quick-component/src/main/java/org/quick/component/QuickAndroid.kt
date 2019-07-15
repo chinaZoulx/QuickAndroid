@@ -16,7 +16,7 @@ object QuickAndroid {
     /**
      * app的基础名称，用于配置SharedPreferences
      */
-    var appBaseName = QuickConfigConstant.APP_BASE_NAME
+    var appBaseName = Constant.APP_BASE_NAME
     var defenseClickTime = 300L
     var screenWidth = 0
     var screenHeight = 0

@@ -33,8 +33,8 @@ class LoggingInterceptor : Interceptor {
         Log2.d(" ")
 
         return response.newBuilder()
-                .body(ResponseBody.create(HttpService.mediaTypeJson, resultStr))
-                .build()
+            .body(ResponseBody.create(HttpService.mediaTypeJson, resultStr))
+            .build()
     }
 
     companion object {

@@ -1,18 +1,26 @@
 package com.example.chriszou.quicksample.ui.main
 
-import com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment
+import com.example.chriszou.quicksample.R
 import org.quick.component.QuickAdapter
 import org.quick.component.QuickAsync
 import org.quick.component.QuickToast
+import org.quick.component.QuickViewHolder
 import org.quick.library.b.QuickListFragment
 
-class RecyclerListFragment : QuickListFragment<String>() {
+class RecyclerListFragment : QuickListFragment<String,String>() {
+
     override val isPullRefreshEnable: Boolean
         get() = true
     override val isLoadMoreEnable: Boolean
         get() = true
 
-    override fun onResultAdapter(): QuickAdapter<*,*> = DiscoverListFragment.Adapter()
+    override fun onResultItemResId(viewType: Int): Int = R.layout.item_discover_list
+
+    override fun onBindData(holder: QuickViewHolder, position: Int, itemData: String, viewType: Int) {
+        holder.setImg(R.id.contentIv, itemData)
+    }
+
+    override fun onResultItemMargin(position: Int): Float = 40f
 
     override fun onResultUrl(): String = ""
 
@@ -20,8 +28,12 @@ class RecyclerListFragment : QuickListFragment<String>() {
 
     }
 
-    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) {
+    override fun onLoadMoreSuccess(model: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
+    override fun onPullRefreshSuccess(model: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun start() {

@@ -8,10 +8,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.Size
-import android.support.v4.app.ActivityCompat
-import android.view.View
-import org.quick.component.utils.SystemActionManager
+import androidx.annotation.Size
+import androidx.core.app.ActivityCompat
 
 @SuppressLint("StaticFieldLeak")
 object QuickPermissions {
@@ -65,13 +63,13 @@ object QuickPermissions {
         if (context is Activity) {
             when {
                 hasPermissions() -> onRequestPermissionsResultCallback.onPermissionsGranted(permission)
-                permission.any { return@any ActivityCompat.shouldShowRequestPermissionRationale(context, it) } -> {
-                    QuickDialog.Builder(context, R.layout.app_dialog_is_ok).show()
-                            .setOnClickListener({view, viewHolder ->  requestPermission(context, *permission) }, R.id.msgOkBtn)
-                            .setOnClickListener({_,_-> QuickDialog.dismiss() }, R.id.msgCancelBtn)
-                            .setText(R.id.titleTv, context.getString(R.string.permissionTitle))
-                            .setText(R.id.contentTv, getPermissionChineseName(*permission))
-                }
+//                permission.any { return@any ActivityCompat.shouldShowRequestPermissionRationale(context, it) } -> {
+//                    QuickDialog.Builder(context, R.layout.app_dialog_is_ok).show()
+//                            .setOnClickListener({view, viewHolder ->  requestPermission(context, *permission) }, R.id.rightBtn)
+//                            .setOnClickListener({_,_-> QuickDialog.dismiss() }, R.id.leftBtn)
+//                            .setText(R.id.titleTv, context.getString(R.string.permissionTitle))
+//                            .setText(R.id.contentTv, getPermissionChineseName(*permission))
+//                }
                 else -> requestPermission(context, *permission)
             }
         }
@@ -90,13 +88,13 @@ object QuickPermissions {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED)
                     granted.add(perm)
                 else if (context is Activity && ActivityCompat.shouldShowRequestPermissionRationale(context as Activity, permissions[i]))
-                    QuickDialog.Builder(context!!, R.layout.app_dialog_is_ok).show()
-                            .setText(R.id.msgOkBtn, "设置",  {view,viewholder->
-                                SystemActionManager.goAppDetailSettingIntent(context as Activity, requestCode)
-                            })
-                            .setOnClickListener({view,viewHolder-> QuickDialog.dismiss() }, R.id.msgCancelBtn)
-                            .setText(R.id.titleTv, context!!.getString(R.string.permissionTitle))
-                            .setText(R.id.contentTv, getPermissionChineseName(*permissions))
+//                    QuickDialog.Builder(context!!, R.layout.app_dialog_is_ok).show()
+//                            .setText(R.id.rightBtn, "设置",  { view, viewholder->
+//                                SystemActionManager.goAppDetailSettingIntent(context as Activity, requestCode)
+//                            })
+//                            .setOnClickListener({view,viewHolder-> QuickDialog.dismiss() }, R.id.leftBtn)
+//                            .setText(R.id.titleTv, context!!.getString(R.string.permissionTitle))
+//                            .setText(R.id.contentTv, getPermissionChineseName(*permissions))
                 else denied.add(perm)
             }
 

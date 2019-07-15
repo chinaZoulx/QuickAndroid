@@ -25,6 +25,7 @@
 
     <!--常规列表项高度-->
     <dimen name="itemHeight">50dp</dimen>
+    <dimen name="itemHeightBold">70dp</dimen>
     <!--常规列表项高度-->
     <dimen name="itemHeightSmall">40dp</dimen>
     <dimen name="itemHeightSmallSupper">30dp</dimen>
@@ -35,10 +36,12 @@
     <!--与屏幕两边的距离-->
     <dimen name="borderWidth">20dp</dimen>
     <!--与屏幕两边的距离-更大-->
-    <dimen name="borderWidthBig">60px</dimen>
+    <dimen name="borderWidthBig">30dp</dimen>
+    <!--与屏幕两边的距离-更小-->
+    <dimen name="borderWidthSmell">10dp</dimen>
 
     <dimen name="cardViewRadius">5dp</dimen>
-    <dimen name="cardViewElevation">10dp</dimen>
+    <dimen name="cardViewElevation">5dp</dimen>
     <dimen name="cardViewContentPadding">10dp</dimen>
 
     <dimen name="withdrawDepositTitle">24px</dimen>

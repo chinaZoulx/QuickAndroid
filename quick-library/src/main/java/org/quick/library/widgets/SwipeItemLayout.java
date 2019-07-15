@@ -1,8 +1,8 @@
 package org.quick.library.widgets;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -281,7 +281,7 @@ public class SwipeItemLayout extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = ev.getActionMasked();
-        //click main view，但是它处于open状态，所以，不需要点击效果，直接拦截不调用click listener
+        //click main view，但是它处于open状态，所以，不需要点击效果，直接拦截不调用click onAfterListener
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
                 final int x = (int) ev.getX();
@@ -311,7 +311,7 @@ public class SwipeItemLayout extends ViewGroup {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         final int action = ev.getActionMasked();
-        //click main view，但是它处于open状态，所以，不需要点击效果，直接拦截不调用click listener
+        //click main view，但是它处于open状态，所以，不需要点击效果，直接拦截不调用click onAfterListener
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
                 final int x = (int) ev.getX();

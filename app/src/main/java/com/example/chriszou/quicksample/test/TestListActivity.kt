@@ -1,12 +1,13 @@
 package com.example.chriszou.quicksample.test
 
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.Gravity
 import android.widget.Toast
 import org.quick.component.QuickAdapter
 import org.quick.library.b.BaseViewHolder
 import org.quick.component.QuickToast
+import org.quick.component.QuickViewHolder
 
 /**
  * @describe
@@ -14,19 +15,22 @@ import org.quick.component.QuickToast
  * @date 2018/7/4-15:02
  * @email chrisSpringSmell@gmail.com
  */
-class TestListActivity : org.quick.library.b.QuickListActivity<String>() {
+class TestListActivity : org.quick.library.b.QuickListActivity<String,String>() {
+    override fun onResultItemResId(viewType: Int): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onBindData(holder: QuickViewHolder, position: Int, itemData: String, viewType: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
     override val isPullRefreshEnable: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
     override val isLoadMoreEnable: Boolean
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
-    override fun onResultLayoutResId(): Int {
-        return super.onResultLayoutResId()
-    }
-
     override fun start() {
         sendBroadcast(Intent("action"))
-        getAdapter<Adapter>()?.setOnItemClickListener { view, viewHolder, position, itemData ->
+        setOnItemClickListener { view, viewHolder, position, itemData ->
 
         }
 //        getAdapter<Adapter>().setOnClickListener(BaseRecyclerViewAdapter.OnClickListener{ view, holder, position ->
@@ -43,10 +47,7 @@ class TestListActivity : org.quick.library.b.QuickListActivity<String>() {
     }
 
 
-    /*返回适配器*/
-    override fun onResultAdapter(): QuickAdapter<*,*> = Adapter()
-
-    override fun onResultLayoutManager(): RecyclerView.LayoutManager {
+    override fun onResultLayoutManager(): androidx.recyclerview.widget.RecyclerView.LayoutManager {
         return super.onResultLayoutManager()
     }
 
@@ -56,23 +57,11 @@ class TestListActivity : org.quick.library.b.QuickListActivity<String>() {
         params["userName"] = "张三"
     }
 
-    override fun onRequestSuccess(jsonData: String, isPullRefresh: Boolean) {
-        if (isPullRefresh) {//下拉刷新
-
-        } else {//上拉加载
-
-        }
+    override fun onLoadMoreSuccess(model: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    inner class Adapter : org.quick.library.b.BaseAdapter<String>() {
-
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: String, viewType: Int) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun onResultLayoutResId(viewType: Int): Int {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
+    override fun onPullRefreshSuccess(model: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

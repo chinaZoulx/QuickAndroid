@@ -18,7 +18,7 @@
 //    private lateinit var commodityBannerFragment: CommodityBannerFragment
 //    override val isShowTitle: Boolean get() = false
 //
-//    override fun onResultLayoutResId(): Int = R.layout.activity_commodity_detail
+//    override fun onResultItemResId(): Int = R.layout.activity_commodity_detail
 //
 //    override fun onInit() {
 //        commodityBannerFragment = supportFragmentManager.findFragmentById(R.id.commodityBannerFragment) as CommodityBannerFragment
@@ -41,16 +41,16 @@
 //        commodityListFragment.layoutManager = layoutManager
 //        val adapter = CommodityListFragment.Adapter()
 //        val dataList = mutableListOf<Int>()
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
-//        dataList.add(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
+//        dataList.addData(R.drawable.ic_ring)
 //        adapter.setDataList(dataList)
 //        commodityListFragment.adapter = adapter
 //        CenterSnapHelper().attachToRecyclerView(commodityListFragment)

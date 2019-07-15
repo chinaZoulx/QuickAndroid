@@ -2,28 +2,29 @@ package org.quick.library.b
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.Size
-import android.support.design.widget.TabLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.Size
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.app_base_list.*
 import kotlinx.android.synthetic.main.app_include_no_msg.*
+import org.quick.component.Constant
 import org.quick.component.QuickAdapter
+import org.quick.component.QuickViewHolder
 import org.quick.component.callback.OnClickListener2
 import org.quick.component.http.HttpService
+import org.quick.component.http.callback.Callback
 import org.quick.component.http.callback.ClassCallback
 import org.quick.component.utils.GsonUtils
 import org.quick.component.utils.check.CheckUtils
 import org.quick.component.widget.QRecyclerView
 import org.quick.library.R
-import org.quick.library.config.QuickConfigConstant
-import org.quick.library.mvp.BaseModel
-import java.io.IOException
+import org.quick.library.model.BaseModel
 import java.util.*
 
 /**
@@ -31,9 +32,12 @@ import java.util.*
  *
  * @author chris zou
  * @mail chrisSpringSmell@gmail.com
+ *
+ * @param M 数据模型，使用GSON解析JSON
+ * @param MC 实际数据列表item
  */
 
-abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshListener {
+abstract class QuickListActivity<M, MC> : BaseActivity(), QRecyclerView.OnRefreshListener {
     enum class ErrorType(var value: Int = 0) {
         /**
          * 没有数据
@@ -48,6 +52,14 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
          */
         SERVICE(-0x3),
         /**
+         * 未登录
+         */
+        NO_LOGIN(-0x4),
+        /**
+         * 数据异常
+         */
+        DATA(-0x5),
+        /**
          * 其他问题-自定义
          */
         OTHER(-0x3),
@@ -58,13 +70,16 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
         /**
          * 分页关键字
          */
-        const val PAGER_NUMBER_KEY = "pageNumber"
+        const val PAGER_NUMBER_KEY = "page"
+        const val PAGER_COUNT_KEY = "num"
         const val PAGER_FIRST_NUMBER = 1
+        const val PAGER_COUNT = 10
     }
 
     private var onTabSelectedListener: TabLayout.OnTabSelectedListener? = null
     private var isDefaultNoMsgLayout = true
     private var tabs: Array<String>? = null
+    private val adapter = Adapter()
     private val params = HashMap<String, String>()
 
     var pageNumber = 1
@@ -82,7 +97,7 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
         }
 
     private val isPullRefresh: Boolean
-        get() = pageNumber <= 1
+        get() = pageNumber <= 2
 
     abstract val isPullRefreshEnable: Boolean
 
@@ -115,7 +130,7 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
     }
 
     fun setupTab(onTabSelectedListener: TabLayout.OnTabSelectedListener?, @Size(min = 1) vararg tabs: String) {
-        setupTab(onTabSelectedListener, 0, *tabs)
+        setupTab(onTabSelectedListener, -1, *tabs)
     }
 
     /**
@@ -123,10 +138,14 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
      *
      * @param tabs
      */
-    fun setupTab(onTabSelectedListener: TabLayout.OnTabSelectedListener?, selectorPosition: Int, @Size(min = 1) vararg tabs: String): TabLayout {
+    fun setupTab(
+        onTabSelectedListener: TabLayout.OnTabSelectedListener?,
+        selectorPosition: Int, @Size(min = 1) vararg tabs: String
+    ): TabLayout {
+        @Suppress("UNCHECKED_CAST")
         this.tabs = tabs as Array<String>
         tabLayout.visibility = View.VISIBLE
-        tabLayout.removeOnTabSelectedListener(this.onTabSelectedListener!!)
+        if (this.onTabSelectedListener != null) tabLayout.removeOnTabSelectedListener(this.onTabSelectedListener!!)
         if (onTabSelectedListener != null) {
             this.onTabSelectedListener = onTabSelectedListener
             tabLayout.addOnTabSelectedListener(this.onTabSelectedListener!!)
@@ -141,8 +160,8 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
         } else tabs.forEach {
             tabLayout.addTab(tabLayout.newTab().setText(it))
         }
-
-        Objects.requireNonNull<TabLayout.Tab>(tabLayout!!.getTabAt(selectorPosition)).select()
+        if (selectorPosition > 0 && selectorPosition < tabs.size)
+            Objects.requireNonNull<TabLayout.Tab>(tabLayout!!.getTabAt(selectorPosition)).select()
         return tabLayout
     }
 
@@ -176,51 +195,36 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
 
     override fun onRefresh() {
         if (!CheckUtils.isNetWorkAvailable())
-            dataHas(false, ErrorType.NET_WORK)
+            dataHas(false, QuickListActivity.ErrorType.NET_WORK)
         else if (!TextUtils.isEmpty(onResultUrl())) {
-            recyclerView.isRefreshing = true
-            requestData(PAGER_FIRST_NUMBER)
+            pageNumber = QuickListActivity.PAGER_FIRST_NUMBER
+            requestData()
         }
     }
 
     override fun onLoading() {
-        requestData(++pageNumber)
+        if (!TextUtils.isEmpty(onResultUrl()))
+            requestData()
     }
 
-    open fun requestData(pageNumber: Int) {
+    open fun requestData() {
         params.clear()
         onResultParams(params)
-        if (!params.containsKey(PAGER_NUMBER_KEY)) params[PAGER_NUMBER_KEY] = pageNumber.toString()
+        if (!params.containsKey(QuickListActivity.PAGER_NUMBER_KEY))
+            params[QuickListActivity.PAGER_NUMBER_KEY] = pageNumber.toString()
+        if (!params.containsKey(QuickListActivity.PAGER_COUNT_KEY))
+            params[QuickListActivity.PAGER_COUNT_KEY] = QuickListActivity.PAGER_COUNT.toString()
 
-        HttpService.Builder(onResultUrl()).addParams(params).post(object : org.quick.component.http.callback.OnRequestListener<String>() {
+        HttpService.Builder(onResultUrl()).addParams(params).post().enqueue(object : Callback<String>() {
 
-            override fun onFailure(e: IOException, isNetworkError: Boolean) {
+            override fun onFailure(e: Throwable, isNetworkError: Boolean) {
                 dataHas(false, QuickListActivity.ErrorType.SERVICE)
                 onRequestListener?.onError("", isPullRefresh, errorType)
             }
 
             override fun onResponse(value: String?) {
-                val model = GsonUtils.parseFromJson(value, BaseModel::class.java)
-                val realModel = GsonUtils.parseFromJson(value, ClassCallback.getTClass(this@QuickListActivity::class.java))
-                if (model != null && realModel != null) {
-                    if (model.code == QuickConfigConstant.APP_SUCCESS_TAG) {//成功了返回
-                        recyclerView.isNoMore = false
-                        dataHas(true)
-                        onRequestSuccess(realModel as M, isPullRefresh)
-                    } else {
-                        if (isPullRefresh) {//下拉刷新
-                            dataHas(false)
-                            showToast(model.msg)
-                        } else {//上拉加载
-                            recyclerView.isNoMore = true
-                            dataHas(true)
-                        }
-                        onRequestListener?.onError(value!!, isPullRefresh, errorType)
-                    }
-                } else {
-                    onRequestListener?.onError(value!!, isPullRefresh, errorType)
-                    dataHas(false, QuickListActivity.ErrorType.SERVICE)
-                }
+                checkData(value)
+                pageNumber++
             }
 
             override fun onEnd() {
@@ -231,6 +235,58 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
                 onRequestListener?.onEnd()
             }
         })
+    }
+
+    /**
+     * 消息统一处理
+     */
+    private fun checkData(value: String?) {
+        val model = GsonUtils.parseFromJson(value, BaseModel::class.java)
+        if (model != null) {
+            when (model.status) {
+                /*成功*/
+                Constant.APP_SUCCESS_TAG -> {
+                    val realModel =
+                        GsonUtils.parseFromJson(value, ClassCallback.getTClass(this@QuickListActivity::class.java)) as M
+                    if (realModel != null) {
+                        recyclerView.isNoMore = false
+                        dataHas(true)
+                        if (isPullRefresh) onPullRefreshSuccess(realModel) else onLoadMoreSuccess(realModel)
+                    } else {
+                        if (isPullRefresh)
+                            dataHas(false, QuickListActivity.ErrorType.DATA)
+                        else
+                            showToast(getString(R.string.errorDataHint))
+                        onRequestListener?.onError(value!!, isPullRefresh, errorType)
+                    }
+                }
+                /*没有消息*/
+                Constant.APP_ERROR_MSG_N0 -> {
+                    dataHas(false, QuickListActivity.ErrorType.NO_MSG)
+                    showToast(model.msg)
+                    onRequestListener?.onError(value!!, isPullRefresh, errorType)
+                }
+                /*没有更多消息*/
+                Constant.APP_ERROR_MSG_N0_MORE -> {
+                    recyclerView.isNoMore = true
+                    showToast("没有更多消息啦")
+                    onRequestListener?.onError(value!!, isPullRefresh, errorType)
+                }
+                /*未登录*/
+                Constant.APP_ERROR_NO_LOGIN -> {
+                    dataHas(false, QuickListActivity.ErrorType.NO_LOGIN)
+                    onRequestListener?.onError(value!!, isPullRefresh, errorType)
+                }
+                /*其他异常*/
+                else -> {
+                    dataHas(false, QuickListActivity.ErrorType.SERVICE)
+                    onRequestListener?.onError(value!!, isPullRefresh, errorType)
+                }
+            }
+        } else {
+            dataHas(false, QuickListActivity.ErrorType.DATA)
+            onRequestListener?.onError(value!!, isPullRefresh, errorType)
+        }
     }
 
     fun dataNoMore(isNoMore: Boolean) {
@@ -300,18 +356,64 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
     /**
      * 刷新按钮的点击事件
      */
-    fun onRefreshClick(errorType: ErrorType) {
+    open fun onRefreshClick(errorType: QuickListActivity.ErrorType) {
         onRefresh()
     }
 
-    fun <T : BaseAdapter<*>> getAdapter(): T? = recyclerView.getAdapter<BaseAdapter<*>>() as T
 
-    fun setDataList(dataList: MutableList<*>) {
-        getAdapter<BaseAdapter<Any>>()?.setDataList(dataList as MutableList<Any>)
+    fun getAdapter(): Adapter = adapter
+
+    fun setDataList(dataList: MutableList<MC>) {
+        getAdapter().setDataList(dataList)
     }
 
-    fun addDataList(dataList: MutableList<*>) {
-        getAdapter<BaseAdapter<Any>>()?.addDataList(dataList as MutableList<Any>)
+    fun addDataList(dataList: MutableList<MC>) {
+        getAdapter().addDataList(dataList)
+    }
+
+    fun addData(m: MC) {
+        getAdapter().addData(m)
+    }
+
+    fun getDataList(): MutableList<MC> = getAdapter().getDataList()
+
+    fun getCount() = getDataList().size
+
+    fun getItem(position: Int): MC = getAdapter().getItem(position)
+
+    fun remove(position: Int) {
+        getAdapter().remove(position)
+    }
+
+    fun remove(m: MC) {
+        getAdapter().remove(m)
+    }
+
+    fun removeAll() {
+        getAdapter().removeAll()
+    }
+
+    fun setOnClickListener(
+        onClickListener: ((view: View, viewHolder: QuickViewHolder, position: Int, itemData: MC) -> Unit),
+        @Size(min = 1) vararg resId: Int
+    ) {
+        getAdapter().setOnClickListener(onClickListener, *resId)
+    }
+
+    fun setOnCheckedChangedListener(
+        onCheckedChangedListener: ((view: View, viewHolder: QuickViewHolder, isChecked: Boolean, position: Int, itemData: MC) -> Unit), @Size(
+            min = 1
+        ) vararg resId: Int
+    ) {
+        getAdapter().setOnCheckedChangedListener(onCheckedChangedListener, *resId)
+    }
+
+    fun setOnItemClickListener(onItemClickListener: ((view: View, viewHolder: QuickViewHolder, position: Int, itemData: MC) -> Unit)) {
+        getAdapter().setOnItemClickListener(onItemClickListener)
+    }
+
+    fun setOnItemLongClickListener(onItemLongClickListener: ((view: View, viewHolder: QuickViewHolder, position: Int, itemData: MC) -> Boolean)) {
+        getAdapter().setOnItemLongClickListener(onItemLongClickListener)
     }
 
     /**
@@ -355,6 +457,25 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
     open fun onResultErrorOtherTxt(): String = getString(R.string.errorOtherHint)
 
     /**
+     * 未登录
+     *
+     * @return
+     */
+    @DrawableRes
+    open fun onResultErrorNoLoginIcon(): Int = R.drawable.ic_broken_image_gray_24dp
+
+    open fun onResultErrorNoLoginTxt(): String = getString(R.string.errorNoLoginHint)
+
+    /**
+     * 数据异常
+     *
+     * @return
+     */
+    @DrawableRes
+    open fun onResultErrorDataIcon(): Int = R.drawable.ic_broken_image_gray_24dp
+
+    open fun onResultErrorDataTxt(): String = getString(R.string.errorDataHint)
+    /**
      * 网络出错时的文字
      *
      * @return
@@ -365,7 +486,7 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
 
     open fun onResultRefreshColors(): IntArray = intArrayOf(Color.BLACK)
 
-    abstract fun onResultAdapter(): QuickAdapter<*, *>
+    open fun onResultAdapter(): QuickAdapter<*> = adapter
 
     abstract fun onResultUrl(): String
 
@@ -374,14 +495,168 @@ abstract class QuickListActivity<M> : BaseActivity(), QRecyclerView.OnRefreshLis
     /**
      * 数据请求成功
      *
-     * @param jsonData
+     * @param model 数据model
      * @return
      */
-    abstract fun onRequestSuccess(model: M, isPullRefresh: Boolean)
+    abstract fun onPullRefreshSuccess(model: M)
+
+    /**
+     * 数据请求成功
+     *
+     * @param model 数据model
+     * @return
+     */
+    abstract fun onLoadMoreSuccess(model: M)
+
+    abstract fun onResultItemResId(viewType: Int): Int
+
+    abstract fun onBindData(holder: QuickViewHolder, position: Int, itemData: MC, viewType: Int)
+
+    open fun getItemViewType(position: Int): Int = -1
+
+    open fun onResultItemMargin(position: Int): Float = 0f
+
+    open fun onResultItemMarginLeft(position: Int): Float {
+        return if (!getAdapter().isVertically()) {
+            when (position) {
+                0 -> {
+                    onResultItemMargin(position)
+                }
+                else -> onResultItemMargin(position) / 2
+            }
+        } else onResultItemMargin(position)
+    }
+
+    open fun onResultItemMarginRight(position: Int): Float {
+        return if (!getAdapter().isVertically()) {
+            when (position) {
+                getAdapter().itemCount - 1 -> {
+                    onResultItemMargin(position)
+                }
+                else -> onResultItemMargin(position) / 2
+            }
+        } else onResultItemMargin(position)
+    }
+
+    open fun onResultItemMarginTop(position: Int): Float {
+        return if (getAdapter().isVertically()) {
+            when (position) {
+                0 -> {
+                    onResultItemMargin(position)
+                }
+                else -> onResultItemMargin(position) / 2
+            }
+        } else onResultItemMargin(position)
+    }
+
+    open fun onResultItemMarginBottom(position: Int): Float {
+        return if (getAdapter().isVertically()) {
+            when (position) {
+                getAdapter().itemCount - 1 -> {
+                    onResultItemMargin(position)
+                }
+                else -> onResultItemMargin(position) / 2
+            }
+        } else onResultItemMargin(position)
+    }
+
+    open fun onResultItemPadding(position: Int): Float = 0f
+
+    open fun onResultItemPaddingLeft(position: Int): Float {
+        return if (!getAdapter().isVertically()) {
+            when (position) {
+                0 -> {
+                    onResultItemPadding(position)
+                }
+                else -> onResultItemPadding(position) / 2
+            }
+        } else onResultItemPadding(position)
+    }
+
+    open fun onResultItemPaddingRight(position: Int): Float {
+        return if (!getAdapter().isVertically()) {
+            when (position) {
+                getAdapter().itemCount - 1 -> {
+                    onResultItemPadding(position)
+                }
+                else -> onResultItemPadding(position) / 2
+            }
+        } else onResultItemPadding(position)
+    }
+
+    open fun onResultItemPaddingTop(position: Int): Float {
+        return if (getAdapter().isVertically()) {
+            when (position) {
+                0 -> {
+                    onResultItemPadding(position)
+                }
+                else -> onResultItemPadding(position) / 2
+            }
+        } else onResultItemPadding(position)
+    }
+
+    open fun onResultItemPaddingBottom(position: Int): Float {
+        return if (getAdapter().isVertically()) {
+            when (position) {
+                getAdapter().itemCount - 1 -> {
+                    onResultItemPadding(position)
+                }
+                else -> onResultItemPadding(position) / 2
+            }
+        } else onResultItemPadding(position)
+    }
+
+    inner class Adapter : QuickAdapter<MC>() {
+        override fun onResultItemResId(viewType: Int): Int = this@QuickListActivity.onResultItemResId(viewType)
+
+        override fun onBindData(holder: QuickViewHolder, position: Int, itemData: MC, viewType: Int) {
+            this@QuickListActivity.onBindData(holder, position, itemData, viewType)
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return this@QuickListActivity.getItemViewType(super.getItemViewType(position))
+        }
+
+        override fun onResultItemMargin(position: Int): Float = this@QuickListActivity.onResultItemMargin(position)
+
+        override fun onResultItemMarginLeft(position: Int): Float =
+            this@QuickListActivity.onResultItemMarginLeft(position)
+
+        override fun onResultItemMarginRight(position: Int): Float {
+            return this@QuickListActivity.onResultItemMarginRight(position)
+        }
+
+        override fun onResultItemMarginTop(position: Int): Float {
+            return this@QuickListActivity.onResultItemMarginTop(position)
+        }
+
+        override fun onResultItemMarginBottom(position: Int): Float {
+            return this@QuickListActivity.onResultItemMarginBottom(position)
+        }
+
+        override fun onResultItemPadding(position: Int): Float {
+            return this@QuickListActivity.onResultItemPadding(position)
+        }
+
+        override fun onResultItemPaddingLeft(position: Int): Float {
+            return this@QuickListActivity.onResultItemPaddingLeft(position)
+        }
+
+        override fun onResultItemPaddingRight(position: Int): Float {
+            return this@QuickListActivity.onResultItemPaddingRight(position)
+        }
+
+        override fun onResultItemPaddingTop(position: Int): Float {
+            return this@QuickListActivity.onResultItemPaddingTop(position)
+        }
+
+        override fun onResultItemPaddingBottom(position: Int): Float {
+            return this@QuickListActivity.onResultItemPaddingBottom(position)
+        }
+    }
 
     interface OnRequestListener {
         fun onEnd()
         fun onError(jsonData: String, isPullRefresh: Boolean, errorType: ErrorType)
     }
-
 }

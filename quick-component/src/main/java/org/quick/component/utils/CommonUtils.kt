@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.Rect
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Display
@@ -28,10 +28,10 @@ object CommonUtils {
      * @param viewpager      ViewPager控件
      * @param DurationSwitch 滑动延时
      */
-    fun controlViewPagerSpeed(viewpager: ViewPager, DurationSwitch: Int) {
+    fun controlViewPagerSpeed(viewpager: androidx.viewpager.widget.ViewPager, DurationSwitch: Int) {
         try {
             val mField: Field
-            mField = ViewPager::class.java.getDeclaredField("mScroller")
+            mField = androidx.viewpager.widget.ViewPager::class.java.getDeclaredField("mScroller")
             mField.isAccessible = true
 
             if (mScroller == null) {

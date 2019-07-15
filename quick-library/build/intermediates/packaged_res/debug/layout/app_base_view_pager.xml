@@ -5,24 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:visibility="gone"
         app:tabIndicatorColor="@color/colorPrimary"
-        app:tabIndicatorHeight="4px"
+        app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="@color/colorBlack" />
+        app:tabTextColor="@color/black" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <org.quick.library.widgets.CustomCompatViewPager
+        <org.quick.library.widgets.CompatViewPager
             android:id="@+id/customCompatViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,10 +35,6 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:minHeight="20dp"
-            android:orientation="horizontal">
-
-
-        </LinearLayout>
-
+            android:orientation="horizontal"/>
     </FrameLayout>
 </LinearLayout>

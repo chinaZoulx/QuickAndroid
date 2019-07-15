@@ -9,16 +9,16 @@ import com.example.chriszou.quicksample.test.TestListViewActivity
 import com.example.chriszou.quicksample.ui.main.discover.DiscoverListFragment
 import com.example.chriszou.quicksample.ui.search.InputFiltrateListActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
-import org.quick.library.b.BaseFragment
-import org.quick.library.b.activities.WebActivity
 import org.chris.zxing.library.CaptureActivity
 import org.chris.zxing.library.Intents
 import org.chris.zxing.library.QRCodeParse
 import org.quick.component.Log2
-import org.quick.component.QuickBroadcast
 import org.quick.component.QuickActivity
+import org.quick.component.QuickBroadcast
 import org.quick.component.utils.HttpUtils
 import org.quick.component.utils.ViewUtils
+import org.quick.library.b.BaseFragment
+import org.quick.library.b.activities.WebActivity
 
 class DiscoverFragment : BaseFragment() {
 
@@ -104,14 +104,14 @@ class DiscoverFragment : BaseFragment() {
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/33/52/95/335295727ee98f2158c3a810ca4e1d2f.jpg")
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/49/54/af/4954af624f05e1e01cb93272904fddda.jpg")
         tempDataList.add("https://up.enterdesk.com/edpic_360_360/f4/f8/4f/f4f84ff78e2b01b2a466b4b721c81114.jpg")
-        discoverListFragment.getAdapter<DiscoverListFragment.Adapter>()?.setDataList(tempDataList)
+        discoverListFragment.setDataList(tempDataList)
     }
 
     private fun parseQrCodeContent(content: String?) {
         when {
             HttpUtils.isHttpUrlFormRight(content!!) -> WebActivity.startAction(activity, "链接", content)
             else ->
-                isOkDialog.alertIsOkDialog("二维码包含内容", content)
+                isOkDialog.setTitle("二维码包含内容").setContent(content).show()
         }
     }
 

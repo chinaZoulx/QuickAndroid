@@ -19,7 +19,7 @@
             android:id="@+id/progressBar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:indeterminateTint="@color/colorBlueShallow"
+            android:indeterminateTint="@color/blueShallow"
             android:progressBackgroundTintMode="multiply"
             android:visibility="visible" />
 
@@ -46,6 +46,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="载入中"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/black"
         android:textSize="12sp" />
 </LinearLayout>

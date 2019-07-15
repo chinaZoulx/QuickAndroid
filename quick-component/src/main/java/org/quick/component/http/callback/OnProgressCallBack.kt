@@ -1,5 +1,5 @@
 package org.quick.component.http.callback
 
-interface OnProgressCallBack {
+interface OnProgressCallback {
     fun onLoading(key: String, bytesRead: Long, totalCount: Long, isDone: Boolean)
 }

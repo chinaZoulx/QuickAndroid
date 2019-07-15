@@ -7,17 +7,18 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.chriszou.quicksample.R
+import org.quick.component.QuickAdapter
+import org.quick.component.QuickViewHolder
 import org.quick.component.widget.QRecyclerView
-import org.quick.library.b.BaseViewHolder
 
 /**
  * Created by work on 2017/6/28.
@@ -26,7 +27,7 @@ import org.quick.library.b.BaseViewHolder
  * @mail chrisSpringSmell@gmail.com
  */
 
-class BluetoothDeviceDialog(var context: Context, var onItemClickListener: (view: View, viewHolder: BaseViewHolder, position: Int, itemData: BluetoothDevice) -> Unit) {
+class BluetoothDeviceDialog(var context: Context, var onItemClickListener: (view: View, viewHolder: QuickViewHolder, position: Int, itemData: BluetoothDevice) -> Unit) {
 
     lateinit var dialog: Dialog
     lateinit var holder: ViewHolder
@@ -38,7 +39,7 @@ class BluetoothDeviceDialog(var context: Context, var onItemClickListener: (view
                     val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
                     when (device.bondState) {
                         BluetoothDevice.BOND_BONDED -> Unit
-                        else -> if (!holder.adapter.getDataList().contains(device)) holder.adapter.add(device)
+                        else -> if (!holder.adapter.getDataList().contains(device)) holder.adapter.addData(device)
                     }
                 }
                 BluetoothAdapter.ACTION_DISCOVERY_FINISHED -> {//搜索完成
@@ -63,7 +64,7 @@ class BluetoothDeviceDialog(var context: Context, var onItemClickListener: (view
         dialog = builder.create()
         val window = dialog.window
         window!!.setGravity(Gravity.CENTER)
-        window.setWindowAnimations(org.quick.library.R.style.SelectSexAnimation)
+        window.setWindowAnimations(org.quick.library.R.style.dialogAnimBottom2Up)
         holder = ViewHolder(view)
         initBluetooth()
     }
@@ -81,7 +82,7 @@ class BluetoothDeviceDialog(var context: Context, var onItemClickListener: (view
         val pairedDevices = BluetoothAdapter.getDefaultAdapter().bondedDevices
         for (device in pairedDevices) {
             if (device != null && !holder.adapter.getDataList().contains(device))
-                holder.adapter.add(device)
+                holder.adapter.addData(device)
         }
     }
 
@@ -122,12 +123,12 @@ class BluetoothDeviceDialog(var context: Context, var onItemClickListener: (view
         }
     }
 
-    class Adapter : org.quick.library.b.BaseAdapter<BluetoothDevice>() {
-        override fun onBindData(holder: BaseViewHolder, position: Int, itemData: BluetoothDevice, viewType: Int) {
+    class Adapter : QuickAdapter<BluetoothDevice>() {
+        override fun onBindData(holder: QuickViewHolder, position: Int, itemData: BluetoothDevice, viewType: Int) {
             holder.setText(org.quick.library.R.id.bluetoothNameTv, if (!TextUtils.isEmpty(itemData.name)) itemData.name else itemData.address)
             holder.setText(org.quick.library.R.id.macTv, itemData.address)
         }
 
-        override fun onResultLayoutResId(viewType: Int): Int = R.layout.item_bluetooth_device_dialog
+        override fun onResultItemResId(viewType: Int): Int = R.layout.item_bluetooth_device_dialog
     }
 }

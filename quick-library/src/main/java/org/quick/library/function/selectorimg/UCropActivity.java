@@ -7,12 +7,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -39,7 +39,7 @@ import org.quick.library.R;
 import org.quick.library.b.activities.ThemeActivity;
 import org.quick.library.function.LoadingDialog;
 import org.quick.library.widgets.AspectRatioTextView;
-import org.quick.library.widgets.HorizontalProgressWheelView;import org.quick.library.b.activities.ThemeActivity;
+import org.quick.library.widgets.HorizontalProgressWheelView;
 
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -131,7 +131,7 @@ public class UCropActivity extends ThemeActivity {
                 loadingDialog = new LoadingDialog(this);
             }
             final Bitmap croppedBitmap = mGestureCropImageView.cropImage();
-            loadingDialog.alertLoadingDialog(false, "裁剪中");
+            loadingDialog.show(false, "裁剪中");
             Observable.fromCallable(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {

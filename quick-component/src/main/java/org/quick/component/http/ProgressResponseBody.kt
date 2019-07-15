@@ -4,13 +4,13 @@ import okhttp3.MediaType
 import okhttp3.ResponseBody
 import okio.*
 import org.quick.component.QuickAsync
-import org.quick.component.http.callback.OnProgressCallBack
+import org.quick.component.http.callback.OnProgressCallback
 import org.quick.component.utils.HttpUtils
 
 /**
  * 下载进度监听-响应体
  */
-class ProgressResponseBody(var builder: HttpService.Builder, var responseBody: ResponseBody, var onProgressCallBack: OnProgressCallBack) : ResponseBody() {
+class ProgressResponseBody(var builder: HttpService.Builder, var responseBody: ResponseBody, var onProgressCallback: OnProgressCallback) : ResponseBody() {
 
     var bufferedSource: BufferedSource
 
@@ -35,7 +35,7 @@ class ProgressResponseBody(var builder: HttpService.Builder, var responseBody: R
                 val bytesRead = super.read(sink, byteCount)
                 totalBytesRead += if (bytesRead != -1L) bytesRead else 0
                 QuickAsync.runOnUiThread {
-                    onProgressCallBack.onLoading(HttpUtils.getFileName(builder.url), totalBytesRead, contentLength(), bytesRead == -1L)
+                    onProgressCallback.onLoading(HttpUtils.getFileName(builder.url), totalBytesRead, contentLength(), bytesRead == -1L)
                 }
                 return bytesRead
             }

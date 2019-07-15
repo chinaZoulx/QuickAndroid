@@ -4,43 +4,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/noMsgContainer"
     android:layout_height="match_parent"
-    android:background="@color/colorTransparent"
+    android:background="@color/transparent"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/borderWidth">
 
     <ImageView
-        android:id="@+id/hintErrorIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:minHeight="350px"
-        android:minWidth="350px"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_broken_image_gray_24dp" />
+            android:id="@+id/hintErrorIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minHeight="150dp"
+            android:minWidth="150dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_baseline_flight_takeoff_24px"/>
 
     <TextView
-        android:id="@+id/hintErrorTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/borderWidth"
-        android:gravity="center"
-        android:text="@string/errorNoMsgHint"
-        android:textColor="@color/colorGray"
-        android:textSize="30px"
-        android:visibility="visible" />
+            android:id="@+id/hintErrorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/borderWidth"
+            android:gravity="center"
+            android:text="@string/errorNoMsgHint"
+            android:textColor="@color/grayDark"
+            android:textSize="@dimen/textTitleSizeSmall"
+            android:visibility="visible"/>
 
     <Button
-        android:id="@+id/refreshBtn"
-        android:layout_width="200px"
-        android:layout_height="70px"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/borderWidth"
-        android:background="@drawable/selector_rec_cir_bg_tr_prim"
-        android:gravity="center"
-        android:text="刷新页面"
-        android:textColor="@color/selector_prim_white"
-        android:textSize="28px"
-        android:visibility="gone" />
+            android:id="@+id/refreshBtn"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/btnHeight"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/borderWidth"
+            android:background="@drawable/selector_cir_prim_bg_prim_dark"
+            android:gravity="center"
+            android:text="@string/refresh"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textTitleSizeSmall"
+            android:visibility="gone"/>
 
 </LinearLayout>

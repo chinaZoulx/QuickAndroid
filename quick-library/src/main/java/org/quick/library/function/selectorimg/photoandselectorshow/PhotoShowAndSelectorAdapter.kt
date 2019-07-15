@@ -1,11 +1,12 @@
 package org.quick.library.function.selectorimg.photoandselectorshow
 
-import android.support.v4.view.PagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import org.quick.component.img.GlideApp
+import org.quick.component.img.ImageManager
 import org.quick.library.R
-import org.quick.library.m.ImageManager
 import org.quick.library.widgets.ImageViewScale
 import org.quick.library.widgets.ProgressWheel
 import java.io.File
@@ -17,7 +18,7 @@ import java.io.File
  * @mail chrisSpringSmell@gmail.com
  */
 
-class PhotoShowAndSelectorAdapter : PagerAdapter() {
+class PhotoShowAndSelectorAdapter : androidx.viewpager.widget.PagerAdapter() {
 
     private var imgList: List<String>? = null
     private var onItemClickListener: OnItemClickListener? = null
@@ -43,7 +44,8 @@ class PhotoShowAndSelectorAdapter : PagerAdapter() {
             onItemClickListener?.onItemClick(view, position)
         }
         if (filePath.contains("http")) {
-            loadingAnimView.visibility = View.VISIBLE
+            loadingAnimView.visibility = View.GONE
+            imgScaleView.visibility = View.VISIBLE
             ImageManager.loadImage(container.context, filePath, imgScaleView)
         } else {
             loadingAnimView.visibility = View.GONE

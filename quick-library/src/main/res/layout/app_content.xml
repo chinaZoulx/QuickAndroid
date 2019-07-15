@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/appToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:elevation="5dp"
+        android:background="@color/white"
         android:theme="@style/Theme.AppCompat.DayNight"
         android:visibility="gone"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:titleTextColor="@color/colorWhite" />
+        app:titleTextColor="@color/black" />
 
     <FrameLayout
         android:id="@+id/appContent"

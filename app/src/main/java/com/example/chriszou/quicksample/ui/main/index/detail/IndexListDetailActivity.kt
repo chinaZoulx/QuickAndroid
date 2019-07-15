@@ -3,11 +3,12 @@ package com.example.chriszou.quicksample.ui.main.index.detail
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import com.example.chriszou.quicksample.R
 import com.example.chriszou.quicksample.ui.setting.OtherActivity
 import kotlinx.android.synthetic.main.activity_index_list_detail.*
 import org.quick.component.QuickActivity
+import org.quick.component.img.ImageManager
 import org.quick.component.utils.ViewUtils
 
 class IndexListDetailActivity : org.quick.library.b.BaseActivity() {
@@ -45,7 +46,7 @@ class IndexListDetailActivity : org.quick.library.b.BaseActivity() {
     }
 
     override fun start() {
-        org.quick.library.m.ImageManager.loadImage(this, getTransmitValue("coverIv", ""), coverIv)
+        ImageManager.loadImage(this, getTransmitValue("coverIv", ""), coverIv)
     }
 
     override fun onResume() {
