@@ -44,11 +44,11 @@ class DiscoverListFragment : org.quick.library.b.QuickListFragment<String,String
     override fun onResultLayoutManager(): androidx.recyclerview.widget.RecyclerView.LayoutManager = StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL)
 
     override fun onLoadMoreSuccess(model: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onPullRefreshSuccess(model: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onResultItemResId(viewType: Int): Int = R.layout.item_discover_list

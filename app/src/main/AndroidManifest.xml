@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.chriszou.quicksample">
+          xmlns:tools="http://schemas.android.com/tools" package="com.example.chriszou.quicksample">
 
     <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.UNINSTALL_SHORTCUT" />
@@ -11,13 +11,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".MainApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoTitleBar">
+            android:name=".MainApplication"
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme.NoTitleBar" tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".ui.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,22 +63,22 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
-        <activity
-            android:name=".ui.material.CommodityDetailActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <!--<activity-->
+            <!--android:name=".ui.material.CommodityDetailActivity"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />-->
         <activity
             android:name=".ui.main.mycenter.QuickRecyclerViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
-        <activity
-            android:name=".ui.main.index.CustomPullRefreshActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <!--<activity-->
+            <!--android:name=".ui.main.index.CustomPullRefreshActivity"-->
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />-->
         <activity android:name=".test.TestListViewActivity" />
         <activity android:name=".ui.main.mycenter.QSwipeRefreshLayoutActivity" />
         <activity android:name=".ui.main.mycenter.CheckAnimActivity" />

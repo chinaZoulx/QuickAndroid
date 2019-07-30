@@ -29,11 +29,9 @@ class RecyclerListFragment : QuickListFragment<String,String>() {
     }
 
     override fun onLoadMoreSuccess(model: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onPullRefreshSuccess(model: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun start() {

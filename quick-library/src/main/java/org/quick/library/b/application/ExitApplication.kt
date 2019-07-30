@@ -3,6 +3,7 @@ package org.quick.library.b.application
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import org.quick.component.Log2
 import java.util.*
 
 /**
@@ -18,6 +19,7 @@ open class ExitApplication : Application() {
 
     override fun onCreate() {
         instance = this
+        Log2.e("走了这里")
         super.onCreate()
     }
 

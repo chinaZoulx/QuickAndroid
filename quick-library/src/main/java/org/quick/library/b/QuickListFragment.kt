@@ -146,19 +146,19 @@ abstract class QuickListFragment<M, MC> : BaseFragment(), QRecyclerView.OnRefres
     }
 
     fun setupDividerLine(drawable: Drawable, size: Int = 1, padding: Float = -1f) {
-        recyclerView.setupDividerLine(drawable, padding, size)
+        recyclerView?.setupDividerLine(drawable, padding, size)
     }
 
     fun setupDividerLine(color: Int, size: Int = 1, padding: Float = -1f) {
-        recyclerView.setupDividerLine(color, padding, size)
+        recyclerView?.setupDividerLine(color, padding, size)
     }
 
     fun refreshComplete() {
-        recyclerView.refreshComplete()
+        recyclerView?.refreshComplete()
     }
 
     fun loadMoreComplete() {
-        recyclerView.loadMoreComplete()
+        recyclerView?.loadMoreComplete()
     }
 
     fun addFooterView(view: View) {
@@ -166,11 +166,11 @@ abstract class QuickListFragment<M, MC> : BaseFragment(), QRecyclerView.OnRefres
     }
 
     fun addHeadViewRv(@Size(min = 1) vararg views: View) {
-        recyclerView.addHeaderView(*views)
+        recyclerView?.addHeaderView(*views)
     }
 
     fun addFooterViewRv(@Size(min = 1) vararg views: View) {
-        recyclerView.addFooterView(*views)
+        recyclerView?.addFooterView(*views)
     }
 
     fun getRecyclerView() = recyclerView
@@ -272,7 +272,7 @@ abstract class QuickListFragment<M, MC> : BaseFragment(), QRecyclerView.OnRefres
     }
 
     fun dataNoMore(isNoMore: Boolean) {
-        recyclerView.isNoMore = isNoMore
+        recyclerView?.isNoMore = isNoMore
     }
 
     /**

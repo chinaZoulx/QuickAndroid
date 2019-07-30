@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.StrictMode;
 import android.widget.Toast;
 
+import androidx.multidex.MultiDex;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
@@ -138,9 +139,9 @@ public class BaseTinkerApplication extends BaseApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        //MultiDex.install(base);//此处需要初始化分包，一定要在Bugly之前
+//        MultiDex.install(base);//此处需要初始化分包，一定要在Bugly之前
         // 安装tinker
-        Beta.installTinker();
+//        Beta.installTinker();
     }
 
 

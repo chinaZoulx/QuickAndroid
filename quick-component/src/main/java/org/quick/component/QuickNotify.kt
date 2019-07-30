@@ -295,6 +295,7 @@ object QuickNotify {
             this.shortcutIcon = shortcutIcon
             return this
         }
+
     }
 
     class NotificationReceiver : BroadcastReceiver() {
