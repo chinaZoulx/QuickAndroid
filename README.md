@@ -184,6 +184,7 @@ class TestListActivity2 : BaseListActivity2<String>() {
 ## BaseListFragment2
 同上
 ## BaseRecyclerViewAdapter
+目前此类存在内存泄露的问题，暂未解决
 recyclerView基类，集成了点击事件、长按、item内的view点击<br><br>
 
 最简单的使用方法
